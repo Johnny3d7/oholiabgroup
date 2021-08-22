@@ -124,7 +124,7 @@ Etat du stock {{ $entreprise->nom }}
                                     DB::raw('SUM(variations.qte_entree) - SUM(variations.qte_sortie) as total_stock'))
                                     ->where('variations.id_entreprise', '=', 1)
                                     ->where('products.id', '=', $data->id)
-                                    ->whereIn('commandes.status', [1,2])
+                                    ->whereIn('commandes.status', [0,1])
                                     ->groupBy('ligne_commandes.id')->get();    
                                 @endphp
 
@@ -136,6 +136,9 @@ Etat du stock {{ $entreprise->nom }}
                                 @endforeach
                                 {{-- Stock virtuelle --}}
                                 <?php $stock_virtuel = $data->total_stock - $total_qte_cmde; ?>
+                                @if ($entreprise->id != 1)
+                                    <?php $stock_virtuel = $data->total_stock; ?>
+                                @endif
                                     <td>{{ $data->ref }}</td>
                                     <td>{{ $data->lib }}</td>
                                     <td>{{ $data->category }}</td>

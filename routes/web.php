@@ -30,6 +30,19 @@ Route::get('/commande-client/edit/{slug}', 'App\Http\Controllers\Stock\CommandeC
 Route::any('/commande-client/update/{slug}', 'App\Http\Controllers\Stock\CommandeController@update')->name('commande_client.update');
 Route::get('/commande-client/destroy/{slug}', 'App\Http\Controllers\Stock\CommandeController@destroy')->name('commande_client.destroy');
 
+//Action commande
+
+//Restauration de la commande
+Route::get('/commande-client/restaurer/{slug}', 'App\Http\Controllers\Stock\CommandeController@restaurer')->name('commande_client.restaurer');
+// Quand stock disponible
+Route::get('/commande-client/valider/{slug}', 'App\Http\Controllers\Stock\CommandeController@valider')->name('commande_client.valider');
+//En cas de défaut du stock
+Route::get('/commande-client/rejeter/{slug}', 'App\Http\Controllers\Stock\CommandeController@rejeter')->name('commande_client.rejeter');
+//En cas d'annulation du client
+Route::get('/commande-client/annuler/{slug}', 'App\Http\Controllers\Stock\CommandeController@annuler')->name('commande_client.annuler');
+//Classer comme livré
+Route::get('/commande-client/livrer/{slug}', 'App\Http\Controllers\Stock\CommandeController@livrer')->name('commande_client.livrer');
+
 //Produit d'une commande
 Route::post('/commande-client/add-product', 'App\Http\Controllers\Stock\CommandeController@addProduct')->name('commande_client.add_Product');
 Route::get('/commande-client/update-product/{commande}/{product}', 'App\Http\Controllers\Stock\CommandeController@updateProduct')->name('commande_client.update_Product');
@@ -49,7 +62,10 @@ Route::get('/factures', 'App\Http\Controllers\Stock\FactureController@index')->n
 Route::get('/livraisons', 'App\Http\Controllers\Stock\LivraisonController@index')->name('livraison.index');
 Route::get('commande-nature/{id}', 'App\Http\Controllers\Stock\AjaxController@getCommandeNature')->name('commande-nature.search');
 
+//Bon de livraison
 
+//Créer bon de livraison
+Route::post('/commande-client/create-bon-livraison', 'App\Http\Controllers\Stock\LivraisonController@creer_bonlivraison')->name('commande_client.create_bon_livraison');
 
 //Gestion de stock routes
 Route::prefix('/stock')->namespace('App\Http\Controllers\Stock')->name('stock.')->group(function () {

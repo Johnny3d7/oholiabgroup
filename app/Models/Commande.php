@@ -27,6 +27,8 @@ class Commande extends Model
         'canal_reception',
         'type',
         'id_client',
+        'create_facture',
+        'create_bonlivraison',
         'status',
     ];
     
@@ -43,6 +45,11 @@ class Commande extends Model
     public function client()
     {
         return $this->belongsTo(Client::class, 'id_client');
+    }
+
+    public function livraisons()
+    {
+        return $this->hasMany(Livraison::class, 'id_commande');
     }
 
    /**

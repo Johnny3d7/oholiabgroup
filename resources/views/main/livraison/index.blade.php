@@ -87,26 +87,44 @@ Liste des livraisons
                         <table class="display table" id="ul-contact-list" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Référence</th>
+                                    <th>ID</th>
                                     <th>Commande</th>
+                                    <th>Client</th>
+                                    <th>Lieu livraison</th>
                                     <th>Nom livreur</th>
-                                    <th>Date livraison</th>
+                                    <th>Numero véhicule</th>
+                                    <th>Statut</th>
                                     <th>Modification</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                @forelse ($livraisons as $data)
                                     <tr>
-                                        <td>LI001</td>
-                                        <td>COM002</td>
-                                        <td>Adou pascal</td>
-                                        <td>1/08/2021</td>
-                                        <td><a class="ul-link-action text-success" href="" data-toggle="tooltip" data-placement="top" title="Modifier"><i class="i-Edit"></i></a><a class="ul-link-action text-danger mr-1" href="" data-toggle="tooltip" data-placement="top" title="Voulez-vous supprimer!!!"><i class="i-Eraser-2"></i></a></td>
-                                        <td><a href="#"><button class="btn btn-outline-warning m-1" type="button">Détail</button></a></td>
-                                    </tr> 
+                                        <tr>
+                                            <td>{{ $data->id }}</td>
+                                            <td> {{ $data->commande->num_cmd }}</td>
+                                            <td>{{ $data->commande->client->nom }}</td>
+                                            <td>{{ $data->commande->lieu_livraison }}</td>
+                                            <td>{{ $data->nom_livreur }}</td>
+                                            <td>{{ $data->numero_vehicule }}</td>
+                                            <td>
+                                                @if ($data->status == 0)
+                                                    Non livrée
+                                                @else
+                                                    Livrée
+                                                @endif
+                                                
+                                            </td>
+                                            <td><a class="ul-link-action text-success" href="" data-toggle="tooltip" data-placement="top" title="Modifier"><i class="i-Edit"></i></a><a class="ul-link-action text-danger mr-1" href="" data-toggle="tooltip" data-placement="top" title="Voulez-vous supprimer!!!"><i class="i-Eraser-2"></i></a></td>
+                                            <td><a href="#"><button class="btn btn-outline-warning m-1" type="button">Détail</button></a></td>
+                                        </tr> 
 
-                                </tr>                  
+                                    </tr> 
+                                @empty
+                                    
+                                @endforelse
+                                                 
                              </tbody>
                         </table>
                     </div>

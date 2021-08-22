@@ -21,8 +21,10 @@ class CreateCommandesTable extends Migration
             $table->string('date_livraison');
             $table->string('mode_reglement');
             $table->string('canal_reception');
+            $table->string('create_facture')->default(0);
+            $table->string('create_bonlivraison')->default(0);
             $table->string('type');
-            $table->integer('status')->default(1);
+            $table->integer('status')->default(0);
             $table->timestamps();
             //Foreign_key
             $table->integer('id_client')->unsigned()->nullable();

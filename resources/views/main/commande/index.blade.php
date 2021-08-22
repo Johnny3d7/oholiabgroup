@@ -46,14 +46,16 @@ Liste des commandes
                                     <td>{{ $data->date_livraison }}</td>
                                     <td>{{ $data->lieu_livraison }}</td>
                                     <td>
-                                        @if ($data->status == 1)
+                                        @if ($data->status == 0)
                                             <a class="badge badge-primary m-2 p-2" href="#">Vérification stock</a>
-                                        @elseif($data->status == 2 )
-                                            <a class="badge badge-warning m-2 p-2" href="#">Livraison en cours</a>
+                                        @elseif($data->status == 1 )
+                                            <a class="badge badge-warning m-2 p-2" href="#">Attente de livraison</a>
+                                        @elseif($data->status == 2)
+                                            <a class="badge badge-danger m-2 p-2" href="#">Rejetée</a>
                                         @elseif($data->status == 3)
-                                            <a class="badge badge-success m-2 p-2" href="#">Livrée</a>
-                                        @elseif($data->status == 4)
                                             <a class="badge badge-danger m-2 p-2" href="#">Annulée</a>
+                                        @elseif($data->status == 5)
+                                            <a class="badge badge-success m-2 p-2" href="#">Livrée</a>
                                         @endif
                                     </td>
                                     <td>{{ ucwords((new Carbon\Carbon($data->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>

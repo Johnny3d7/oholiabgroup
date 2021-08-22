@@ -118,21 +118,25 @@ Commande
                                         <tr>
                                             <th class="text-16 text-muted" scope="row">Statut</th>
                                             
-                                                @if ($commande->status == 1)
+                                                @if ($commande->status == 0)
                                                 <td class="text-16 text-primary font-weight-700">
                                                     Vérification stock
                                                 </td> 
-                                                @elseif($commande->status == 2 )
+                                                @elseif($commande->status == 1 )
                                                 <td class="text-16 text-warning font-weight-700">
-                                                    Livraison en cours
+                                                    Attente de livraison
+                                                </td>
+                                                @elseif($commande->status == 2)
+                                                <td class="text-16 text-danger font-weight-700">
+                                                    Rejetée
                                                 </td>
                                                 @elseif($commande->status == 3)
-                                                <td class="text-16 text-success font-weight-700">
-                                                    Livrée
-                                                </td>
-                                                @elseif($commande->status == 4)
                                                 <td class="text-16 text-danger font-weight-700">
                                                     Annulée
+                                                </td>
+                                                @elseif($commande->status == 5)
+                                                <td class="text-16 text-success font-weight-700">
+                                                    Livrée
                                                 </td>
                                                 @endif
                                               
@@ -184,22 +188,27 @@ Commande
                     <div class="card mb-4">
                         <div class="card-body">
                             <h6 class="mb-2 text-muted">Progression</h6>
-                            @if ($commande->status == 1)
+                            @if ($commande->status == 0)
                             <p class="mb-1 text-22 font-weight-light">30%</p>
                             <div class="progress mb-1" style="height: 4px">
                                 <div class="progress-bar bg-primary" style="width: 30%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div><small class="text-muted">vérification stock</small>
-                            @elseif($commande->status == 2)
+                            @elseif($commande->status == 1)
                             <p class="mb-1 text-22 font-weight-light">70%</p>
                             <div class="progress mb-1" style="height: 4px">
                                 <div class="progress-bar bg-warning" style="width: 70%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div><small class="text-muted">En cours de livraison</small>
-                            @elseif($commande->status == 3)
+                            </div><small class="text-muted">Attente de livraison</small>
+                            @elseif($commande->status == 2)
+                            <p class="mb-1 text-22 font-weight-light">0%</p>
+                            <div class="progress mb-1" style="height: 4px">
+                                <div class="progress-bar bg-danger" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div><small class="text-muted">Rejetée</small>
+                            @elseif($commande->status == 5)
                             <p class="mb-1 text-22 font-weight-light">100%</p>
                             <div class="progress mb-1" style="height: 4px">
                                 <div class="progress-bar bg-success" style="width: 100%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div><small class="text-muted">Livrée</small>
-                            @elseif($commande->status == 4)
+                            @elseif($commande->status == 3)
                             <p class="mb-1 text-22 font-weight-light">100%</p>
                             <div class="progress mb-1" style="height: 4px">
                                 <div class="progress-bar bg-danger" style="width: 100%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -320,6 +329,7 @@ Commande
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $valider = true ?>
                                 @forelse ($commande->products as $data)
                                 @if ($data->pivot->status == 1)
                                 <tr>
@@ -348,7 +358,7 @@ Commande
                                         DB::raw('SUM(variations.qte_entree) - SUM(variations.qte_sortie) as total_stock'))
                                         ->where('variations.id_entreprise', '=', 1)
                                         ->where('products.id', '=', $data->id)
-                                        ->whereIn('commandes.status', [1,2])
+                                        ->whereIn('commandes.status', [0,1])
                                         ->groupBy('ligne_commandes.id')->get();    
                                     @endphp
 
@@ -368,7 +378,8 @@ Commande
                                     <td>{{ $data->pivot->qte }}</td>
                                     <td>{{ number_format($data->pivot->qte * $data->pivot->prix, 0, '', '.')  }} Fcfa</td>
                                     <td>
-                                        @if ($data->pivot->qte > $stock_virtuel)
+                                        @if ($stock_virtuel < 0)
+                                        <?php $valider = false ?>
                                         <a class="badge badge-danger m-2 p-2" href="#">Indisponible</a>
                                         @else
                                         <a class="badge badge-success m-2 p-2" href="#">Disponible</a>
@@ -433,6 +444,140 @@ Commande
             </div>
         </div>
         <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="ul-widget__head v-margin pb-20">
+                        <div class="ul-widget__head-label">
+                            <h3 class="ul-widget__head-title">Actions</h3>
+                        </div>
+                        
+                    </div>
+                    <div class="ul-widget__body">
+                        <div class="__g-widget4">
+                            @if ($commande->status == 0)
+                                @if ($valider == true)
+                                        <div class="ul-widget4__item">
+                                            <div class="ul-widget4__pic-icon"><i class="i-Yes text-success"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.valider',['slug'=> $commande->slug]) }}">Valider la commande</a>
+                                        </div>                            
+                                @elseif($valider == false)
+                                        <div class="ul-widget4__item">
+                                            <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.rejeter',['slug'=> $commande->slug]) }}">Rejeter la commande</a>
+                                        </div>
+                                @endif
+                                </div><div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.annuler',['slug'=> $commande->slug]) }}">Annuler la commande</a>
+                                </div>
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.destroy',['slug'=> $commande->slug]) }}">Supprimer la commande</a>
+                                </div>
+                            @endif
+                            
+                            @if ($commande->status == 1)
+                                @if ($commande->create_bonlivraison == 1)
+                                    <div class="ul-widget4__item">
+                                        <div class="ul-widget4__pic-icon"><i class="i-Folder-Organizing text-success"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.livrer',['slug'=> $commande->slug]) }}">Classez livrée</a>
+                                    </div>
+                                @endif
+                                @if ($commande->create_facture == 0)
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Billing text-info"></i></div><a class="ul-widget4__title" href="#">Crée facture</a>
+                                </div>
+                                @endif
+                                @if ($commande->create_bonlivraison == 0)
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Car text-info"></i></div><a class="ul-widget4__title" href="#" type="button" data-toggle="modal" onclick="event.preventDefault();" data-target="#livraisonModalContent{{ $commande->id }}" data-whatever="@fat">Crée bon de livraison</a>
+                                </div>
+                                @else
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Eye text-info"></i></div><a class="ul-widget4__title" href="#">Visonner le bon de livraison</a>
+                                </div>
+                                @endif
+                                </div><div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.annuler',['slug'=> $commande->slug]) }}">Annuler la commande</a>
+                                </div>
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.destroy',['slug'=> $commande->slug]) }}">Supprimer la commande</a>
+                                </div>
+                            @endif
+
+                            @if ($commande->status == 2)
+                                </div><div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.annuler',['slug'=> $commande->slug]) }}">Annuler la commande</a>
+                                </div>
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.destroy',['slug'=> $commande->slug]) }}">Supprimer la commande</a>
+                                </div>
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Refresh text-warning"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.restaurer',['slug'=> $commande->slug]) }}">Restaurer la commande</a>
+                                </div>
+                            @endif
+
+                            @if ($commande->status == 3)
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.destroy',['slug'=> $commande->slug]) }}">Supprimer la commande</a>
+                                </div>
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Refresh text-warning"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.restaurer',['slug'=> $commande->slug]) }}">Restaurer la commande</a>
+                                </div>
+                            @endif
+
+                            @if ($commande->status == 4)
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Refresh text-warning"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.restaurer',['slug'=> $commande->slug]) }}">Restaurer la commande</a>
+                                </div>
+                            @endif
+
+                            @if ($commande->status == 5)
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Billing text-info"></i></div><a class="ul-widget4__title" href="#">Cree facture</a>
+                                </div>
+                                @if ($commande->create_bonlivraison == 0)
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Car text-info"></i></div><a class="ul-widget4__title" type="button" href="#" data-toggle="modal" onclick="event.preventDefault();" data-target="#livraisonModalContent{{ $commande->id }}" data-whatever="@fat">Crée bon de livraison</a>
+                                </div>
+                                @else
+                                <div class="ul-widget4__item">
+                                    <div class="ul-widget4__pic-icon"><i class="i-Eye text-info"></i></div><a class="ul-widget4__title" href="#">Visonner le bon de livraison</a>
+                                </div>
+                                @endif
+                            @endif
+                            <div class="modal fade" id="livraisonModalContent{{ $commande->id }}" tabindex="-1" role="dialog" aria-labelledby="livraisonModalContent{{ $commande->id }}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="livraisonModalContent{{ $commande->id }}_title">Créer un bon de livraison</h5>
+                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="post" action="{{ route('commande_client.create_bon_livraison')}}">
+                                                @csrf
+                                                @method('POST')
+                                                <div class="form-group ">
+                                                    <label class="col-form-label" for="nom_livreur">Nom du livreur</label>
+                                                    <input class="form-control"  name="nom_livreur" id="nom_livreur" type="text" placeholder="Ex: Irébé daniel "/>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label class="col-form-label" for="numero_vehicule">Numéro du véhicule</label>
+                                                    <input class="form-control"  name="numero_vehicule" id="numero_vehicule" type="text" placeholder="Ex: 9857JN01"/>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <input class="form-control" value="{{ $commande->id }}" name="commande_id" id="commande_id" type="text" hidden/>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
+                                                    <button class="btn btn-primary" type="submit">Valider</button>
+                                                </div>
+                                            </form>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

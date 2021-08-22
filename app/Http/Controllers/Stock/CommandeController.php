@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Stock;
 use App\Http\Controllers\Controller;
 use App\Models\Commande;
 use App\Models\Product;
+use App\Models\Variation;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +20,7 @@ class CommandeController extends Controller
     public function index()
     {
         //
-        $commandes = Commande::whereIn('status', [1,2,3,4])->orderBy('created_at', 'desc')->get();
+        $commandes = Commande::whereIn('status', [0,1,2,3,5])->orderBy('created_at', 'desc')->get();
         //dd($commandes);
         return view('main.commande.index',compact('commandes'));
     }
@@ -197,7 +199,7 @@ class CommandeController extends Controller
     {
         //
         $commande = Commande::where('slug', $slug)->first();
-        $commande->status = 5;
+        $commande->status = 4;
         $commande->save();
 
         $notification = array(
@@ -304,4 +306,101 @@ class CommandeController extends Controller
         );
         return redirect()->back()->with($notification);
     }
+
+    public function restaurer($slug)
+    {
+        $commande = Commande::where('slug', $slug)->first();
+        $commande->status = 0;
+        $commande->save();
+
+        $notification = array(
+            "message" => "Vous avez restaurer cette commande!",
+            "alert-type" => "success"
+        );
+        
+        return redirect()->back()->with($notification);
+    }
+
+    public function valider($slug)
+    {
+        $commande = Commande::where('slug', $slug)->first();
+        $commande->status = 1;
+        $commande->save();
+
+        $notification = array(
+            "message" => "Vous avez valider cette commande!",
+            "alert-type" => "success"
+        );
+        
+        return redirect()->back()->with($notification);
+    }
+
+    public function rejeter($slug)
+    {
+        $commande = Commande::where('slug', $slug)->first();
+        $commande->status = 2;
+        $commande->save();
+
+        $notification = array(
+            "message" => "Vous avez rejeter cette commande!",
+            "alert-type" => "success"
+        );
+        
+        return redirect()->back()->with($notification);
+    }
+
+    public function annuler($slug)
+    {
+        $commande = Commande::where('slug', $slug)->first();
+        $commande->status = 3;
+        $commande->save();
+
+        $notification = array(
+            "message" => "Vous avez annulé cette commande!",
+            "alert-type" => "success"
+        );
+        
+        return redirect()->back()->with($notification);
+    }
+
+
+    public function livrer($slug)
+    {
+        $commande = Commande::where('slug', $slug)->first();
+
+        foreach ($commande->products as $data) {
+            $variation = new Variation();
+
+            $variation->typemouv = 0;
+            $variation->id_entreprise = 1;
+            $variation->id_product = $data->pivot->product_id;
+            $variation->production = 0;
+            $variation->datemouv = new DateTime();
+            $variation->observation = "Vente produit";
+            $variation->datemouv = new DateTime();
+            $variation->qte_entree = 0;
+            $variation->qte_sortie = $data->pivot->qte;
+
+            $variation->save();
+            
+        }
+        $commande->status = 5;
+        $commande->save();
+
+        $livraison = $commande->livraisons->first();
+
+        $livraison->status = 1;
+        $livraison->date_reception = new DateTime();
+        $livraison->save();
+
+        $notification = array(
+            "message" => "Vous avez classé cette cette commande comme livrée!",
+            "alert-type" => "success"
+        );
+        
+        return redirect()->back()->with($notification);
+    }
+
+    
+
 }
