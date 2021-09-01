@@ -33,6 +33,8 @@ class CreateProductsTable extends Migration
             $table->float('liquide')->nullable();
             $table->string('unite_liquide')->nullable();
             $table->integer('status')->default(1);
+            $table->string('image')->nullable();
+            $table->string('image_path')->nullable();
             $table->timestamps();
 
             //Foreign_key

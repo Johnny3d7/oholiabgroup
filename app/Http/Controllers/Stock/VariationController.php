@@ -59,8 +59,7 @@ class VariationController extends Controller
 
         }
 
-        //Controlé pour empêcher l'utilisateur de saisir une date supérieur à aujourd'hui
-        if (strtotime($date[2].'-'.$date[1].'-'.$date[0]) > time()-(60*60*24)) {
+        if (strtotime($date[2].'-'.$date[1].'-'.$date[0]) > strtotime("today")) {
            
             $notification = array(
                 "message" => "La date du mouvement doit être inférieure ou égale à la date d'aujourd'hui. Veuillez réessayer svp!",

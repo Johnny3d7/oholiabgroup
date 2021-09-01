@@ -8,7 +8,7 @@
     <title>Gestion de stock | Oholiab Group</title>
     {{--<link rel="icon" href="{{ url('images/main_img/favicon/favicon-32x32.png') }}" type="image/x-icon">--}}
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
-    <link href="{{ url('css/themes/lite-purple.css') }}" rel="stylesheet" />
+    <link href="{{ url('css/themes/lite-obpinc.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/perfect-scrollbar.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ url('css/plugins/fontawesome-5.css') }}" />
     <link href="{{ url('css/plugins/metisMenu.min.css') }}" rel="stylesheet" />
@@ -24,15 +24,20 @@
     <link href="{{ url('css/plugins/daterangepicker.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/bootstrap-colorpicker.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        header .header-toggle{
+            color: white !important;
+        }
+    </style>
     @yield('stylesheets')
 </head>
 
 <body class="text-left" style="background-image: url({{ url('images/back1.jpg') }}) !important; background-position: center center !important; ">
     <div class="app-admin-wrap layout-sidebar-vertical sidebar-full">
-        @include('main.partials.sidebar')
+        @include('obpinc.partials.sidebar')
         <div class="switch-overlay"></div>
         <div class="main-content-wrap mobile-menu-content bg-off-white m-0" style="background-image: url({{ url('images/back2.jpg') }}) !important; background-position: center center !important;     background-size: contain !important; ">
-            @include('main.partials.header')
+            @include('obpinc.partials.header')
             <!-- ============ Body content start ============= -->
            <div class="main-content pt-4">
                 <div class="breadcrumb">
@@ -47,12 +52,12 @@
                 <!-- end of main-content -->
             </div>
             <div class="sidebar-overlay open"></div><!-- Footer Start -->
-            @include('main.partials.footer')
+            @include('obpinc.partials.footer')
             <!-- fotter end -->
         </div>
     </div>
     <!-- ============ Search UI Start ============= -->
-    @include('main.partials.searchui')
+    @include('obpinc.partials.searchui')
     
     <!-- ============ Search UI End ============= -->
     <script src="{{ url('js/plugins/jquery-3.3.1.min.js') }}"></script>
@@ -75,10 +80,9 @@
     <script src="{{ url('js/plugins/datatables.buttons.min.js') }}"></script>
     <script src="{{ url('js/plugins/jszip.min.js') }}"></script>
     <script src="{{ url('js/plugins/pdfmake.min.js') }}"></script>
-    <script src="{{ url('js/plugins/vfs_fonts.js') }}"></script>
+    <script src="{{ url('js/plugins/vfs_fonts.min.js') }}"></script>
     <script src="{{ url('js/plugins/buttons.html5.min.js') }}"></script>
     <script src="{{ url('js/plugins/buttons.print.min.js') }}"></script>
-    <script src="{{ url('js/plugins/buttons.colvis.min.js') }}"></script>
     <script src="{{ url('js/scripts/contact-list-table.min.js') }}"></script>
     <script src="{{ url('js/scripts/datatables.script.min.js') }}"></script>
     <script src="{{ url('js/plugins/spin.min.js') }}"></script>

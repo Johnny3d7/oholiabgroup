@@ -1,5 +1,5 @@
 <div class="sidebar-panel bg-white" style="background-image: url({{ url('images/sidebar2.jpg') }}) !important; background-position: 70% 20% !important; ">
-    <div class="gull-brand pr-3 text-center mt-4 mb-2 d-flex justify-content-center align-items-center"><img class="pl-3" src="{{ url('images/logo.png') }}"  alt="alt" />
+    <div class="gull-brand pr-3 text-center mt-4 mb-2 d-flex justify-content-center align-items-center"><img class="pl-3" src="{{ url('images/faviconobp.png') }}"  alt="alt" />
         <!--  <span class=" item-name text-20 text-primary font-weight-700">GULL</span> -->
         <div class="sidebar-compact-switch ml-auto"><span></span></div>
     </div>

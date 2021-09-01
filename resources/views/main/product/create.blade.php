@@ -15,12 +15,29 @@ Ajouter un produit
 @section('content')
 <div class="row">
     <div class="col-md-10">
+        <section class="ul-product-detail__box">
+            <div class="row">
+                    <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">
+                        <a href="{{ route('stock.products.index')}}">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="ul-product-detail__border-box">
+                                    <div class="ul-product-detail--icon mb-2"><i class="i-Check text-success text-25 font-weight-500"></i></div>
+                                    <h5 class="heading">Liste des produits</h5>
+                                    <p class="text-muted text-12">Afficher la liste de tous les produits.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+            </div>
+        </section>
         <div class="card animate__animated animate__backInDown">
             <div class="card-header bg-transparent">
             <h3 class="card-title">Ajout d'un nouveau produit</h3>
             </div>
             <!-- begin::form-->
-            <form method="post" action="{{ route('stock.product.store')}}">
+            <form method="post" action="{{ route('stock.product.store')}}" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
                 <div class="card-body">    
@@ -197,7 +214,14 @@ Ajouter un produit
                             </small>
                         </div>  --}}
                     </div>
-                    
+                    <div class="custom-separator"></div>
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label" for="qte">Image (.png | .jpg | .jpeg): </label>               
+                        <div class="custom-file">
+                            <input class="custom-file-input" id="inputGroupFile01" type="file" name="image" aria-describedby="inputGroupFileAddon01" />
+                            <label class="custom-file-label" for="inputGroupFile01">Choisir une image </label>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <div class="mc-footer">
@@ -212,6 +236,7 @@ Ajouter un produit
             </form>
             <!--  end::form 3-->
         </div>
+       
     </div>
 </div>
 @endsection

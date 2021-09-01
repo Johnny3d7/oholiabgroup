@@ -20,6 +20,16 @@ class AjaxController extends Controller
     {
         $cat  = ProductCategory::find($id);
         //dd(Product::where('id_product_category', $cat->id)->orderBy('lib', 'asc')->get());
-        echo json_encode(Product::where('id_product_category', $cat->id)->orderBy('lib', 'asc')->get());
+        echo json_encode(Product::where(['status'=>1,'id_product_category'=> $cat->id])->orderBy('lib', 'asc')->get());
+    }
+
+    public function getBonCommandeProduct($id)
+    {
+        if ($id == 1 || $id == 2) {
+            echo json_encode(Product::where(['status'=>1, 'id_product_category' => $id])->orderBy('lib', 'asc')->get());
+        }
+        else {
+            echo json_encode(Product::where('status', 1)->whereNotIn('id_product_category',[1,2])->orderBy('lib', 'asc')->get());
+        }    
     }
 }

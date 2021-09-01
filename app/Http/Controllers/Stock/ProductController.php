@@ -107,6 +107,24 @@ class ProductController extends Controller
         
 
         $product->ref = "P". $product->id;
+
+        $image = $request->file('image');
+
+        //dd($request->hasFile('image'));
+
+        if ($request->file()) {
+
+            $fileName = $image->getClientOriginalName() . '_' . time() . '_' . rand(9, 999) . '.' . $image->extension();
+
+            $path = $image->storeAs('product_image', $fileName, 'public');
+
+            $product->image = $fileName;
+
+            $product->image_path = 'storage/' . $path;
+
+         
+        }
+
         $product->save();
         //dd($product);
         $notification = array(
@@ -123,9 +141,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($slug)
     {
         //
+        $product = Product::where('slug', $slug)->first();
+
+        return view('main.product.show',compact('product'));
     }
 
     /**
@@ -247,7 +268,7 @@ class ProductController extends Controller
             "alert-type" => "success"
         );
         
-        return redirect()->back()->with($notification);
+        return redirect()->route('stock.products.index')->with($notification);
     }
 
     
@@ -299,4 +320,37 @@ class ProductController extends Controller
 
         return view('main.product.stockstory', compact('variations'));
     }
+
+    //Changer l'image du produit
+    public function addImage(Request $request)
+    {
+        $product = Product::where('slug', $request->slug)->first();
+
+        //dd($request->hasFile('image'));
+
+        $image = $request->file('image');
+
+        if ($request->file()) {
+
+            $fileName = $image->getClientOriginalName() . '_' . time() . '_' . rand(9, 999) . '.' . $image->extension();
+
+            $path = $image->storeAs('product_image', $fileName, 'public');
+
+            $product->image = $fileName;
+
+            $product->image_path = 'storage/' . $path;
+         
+        }
+
+        $product->save();
+
+        $notification = array(
+            "message" => "L'image du produit à été modifié avec succès!",
+            "alert-type" => "success"
+        );
+        
+        return redirect()->back()->with($notification);
+    }
+
+
 }

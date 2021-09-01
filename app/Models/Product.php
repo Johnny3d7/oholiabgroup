@@ -34,6 +34,8 @@ class Product extends Model
         'unite_volume',
         'liquide',
         'unite_liquide',
+        'image',
+        'image_path',
         'status',
         'id_product_category',
         'id_type_product'
@@ -72,5 +74,10 @@ class Product extends Model
     public function commandes()
     {
         return $this->belongsToMany(Commande::class, 'ligne_commandes', 'product_id', 'commande_id')->withPivot('qte', 'prix', 'status')->withTimestamps();
+    }
+
+    public function bon_commandes()
+    {
+        return $this->belongsToMany(BonCommande::class, 'ligne_bon_commandes','product_id', 'bon_commande_id')->withPivot('qte','prix', 'status')->withTimestamps();
     }
 }

@@ -22,7 +22,7 @@ Liste des clients
                 <a href="{{ route('stock.client.create') }}"><button class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right"><span class="ladda-label">Ajouter un client</span></button></a>
                 
                 <div class="table-responsive">
-                    <table class="display table table-striped table-bordered" id="zero_configuration_table" style="width:100%">
+                    <table id="clientsTable" class="display table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Code</th>
@@ -86,5 +86,17 @@ Liste des clients
 @endsection
 
 @section('javascripts')
-
+<script>
+    $(document).ready(function() {
+    $('#clientsTable').DataTable({
+        "order": [[ 1, "asc" ]],
+        paging: true,
+        searching: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>
 @endsection

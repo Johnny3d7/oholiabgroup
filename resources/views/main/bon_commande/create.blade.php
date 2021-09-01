@@ -9,7 +9,7 @@ Commande
 @endsection
 
 @section('pageTitle')
-Créer une commande
+Créer un bon de commande
 @endsection
 
 @section('content')
@@ -17,94 +17,33 @@ Créer une commande
     <div class="col-md-9">
         <div class="card animate__animated animate__backInDown">
             <div class="card-header bg-transparent">
-            <h3 class="card-title">Création de la commande client</h3>
+            <h3 class="card-title">Création du bon de commande</h3>
             </div>
             <!-- begin::form-->
-            <form method="post" action="{{ route('commande_client.store')}}">
+            <form method="post" action="{{ route('boncommande.store')}}" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
                 <div class="card-body">    
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label class="ul-form__label" for="id_client">Client:</label>
-                            <select name="id_client" id="id_client" class="form-control" required>
+                            <label class="ul-form__label" for="id_fournisseur">Fournisseur:</label>
+                            <select name="id_fournisseur" id="id_fournisseur" class="form-control" required>
                                 <option value=""  selected>-- Sélectionner --</option>
-                                @forelse (Client::where('status', 1)->orderBy('nom', 'asc')->get() as $data)
-                                    <option value="{{ $data->id }}" @if (old('id_client')== '{{ $data->id }}') selected="selected" @endif>{{ $data->nom }}</option>
+                                @forelse (Fournisseur::where('status', 1)->orderBy('nom', 'asc')->get() as $data)
+                                    <option value="{{ $data->id }}" @if (old('id_fournisseur')== '{{ $data->id }}') selected="selected" @endif>{{ $data->nom }}</option>
                                 @empty
                                     
                                 @endforelse
                             </select>
-                                @if ($errors->has('id_client'))
+                                @if ($errors->has('id_fournisseur'))
                                     <div class="text-danger">
-                                        <small class="ul-form__text form-text text-danger" id="passwordHelpBlock">{{ $errors->first('id_client') }}</small>
+                                        <small class="ul-form__text form-text text-danger" id="passwordHelpBlock">{{ $errors->first('id_fournisseur') }}</small>
                                     </div>
                                     @else    
                                     <small class="ul-form__text form-text" id="">
-                                        Choisissez le client svp!
+                                        Choisissez le fournisseur svp!
                                     </small>
-                                    @endif
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label class="ul-form__label" for="type">Nature des produits:</label>
-                            <select name="type" id="type" class="form-control" required>
-                                <option value="0" disabled selected>Choisir la nature</option>
-                                @forelse (ProductCategory::where(['commercialisable'=> 1, 'status' => 1])->orderBy('lib', 'asc')->get() as $data)
-                                    <option value="{{ $data->id }}" @if (old('id_client')== '{{ $data->id }}') selected="selected" @endif>{{ $data->lib }}</option>
-                                @empty
-                                    
-                                @endforelse
-                            </select>
-                            @if ($errors->has('type'))
-                                    <div class="text-danger">
-                                        <small class="ul-form__text form-text text-danger" id="passwordHelpBlock">{{ $errors->first('type') }}</small>
-                                    </div>
-                                    @else    
-                                    <small class="ul-form__text form-text" id="">
-                                        Choisissez la nature des produit svp!
-                                    </small>
-                                    @endif
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label class="ul-form__label" for="canal_reception">Canal d'information:</label>
-                            <select name="canal_reception" class="form-control" required>
-                                <option value=""  selected>-- Sélectionner --</option>
-                                <option value="Contact commercial" @if (old('canal_reception')=='Contact commercial') selected="selected" @endif>Contact commercial</option>
-                                <option value="Emailing" @if (old('canal_reception')=='Emailing') selected="selected" @endif>Emailing</option>
-                                <option value="Employé" @if (old('canal_reception')=='Employé') selected="selected" @endif>Employé</option>
-                                <option value="Site web" @if (old('canal_reception')=='Site web') selected="selected" @endif>Site web</option>
-                                <option value="Téléphone" @if (old('canal_reception')=='Téléphone') selected="selected" @endif>Téléphone</option>
-                                <option value="Whatsapp business" @if (old('canal_reception')=='Whatsapp business') selected="selected" @endif>Whatsapp business</option>
-                            </select>
-                            @if ($errors->has('canal_reception'))
-                                    <div class="text-danger">
-                                        <small class="ul-form__text form-text text-danger" id="passwordHelpBlock">{{ $errors->first('canal_reception') }}</small>
-                                    </div>
-                                    @else    
-                                    <small class="ul-form__text form-text" id="">
-                                        Choisissez le canal de réception !
-                                    </small>
-                                    @endif
-                        </div>
-                    </div>
-                    <div class="custom-separator"></div>
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label class="ul-form__label" for="mode_reglement">Mode de règlement:</label>
-                            <select name="mode_reglement" class="form-control" id="mode_reglement" >
-                                <option value=""  selected>-- Sélectionner --</option>
-                                <option value="Espèce" @if (old('mode_reglement')=='Espèce') selected="selected" @endif>Espèce</option>
-                                <option value="Chèque" @if (old('mode_reglement')=='Chèque') selected="selected" @endif>Chèque</option>
-                            </select>
-                            @if ($errors->has('mode_reglement'))
-                                    <div class="text-danger">
-                                        <small class="ul-form__text form-text text-danger" id="passwordHelpBlock">{{ $errors->first('mode_reglement') }}</small>
-                                    </div>
-                                    @else    
-                                    <small class="ul-form__text form-text" id="">
-                                        Choisissez le mode de règlement svp!
-                                    </small>
-                                    @endif
+                                @endif
                         </div>
                         <div class="form-group col-md-4">
                             <label class="ul-form__label" for="date_livraison">Date de livraison</label>
@@ -132,6 +71,14 @@ Créer une commande
                             </small>
                             @endif
                         </div>
+                        <div class="form-group col-md-4">
+                            <label class="col-form-label" for="qte">Pro-forma</label>
+                                            
+                            <div class="custom-file">
+                                <input class="custom-file-input" id="inputGroupFile01" type="file" name="proforma" aria-describedby="inputGroupFileAddon01" />
+                                <label class="custom-file-label" for="inputGroupFile01">Choisir un fichier</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="custom-separator"></div>
                     <div class="form-row" id="lotprod">
@@ -150,6 +97,17 @@ Créer une commande
                             @if ($errors->has('product[]'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('product[]') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label class="ul-form__label" for="prix[]">Prix:</label>
+                            <input class="form-control" value="{{ old('prix[]') }}" name="prix[]" id="prix-0" type="number" placeholder="Ex: 2500"/><small class="ul-form__text form-text" id="">
+                                Entrez le prix du produit !
+                            </small>
+                            @if ($errors->has('prix[]'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('prix[]') }}
                                 </div>
                             @endif
                         </div>
@@ -255,10 +213,21 @@ Créer une commande
                                 </div>
                             @endif
                         </div>
+                        <div class="form-group col-md-2" id="prix-${$i}">
+                            <label class="ul-form__label" for="prix[]">Prix:</label>
+                            <input class="form-control" value="{{ old('prix[]') }}" name="prix[]" id="prix-${$i}" type="number" placeholder="Ex: 150"/><small class="ul-form__text form-text" id="">
+                                Entrez le prix du produit svp!
+                            </small>
+                            @if ($errors->has('qte[]'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('qte[]') }}
+                                </div>
+                            @endif
+                        </div>
                         <div class="form-group col-md-2" id="quantite-${$i}">
                             <label class="ul-form__label" for="qte[]">Quantité:</label>
                             <input class="form-control" value="{{ old('qte[]') }}" name="qte[]" id="qte-${$i}" type="number" placeholder="Ex: 150"/><small class="ul-form__text form-text" id="">
-                                Entrez le volume svp!
+                                Entrez la quantité svp!
                             </small>
                             @if ($errors->has('qte[]'))
                                 <div class="invalid-feedback">
@@ -272,7 +241,7 @@ Créer une commande
                         </div>
         `);    
         
-        let id = $("#type").val();
+        let id = $("#id_fournisseur").val();
        
         $("#product-"+$i).empty();
 
@@ -280,7 +249,7 @@ Créer une commande
 
         $.ajax({
                 type: 'GET',
-                url: '/commande-nature/' + id,
+                url: '/bon-commande-products-fournisseur/' + id,
                 success: function(response) {
                     var response = JSON.parse(response);
                         //console.log(response);
@@ -310,11 +279,12 @@ Créer une commande
    var id = res[1];
    $('#prod-'+id).remove();
    $('#quantite-'+id).remove();
+   $('#prix-'+id).remove();
    $('#supbtn-'+id).remove();
 }
 </script>
 <script>
-    $('#type').on('change', function() {
+    $('#id_fournisseur').on('change', function() {
             //console.log(e);
 
         let id = $(this).val();
@@ -323,7 +293,7 @@ Créer une commande
         $('.produit').append(`<option value="0">chargement...</option>`);
         $.ajax({
                 type: 'GET',
-                url: '/commande-nature/' + id,
+                url: '/bon-commande-products-fournisseur/' + id,
                 success: function(response) {
                     var response = JSON.parse(response);
                         //console.log(response);

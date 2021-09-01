@@ -15,8 +15,7 @@ Commande
 @section('content')
 <!-- section 1-->
 <section class="ul-widget-stat-s1">
-    <div class="row">
-        
+    <div class="row">    
         <div class="col-lg-9">
             <div class="card">
                 <div class="card-body">
@@ -30,11 +29,9 @@ Commande
                                     <img class="logo" style="height: 50px; width:auto; float:right !important; margin-top:-40px !important;" src="{{ url('images/logoobp.png') }}" alt="">
                                     @elseif(strpos(strtolower($commande->products->first()->productCategory->lib), 'ak'))
                                     <img class="logo" style="height: 120px; width:auto; float:right !important; margin-top:-80px !important;" src="{{ url('images/logoakebie.png') }}" alt="">
-                                    @endif
-                                    
+                                    @endif                                    
                                 </div>
-                                <div>
-                                    
+                                <div>    
                                 </div>
                                 <table class="table">
                                     <tbody>
@@ -51,7 +48,7 @@ Commande
                                         </tr>
                                         
                                         <tr>
-                                            <th class="text-16 text-muted" scope="row">Canal de réception</th>
+                                            <th class="text-16 text-muted" scope="row">Canal d'information</th>
                                             <td class="text-16 text-success font-weight-700">
                                                 {{ $commande->canal_reception }}
                                             </td>   
@@ -161,7 +158,7 @@ Commande
                         <div class="card-body text-center"><i class="i-Car-Items"></i>
                             <div class="content">
                                 <p class="text-muted mt-2 mb-0">Produits</p>
-                                <p class="text-primary text-24 line-height-1 mb-2">{{ $commande->products->count() }}</p>
+                                <p class="text-primary text-24 line-height-1 mb-2">{{ $commande->products()->wherePivot('status',1)->count() }}</p>
                             </div>
                         </div>
                     </div>
@@ -242,23 +239,35 @@ Commande
                             </small>
 
                             @else
-                            <p class="text-20 text-danger line-height-1 mb-3"><i class="i-Arrow-Down-in-Circle"></i>Non livrée</p><small class="text-muted">
-                                Livraison dans 
                                 @php
                                 $dt = Carbon::now();
                                 $date = explode(' ',$dt->diffForHumans($commande->date_livraison));
                                 @endphp
-                                <i>
-                                    {{ $date[0] }} 
-                                    @if ( $date[1] == 'days' || $date[1] == 'day'  )
-                                        jour(s)
-                                    @elseif($date[1] == 'months' || $date[1] == 'month')
-                                        mois
-                                    @elseif($date[1] == 'week' || $date[1] == 'weeks')
-                                        semaine(s)
-                                    @endif 
-                                </i>
-                            </small>
+
+                                @if ($commande->date_livraison < $dt)
+                                    <p class="text-20 text-danger line-height-1 mb-3"><i class="i-Arrow-Down-in-Circle"></i>Non livrée</p><small class="text-muted">
+                                        Livraison dans 
+                                        
+                                        <i>
+                                            {{ $date[0] }}  
+                                            @if ( $date[1] == 'days' || $date[1] == 'day'  )
+                                                jour(s)
+                                            @elseif($date[1] == 'months' || $date[1] == 'month')
+                                                mois
+                                            @elseif($date[1] == 'week' || $date[1] == 'weeks')
+                                                semaine(s)
+                                            @elseif($date[1] == 'hours' || $date[1] == 'hour')
+                                                heure(s)
+                                            @endif 
+                                        </i>
+                                    </small>
+                                @else
+                                    <p class="text-20 text-danger line-height-1 mb-3"><i class="i-Arrow-Down-in-Circle"></i>Non livrée</p><small class="text-muted">
+                                        Livraison en retard 
+                                        
+                                    </small>
+                                @endif
+                                
 
                             @endif
                         </div>
@@ -391,7 +400,7 @@ Commande
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="updateModalContent{{ $data->id }}_title">Ajout d'un produit à la commande</h5>
+                                                <h5 class="modal-title" id="updateModalContent{{ $data->id }}_title">Modifié la quantité du produit</h5>
                                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                             </div>
                                             <div class="modal-body">
@@ -450,7 +459,6 @@ Commande
                         <div class="ul-widget__head-label">
                             <h3 class="ul-widget__head-title">Actions</h3>
                         </div>
-                        
                     </div>
                     <div class="ul-widget__body">
                         <div class="__g-widget4">
@@ -464,7 +472,7 @@ Commande
                                             <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.rejeter',['slug'=> $commande->slug]) }}">Rejeter la commande</a>
                                         </div>
                                 @endif
-                                </div><div class="ul-widget4__item">
+                                <div class="ul-widget4__item">
                                     <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_client.annuler',['slug'=> $commande->slug]) }}">Annuler la commande</a>
                                 </div>
                                 <div class="ul-widget4__item">
@@ -582,9 +590,6 @@ Commande
     </div>
 </section>
 <!-- end:: section 1-->
-
-   
-
 @endsection
 
 @section('javascripts')

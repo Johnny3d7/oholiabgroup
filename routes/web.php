@@ -18,6 +18,22 @@ use App\Http\Controllers;
     return view('main.dashboard.dashboard');
 });*/
 
+//Akébié routes 
+
+Route::get('/akebie/dashboard', 'App\Http\Controllers\Akebie\DashboardController@index')->name('index');
+
+//////////////////////////////////
+//////////////////////////////
+
+
+//Obp Inc routes
+
+Route::get('/obpinc/dashboard', 'App\Http\Controllers\Obpinc\DashboardController@index')->name('index');
+
+////////////////////////////
+//////////////////////////
+/////////////////////////
+
 //connexion
 Route::get('/login', 'App\Http\Controllers\Stock\DashboardController@loguser')->name('user.login');
 
@@ -50,9 +66,36 @@ Route::get('/commande-client/delete-product/{commande}/{product}', 'App\Http\Con
 
 
 //Bon de commande
-Route::get('/bon-de-commandes', 'App\Http\Controllers\Stock\CommandeController@boncommande')->name('boncommande.index');
+Route::get('/bon-de-commandes', 'App\Http\Controllers\Stock\BonCommandeController@index')->name('boncommande.index');
+Route::get('/bon-de-commandes/show/{id}', 'App\Http\Controllers\Stock\BonCommandeController@show')->name('boncommande.show');
+Route::get('/bon-de-commandes/create', 'App\Http\Controllers\Stock\BonCommandeController@create')->name('boncommande.create');
+Route::post('/bon-de-commandes/store', 'App\Http\Controllers\Stock\BonCommandeController@store')->name('boncommande.store');
+Route::get('/bon-de-commandes/edit/{id}', 'App\Http\Controllers\Stock\BonCommandeController@edit')->name('boncommande.edit');
+Route::any('/bon-de-commandes/update/{id}', 'App\Http\Controllers\Stock\BonCommandeController@update')->name('boncommande.update');
+Route::get('/bon-de-commandes/destroy/{id}', 'App\Http\Controllers\Stock\BonCommandeController@create')->name('boncommande.destroy');
+
+//Importer la proforma d'un bon de commande
+Route::any('/bon-de-commandes/add_proforma/{id}', 'App\Http\Controllers\Stock\BonCommandeController@addProforma')->name('boncommande.add_proforma');
+
+//Produit d'un bon de commande
+Route::post('/bon-commande-fournisseur/add-product', 'App\Http\Controllers\Stock\BonCommandeController@addProduct')->name('bon_commande_fournisseur.add_Product');
+Route::get('/bon-commande-fournisseur/update-product/{bonCommande}/{product}', 'App\Http\Controllers\Stock\BonCommandeController@updateProduct')->name('bon_commande_fournisseur.update_Product');
+Route::get('/bon-commande-fournisseur/delete-product/{bonCommande}/{product}', 'App\Http\Controllers\Stock\BonCommandeController@deleteProduct')->name('bon_commande_fournisseur.delete_Product');
+
+//(Ajax) bon de commande get product form fournisseur
+Route::get('bon-commande-products-fournisseur/{id}', 'App\Http\Controllers\Stock\AjaxController@getBonCommandeProduct')->name('bon-commande-products-fournisseur.search');
+
+//expression de besoin
 Route::get('/expression_besoin', 'App\Http\Controllers\Stock\CommandeController@expressionbesoin')->name('expression_besoin.index');
 
+//Commande fournisseur
+Route::get('/commandes-fournisseur', 'App\Http\Controllers\Stock\CommandeFournisseurController@index')->name('commande_fournisseur.index');
+Route::get('/commandes-fournisseur/show/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@show')->name('commande_fournisseur.show');
+Route::get('/commandes-fournisseur/create', 'App\Http\Controllers\Stock\CommandeFournisseurController@create')->name('commande_fournisseur.create');
+Route::post('/commandes-fournisseur/store', 'App\Http\Controllers\Stock\CommandeFournisseurController@store')->name('commande_fournisseur.store');
+Route::get('/commandes-fournisseur/edit/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@edit')->name('commande_fournisseur.edit');
+Route::any('/commandes-fournisseur/update/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@update')->name('commande_fournisseur.update');
+Route::get('/commandes-fournisseur/destroy/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@destroy')->name('commande_fournisseur.destroy');
 
 //Facture
 Route::get('/factures', 'App\Http\Controllers\Stock\FactureController@index')->name('facture.index');
@@ -84,10 +127,14 @@ Route::prefix('/stock')->namespace('App\Http\Controllers\Stock')->name('stock.')
     // Routes Produits
     Route::get('/products', 'ProductController@index')->name('products.index');
     Route::get('/product/create', 'ProductController@create')->name('product.create');
+    Route::get('/product/show/{slug}', 'ProductController@show')->name('product.show');
     Route::post('/product/store', 'ProductController@store')->name('product.store');
     Route::get('/product/edit/{slug}', 'ProductController@edit')->name('product.edit');
     Route::any('/product/update/{slug}', 'ProductController@update')->name('product.update');
     Route::get('/product/destroy/{slug}', 'ProductController@destroy')->name('product.destroy');
+
+    //Ajouter une image au produit
+    Route::post('/add_image/product', 'ProductController@addImage')->name('product.add_image');
 
     //Etat du stock
     Route::get('/etat-du-stock/{slug}', 'ProductController@etatstock')->name('etat_stock.index');

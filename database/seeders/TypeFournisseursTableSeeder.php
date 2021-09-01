@@ -18,12 +18,11 @@ class TypeFournisseursTableSeeder extends Seeder
         TypeFournisseur::truncate();
 
         $type= [
-            'Type fournisseur 1',
-            'Type fournisseur 2',
-            'Type fournisseur 3'
+            'Externe',
+            'Interne'
         ];
 
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             TypeFournisseur::create([
                 'lib' => $type[$i],
             ]);

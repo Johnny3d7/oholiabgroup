@@ -6,25 +6,30 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-class Fournisseur extends Model
+
+class CommandeFournisseur extends Model
 {
     use HasFactory;
     use HasSlug;
 
-    protected $table = 'fournisseurs';
+    protected $table = 'commande_fournisseurs';
 
     protected $guarded = ['id'];
 
     public $timestamps = true;
 
     protected $fillable = [
+        'num_cmd',
         'slug',
-        'nom',
-        'email',
-        'contact',
-        'description',
-        'status',
-        'id_type_fournisseur'
+        'lieu_livraison',
+        'date_livraison',
+        'mode_reglement',
+        'create_facture',
+        'create_bonlivraison',
+        'type',
+        'id_fournisseur',
+        'id_boncommande',
+        'status'
     ];
 
     /**
@@ -33,22 +38,12 @@ class Fournisseur extends Model
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('codefour','nom')
+            ->generateSlugsFrom('num_cmd')
             ->saveSlugsTo('slug');
-    }
-
-    public function variations()
-    {
-        return $this->hasMany(Variation::class, 'id_fournisseur');
-    }
-
-    public function typeFournisseur()
-    {
-        return $this->belongsTo(TypeFournisseur::class, 'id_type_fournisseur');
     }
 
     public function bon_commande()
     {
-        return $this->hasMany(BonCommande::class, 'id_fournisseur');
+        return $this->belongsTo(BonCommande::class, 'id_boncommande');
     }
 }
