@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductsTableSeeder::class);
         $this->command->info('Type fournisseur table seeded!');
 
-        $this->call(VariationsTableSeeder::class);
-        $this->command->info('Type fournisseur table seeded!');
+        /*$this->call(VariationsTableSeeder::class);
+        $this->command->info('Type fournisseur table seeded!');*/
     }
 }

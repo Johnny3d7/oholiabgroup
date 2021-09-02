@@ -147,7 +147,7 @@ Route::prefix('/stock')->namespace('App\Http\Controllers\Stock')->name('stock.')
     Route::get('/variation/create', 'VariationController@create')->name('variation.create');
     Route::post('/variations/store', 'VariationController@store')->name('variation.store');
     Route::get('/variations/edit/{id}', 'VariationController@edit')->name('variation.edit');
-    Route::put('/variations/update/{id}', 'VariationController@update')->name('variation.update');
+    Route::get('/variations/update/{id}', 'VariationController@update')->name('variation.update');
     Route::get('/variations/destroy/{id}', 'VariationController@destroy')->name('variation.destroy');
 
     // Routes Fournisseurs

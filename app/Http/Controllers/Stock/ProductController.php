@@ -46,14 +46,12 @@ class ProductController extends Controller
         //
         $validatedData = $request->validate([
             "lib" => "required|min:2",
-            "price" => "required",
             "stockalert" => "required|integer",
             "id_product_category" => "required",
             "id_type_product" => "required"
 
         ], [
             "lib.required" => "Le libellé est un champ est requis",
-            "price.required" => "Le prix unitaire est un champ est requis",
             "stockalert.required" => "Le stock alerte est un champ requis",
             "id_type_product.required" => "Le type du produit est un champ requis",
             "id_product_category.required" => "La catégorie du produit est un champ requis"
@@ -175,14 +173,12 @@ class ProductController extends Controller
         //
         $validatedData = $request->validate([
             "lib" => "required|min:2",
-            "price" => "required",
             "stockalert" => "required|integer",
             "id_product_category" => "required",
             "id_type_product" => "required"
 
         ], [
             "lib.required" => "Le libellé est un champ est requis",
-            "price.required" => "Le prix unitaire est un champ est requis",
             "stockalert.required" => "Le stock alerte est un champ requis",
             "id_type_product.required" => "Le type du produit est un champ requis",
             "id_product_category.required" => "La catégorie du produit est un champ requis"

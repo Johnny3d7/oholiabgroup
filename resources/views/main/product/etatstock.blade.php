@@ -1,7 +1,14 @@
 @extends('main.layout.main')
 
 @section('stylesheets')
-
+<style>
+    label {
+    margin-top: 0px;
+    margin-bottom: 20px !important;
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+</style>
 @endsection
 
 @section('menuTitle')
@@ -94,7 +101,7 @@ Etat du stock {{ $entreprise->nom }}
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="display table table-striped table-bordered" id="zero_configuration_table" style="width:100%">
+                    <table class="display table table-striped table-bordered" id="inventaireTable" style="width:100%">
                         <thead>
                             <tr>
 
@@ -165,7 +172,7 @@ Etat du stock {{ $entreprise->nom }}
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="verifyModalContent{{ $data->id }}_title">Modification du produit {{ $data->lib }}</h5>
+                                                <h5 class="modal-title" id="verifyModalContent{{ $data->id }}_title">EFfectuer un mouvement {{ $data->lib }}</h5>
                                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                             </div>
                                             <div class="modal-body">
@@ -227,6 +234,19 @@ Etat du stock {{ $entreprise->nom }}
 @endsection
 
 @section('javascripts')
+<script>
+    $(document).ready(function() {
+    $('#inventaireTable').DataTable({
+        "order": [[ 1, "asc" ]],
+        paging: true,
+        searching: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>
 <script>
     $('#datemouv').on('focus', function() {
         $('.datepicker').pickadate({

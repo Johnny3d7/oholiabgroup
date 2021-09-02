@@ -91,7 +91,7 @@ Ajouter un produit
                         </div>
                         <div class="form-group col-md-2">
                             <label class="ul-form__label" for="price">Prix unitaire (Fcfa):</label>
-                            <input class="form-control" value="{{ old('price') }}" name="price" id="price" type="text" placeholder="Ex: 7250" required/><small class="ul-form__text form-text" id="">
+                            <input class="form-control" value="{{ old('price') }}" name="price" id="price" type="text" placeholder="Ex: 7250"/><small class="ul-form__text form-text" id="">
                                 Entrez le prix unitaire svp!
                             </small>
                             @if ($errors->has('stockalert'))
@@ -130,7 +130,7 @@ Ajouter un produit
                             <select name="unite_poids" class="form-control" id="unite_poids">
                                 <option value=""  selected>-- Sélectionner --</option>
                                 <option value="T" @if (old('unite_poids')=='T') selected="selected" @endif>Tonne (T)</option>
-                                <option value="Kg" @if (old('unite_poids')=='kg') selected="selected" @endif>Kilogramme (Kg)</option>
+                                <option value="Kg" @if (old('unite_poids')=='Kg') selected="selected" @endif>Kilogramme (Kg)</option>
                                 <option value="g" @if (old('unite_poids')=='g') selected="selected" @endif>Gramme (g)</option>
                             </select><small class="ul-form__text form-text" id="">
                                 Choisissez l'unité svp!
@@ -189,7 +189,6 @@ Ajouter un produit
                                 <option value="m3" @if (old('unite_volume')=='m3') selected="selected" @endif>Mètre cube (m3)</option>
                                 <option value="l" @if (old('unite_volume')=='l') selected="selected" @endif>Litre (l)</option>
                                 <option value="cl" @if (old('unite_volume')=='cl') selected="selected" @endif>Centilitre (cl)</option>
-                                <option value="ml" @if (old('unite_volume')=='ml') selected="selected" @endif>Gramme (g)</option>
                             </select><small class="ul-form__text form-text" id="">
                                 Choisissez l'unité svp!
                             </small>

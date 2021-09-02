@@ -19,12 +19,10 @@ class ProductCategoriesTableSeeder extends Seeder
 
         $type= [
             'Produit AKÉBIÉ',
-            'Produit OBP INC',
-            'Matériel de bureau',
-            'Médicament'
+            'Produit OBP INC'
         ];
 
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             ProductCategory::create([
                 'lib' => $type[$i],
             ]);

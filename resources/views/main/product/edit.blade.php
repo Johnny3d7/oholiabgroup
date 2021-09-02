@@ -15,6 +15,8 @@ Modifier produit
 @section('content')
 <div class="row">
     <div class="col-md-10">
+       
+        
         <div class="card animate__animated animate__backInDown">
             <div class="card-header bg-transparent">
             <h3 class="card-title">Modifier le produit</h3>
@@ -74,7 +76,7 @@ Modifier produit
                         </div>
                         <div class="form-group col-md-2">
                             <label class="ul-form__label" for="price">Prix unitaire (Fcfa):</label>
-                            <input class="form-control" value="{{ $product->price }}" name="price" id="price" type="text" placeholder="Ex: 7250" required/><small class="ul-form__text form-text" id="">
+                            <input class="form-control" value="{{ $product->price }}" name="price" id="price" type="text" placeholder="Ex: 7250"/><small class="ul-form__text form-text" id="">
                                 Entrez le prix unitaire svp!
                             </small>
                             @if ($errors->has('stockalert'))
@@ -113,7 +115,7 @@ Modifier produit
                             <select name="unite_poids" class="form-control" id="unite_poids">
                                 <option value=""  selected>-- Sélectionner --</option>
                                 <option value="T" @if ($product->unite_poids=='T') selected="selected" @endif>Tonne (T)</option>
-                                <option value="Kg" @if ($product->unite_poids=='kg') selected="selected" @endif>Kilogramme (Kg)</option>
+                                <option value="Kg" @if ($product->unite_poids=='Kg') selected="selected" @endif>Kilogramme (Kg)</option>
                                 <option value="g" @if ($product->unite_poids=='g') selected="selected" @endif>Gramme (g)</option>
                             </select><small class="ul-form__text form-text" id="">
                                 Choisissez l'unité svp!
@@ -169,10 +171,9 @@ Modifier produit
                             <label class="ul-form__label" for="unite_poids">Unité du volume:</label>
                             <select name="unite_volume" class="form-control" id="unite_volume">
                                 <option value="" selected>-- Sélectionner --</option>
-                                <option value="m3" @if ($product->unite_poids=='m3') selected="selected" @endif>Mètre cube (m3)</option>
-                                <option value="l" @if ($product->unite_poids=='l') selected="selected" @endif>Litre (l)</option>
-                                <option value="cl" @if ($product->unite_poids=='cl') selected="selected" @endif>Centilitre (cl)</option>
-                                <option value="ml" @if ($product->unite_poids=='ml') selected="selected" @endif>Gramme (g)</option>
+                                <option value="m3" @if ($product->unite_volume=='m3') selected="selected" @endif>Mètre cube (m3)</option>
+                                <option value="l" @if ($product->unite_volume=='l') selected="selected" @endif>Litre (l)</option>
+                                <option value="cl" @if ($product->unite_volume=='cl') selected="selected" @endif>Centilitre (cl)</option>
                             </select><small class="ul-form__text form-text" id="">
                                 Choisissez l'unité svp!
                             </small>
@@ -212,6 +213,100 @@ Modifier produit
             </form>
             <!--  end::form 3-->
         </div>
+        <section class="ul-product-detail__box">
+            <div class="row mb-3">
+                    <div class="col-lg-4 col-md-4 mt-4 text-center">
+                        <a href="{{ route('stock.product.show',['slug'=>$product->slug]) }}">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="ul-product-detail__border-box">
+                                    <div class="ul-product-detail--icon mb-2"><i class="i-Eye text-success text-25 font-weight-500"></i></div>
+                                    <h5 class="heading">Voir ce produit</h5>
+                                    <p class="text-muted text-12">Accéder au détail du produit (voir les caractéristiques).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    </div> 
+                <div class="col-lg-4 col-md-4 mt-4 text-center">
+                    <a href="{{ route('stock.products.index') }}">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="ul-product-detail__border-box">
+                                <div class="ul-product-detail--icon mb-2"><i class="i-Check text-info text-25 font-weight-500"></i></div>
+                                <h5 class="heading">Liste des produits</h5>
+                                <p class="text-muted text-12">Afficher la liste de tous les produits en base.</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                </div>
+                <div class="col-lg-4 col-md-4 mt-4 text-center">
+                    <a href="#" type="button" data-toggle="modal" data-target="#add_variation{{ $product->id }}" data-whatever="@fat">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="ul-product-detail__border-box">
+                                <div class="ul-product-detail--icon mb-2"><i class="i-Rotation-390 text-success text-25 font-weight-500"></i></div>
+                                <h5 class="heading">Ajouter un mouvement</h5>
+                                <p class="text-muted text-12">Effectuer un mouvement de stock pour ce produit</p>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                <div class="modal fade" id="add_variation{{ $product->id }}" tabindex="-1" role="dialog" aria-labelledby="add_variation{{ $product->id }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="add_variation{{ $product->id }}_title">Effectuer un mouvement de stock</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="{{ route('stock.variation.store', ['product'=>$product->id]) }}" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('POST')
+                                    <div class="form-group ">
+                                        <label class="col-form-label" for="entreprise">Entrepôt:</label>
+                                        <select name="entreprise" class="form-control" id="entreprise" required>
+                                            @forelse (Entreprise::where('status', 1)->orderBy('nom', 'asc')->get() as $data)
+                                                <option value="{{ $data->id }}">{{ $data->nom }}</option>
+                                            @empty
+                                                
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="col-form-label" for="typemouv">Nature mouvement:</label>
+                                        <select name="typemouv" class="form-control" id="typemouv" required>
+                                                <option value="1">Entrée</option>
+                                                <option value="0">Sortie</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="col-form-label" for="qte">Quantité mouvement:</label>
+                                        <input class="form-control" id="qte" type="text" name="qte" required/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="col-form-label" for="datemouv">Date mouvement:</label>
+                                        <input class="form-control" id="datemouv" type="text" name="datemouv" data-inputmask='"mask": "99-99-9999"' data-mask required/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="col-form-label" for="observation">Observation:</label>
+                                        <textarea name="observation" id="observation" class="form-control"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
+                                        <button class="btn btn-primary" type="submit">Valider</button>
+                                    </div>
+                                </form>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>   
+            </div>
+        </section>
     </div>
 </div>
 @endsection

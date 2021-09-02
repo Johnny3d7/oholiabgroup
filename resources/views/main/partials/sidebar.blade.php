@@ -8,8 +8,8 @@
         <div class="side-nav">
             <div class="main-menu">
                 <ul class="metismenu" id="menu">
-                    <li class="Ul_li--hover"><a href="{{ route('stock.index') }}"><i class="i-Bar-Chart text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Tableau de bord</span></a></li>
-                    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Shop text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Stock</span></a>
+                    {{-- <li class="Ul_li--hover"><a href="{{ route('stock.index') }}"><i class="i-Bar-Chart text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Tableau de bord</span></a></li> --}}
+                    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Shop text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Inventaire</span></a>
                         <ul class="mm-collapse">
                             @foreach (Entreprise::all() as $data)
                                 <li class="item-name"><a href="{{ route('stock.etat_stock.index',['slug'=> $data->slug]) }}"><i class="nav-icon i-Bell1"></i><span class="item-name">{{ $data->nom }}</span></a></li>
@@ -25,7 +25,7 @@
                             <li class="item-name"><a href="{{ route('stock.categories_prod.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Catégories</span></a></li>
                         </ul>
                     </li>
-                    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes</span></a>
+                    {{-- <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes</span></a>
                         <ul class="mm-collapse">
                             <li class="nav-item"><a href="{{ route('commande.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
                             <li class="item-name"><a href="{{ route('boncommande.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Bon de commande</span></a></li>
@@ -43,7 +43,8 @@
                     </li>
                     
 
-                    <li class="Ul_li--hover"><a href="{{ route('stock.entreprise.index') }}"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Entrepôt</span></a></li>
+                    <li class="Ul_li--hover"><a href="{{ route('stock.entreprise.index') }}"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Entrepôt</span></a></li> --}}
+                    
 
                     <!--  <p class="main-menu-title text-muted ml-3 font-weight-700 text-13 mt-4 mb-2">UI Elements</p> -->
                 </ul>
