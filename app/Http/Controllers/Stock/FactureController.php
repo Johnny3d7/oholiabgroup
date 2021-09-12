@@ -16,7 +16,7 @@ class FactureController extends Controller
     {
         //
 
-        return view('main.facture.index');
+        return view('main.stock.facture.index');
     }
 
     /**

@@ -17,6 +17,19 @@ use App\Http\Controllers;
 /*Route::get('/', function () {
     return view('main.dashboard.dashboard');
 });*/
+Route::get('/mail', 'App\Http\Controllers\Stock\ProductCategoryController@mail')->name('mail');
+
+//Liste des modules
+Route::get('/modules', 'App\Http\Controllers\ModuleController@index')->name('module.index');
+
+
+//Les routes des bons de commande et de livraison
+Route::get('/boncommandeoholiab', 'App\Http\Controllers\Stock\CommandeFournisseurController@boncommandeoholiab')->name('boncommandeoholiab');
+Route::get('/boncommandeakebie', 'App\Http\Controllers\Stock\CommandeFournisseurController@boncommandeakebie')->name('boncommandeakebie');
+Route::get('/boncommandeobp', 'App\Http\Controllers\Stock\CommandeFournisseurController@boncommandeobp')->name('boncommandeobp');
+Route::get('/bonlivraisonoholiab', 'App\Http\Controllers\Stock\LivraisonController@bonlivraisonoholiab')->name('bonlivraisonoholiab');
+Route::get('/bonlivraisonakebie', 'App\Http\Controllers\Stock\LivraisonController@bonlivraisonakebie')->name('bonlivraisonakebie');
+Route::get('/bonlivraisonobp', 'App\Http\Controllers\Stock\LivraisonController@bonlivraisonobp')->name('bonlivraisonobp');
 
 //Akébié routes 
 
@@ -35,7 +48,7 @@ Route::get('/obpinc/dashboard', 'App\Http\Controllers\Obpinc\DashboardController
 /////////////////////////
 
 //connexion
-Route::get('/login', 'App\Http\Controllers\Stock\DashboardController@loguser')->name('user.login');
+Route::get('/slogin', 'App\Http\Controllers\Stock\DashboardController@loguser')->name('user.login');
 
 //commande client
 Route::get('/commandes', 'App\Http\Controllers\Stock\CommandeController@index')->name('commande.index');

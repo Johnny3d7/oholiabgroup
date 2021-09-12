@@ -8,7 +8,16 @@
     <title>Gestion de stock | Oholiab Group</title>
     {{--<link rel="icon" href="{{ url('images/main_img/favicon/favicon-32x32.png') }}" type="image/x-icon">--}}
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
+    @php
+        $a =3 ;
+    @endphp
+    @if ($a == 1)
     <link href="{{ url('css/themes/lite-purple.css') }}" rel="stylesheet" />
+    @elseif($a == 2)
+    <link href="{{ url('css/themes/lite-akebie.css') }}" rel="stylesheet" />
+    @elseif($a == 3)
+    <link href="{{ url('css/themes/lite-obpinc.css') }}" rel="stylesheet" />
+    @endif
     <link href="{{ url('css/plugins/perfect-scrollbar.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ url('css/plugins/fontawesome-5.css') }}" />
     <link href="{{ url('css/plugins/metisMenu.min.css') }}" rel="stylesheet" />
@@ -24,15 +33,21 @@
     <link href="{{ url('css/plugins/daterangepicker.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/bootstrap-colorpicker.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+ 
+    
     @yield('stylesheets')
+    
 </head>
 
 <body class="text-left" style="background-image: url({{ url('images/back1.jpg') }}) !important; background-position: center center !important; ">
     <div class="app-admin-wrap layout-sidebar-vertical sidebar-full">
+
         @include('main.partials.sidebar')
+
         <div class="switch-overlay"></div>
         <div class="main-content-wrap mobile-menu-content bg-off-white m-0" style="background-image: url({{ url('images/back2.jpg') }}) !important; background-position: center center !important;     background-size: contain !important; ">
             @include('main.partials.header')
+
             <!-- ============ Body content start ============= -->
            <div class="main-content pt-4">
                 <div class="breadcrumb">

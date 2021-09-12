@@ -19,7 +19,7 @@ class LivraisonController extends Controller
         //
         $livraisons = Livraison::orderBy('created_at', 'desc')->get();
 
-        return view('main.livraison.index',compact('livraisons'));
+        return view('main.stock.livraison.index',compact('livraisons'));
     }
 
     /**
@@ -100,7 +100,7 @@ class LivraisonController extends Controller
             "commande_id.required" => "Le numero de la commande est un champs requis"
         ]);
 
-        $livraison = new Livraison();;
+        $livraison = new Livraison();
         $livraison->nom_livreur = $request->nom_livreur;
         if ($request->has('numero_vehicule')) {
 
@@ -119,5 +119,22 @@ class LivraisonController extends Controller
         );
         
         return redirect()->back()->with($notification);
+    }
+
+
+    public function bonlivraisonoholiab()
+    {
+        return view('main.stock.livraison.bonlivraisonoholiab');
+    }
+
+    public function bonlivraisonakebie()
+    {
+        return view('main.stock.livraison.bonlivraisonakebie');
+    }
+
+
+    public function bonlivraisonobp()
+    {
+        return view('main.stock.livraison.bonlivraisonobp');
     }
 }

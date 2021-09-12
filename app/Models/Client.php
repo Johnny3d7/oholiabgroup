@@ -43,7 +43,7 @@ class Client extends Model
 
     public function variations()
     {
-        return $this->hasMany(Variation::class, 'id_client');
+        return $this->hasMany(Variation::class, 'id_client');   
     }
 
     public function typeClient()

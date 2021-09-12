@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Stock;
 use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ProductCategoryController extends Controller
 {
@@ -18,7 +19,7 @@ class ProductCategoryController extends Controller
         //
         $productCategory = ProductCategory::where('status', 1)->orderBy('lib', 'asc')->get();
 
-        return view('main.category_prod.index',compact('productCategory'));
+        return view('main.stock.category_prod.index',compact('productCategory'));
     }
 
     /**
@@ -146,5 +147,18 @@ class ProductCategoryController extends Controller
         );
         
         return redirect()->back()->with($notification);
+    }
+
+    public function mail()
+    {
+        $data= ['name'=>"Vishal",'data'=>"Hello Vishal"];
+        $user['to']='sergeregisb466@gmail.com'; 
+        Mail::send('main.mail', $data, function ($message) use ($user) {
+            $message->to($user['to'], 'Serge BLE');
+            $message->cc($user['to'], 'Serge BLE');
+            $message->bcc($user['to'], 'Serge BLE');
+            $message->replyTo($user['to'], 'Serge BLE');
+            $message->subject('Liste des produits en rupture de stock');
+        });
     }
 }

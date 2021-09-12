@@ -22,7 +22,7 @@ class CommandeController extends Controller
         //
         $commandes = Commande::whereIn('status', [0,1,2,3,5])->orderBy('created_at', 'desc')->get();
         //dd($commandes);
-        return view('main.commande.index',compact('commandes'));
+        return view('main.stock.commande.index',compact('commandes'));
     }
 
     /**
@@ -34,7 +34,7 @@ class CommandeController extends Controller
     {
         //
         //$clients = Client::where('status', 1)->orderBy('nom', 'asc')->get();
-        return view('main.commande.bon_commande_index');
+        return view('main.stock.commande.bon_commande_index');
     }
 
     /**
@@ -46,7 +46,7 @@ class CommandeController extends Controller
     {
         //
         //$clients = Client::where('status', 1)->orderBy('nom', 'asc')->get();
-        return view('main.commande.expression_besoin');
+        return view('main.stock.commande.expression_besoin');
     }
 
     /**
@@ -57,7 +57,7 @@ class CommandeController extends Controller
     public function create()
     {
         //
-        return view('main.commande.client.create');
+        return view('main.stock.commande.client.create');
     }
 
     /**
@@ -163,7 +163,7 @@ class CommandeController extends Controller
     {
         //
         $commande = Commande::where('slug', $slug)->first();
-        return view('main.commande.client.show',compact('commande'));
+        return view('main.stock.commande.client.show',compact('commande'));
     }
 
     /**

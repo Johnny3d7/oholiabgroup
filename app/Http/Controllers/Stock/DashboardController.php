@@ -14,7 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('main.dashboard.dashboard');
+        return view('main.stock.dashboard.dashboard');
     }
 
     /**
@@ -24,7 +24,7 @@ class DashboardController extends Controller
      */
     public function loguser()
     {
-        return view('main.dashboard.login');
+        return view('main.stock.dashboard.login');
     }
 
 

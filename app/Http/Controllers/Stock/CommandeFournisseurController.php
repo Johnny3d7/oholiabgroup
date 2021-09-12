@@ -15,7 +15,7 @@ class CommandeFournisseurController extends Controller
     public function index()
     {
         //
-        return view('main.commande_fournisseur.index');
+        return view('main.stock.commande_fournisseur.index');
     }
 
     /**
@@ -82,5 +82,20 @@ class CommandeFournisseurController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function boncommandeoholiab()
+    {
+        return view('main.stock.commande_fournisseur.boncommandeoholiab');
+    }
+
+    public function boncommandeakebie()
+    {
+        return view('main.stock.commande_fournisseur.boncommandeakebie');
+    }
+
+    public function boncommandeobp()
+    {
+        return view('main.stock.commande_fournisseur.boncommandeobp');
     }
 }

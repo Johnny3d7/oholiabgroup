@@ -18,7 +18,7 @@ class EntrepriseController extends Controller
         //
         $entreprises = Entreprise::where('status', 1)->orderBy('nom', 'asc')->get();
 
-        return view('main.entreprise.index',compact('entreprises'));
+        return view('main.stock.entreprise.index',compact('entreprises'));
     }
 
     /**

@@ -18,7 +18,7 @@ class TypeFournisseurController extends Controller
         //
         $types = TypeFournisseur::where('status', 1)->orderBy('lib', 'asc')->get();
 
-        return view('main.type_fournisseur.index',compact('types'));
+        return view('main.stock.type_fournisseur.index',compact('types'));
     }
 
     /**

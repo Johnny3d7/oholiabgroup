@@ -21,7 +21,7 @@ class ProductController extends Controller
         //
         $products = Product::where('status', 1)->orderBy('lib', 'asc')->get();
 
-        return view('main.product.index',compact('products'));
+        return view('main.stock.product.index',compact('products'));
     }
 
     /**
@@ -32,7 +32,7 @@ class ProductController extends Controller
     public function create()
     {
         //
-        return view('main.product.create');
+        return view('main.stock.product.create');
     }
 
     /**
@@ -144,7 +144,7 @@ class ProductController extends Controller
         //
         $product = Product::where('slug', $slug)->first();
 
-        return view('main.product.show',compact('product'));
+        return view('main.stock.product.show',compact('product'));
     }
 
     /**
@@ -158,7 +158,7 @@ class ProductController extends Controller
         
         $product = Product::where('slug', $slug)->first();
 
-        return view('main.product.edit',compact('product'));
+        return view('main.stock.product.edit',compact('product'));
     }
 
     /**
@@ -289,7 +289,7 @@ class ProductController extends Controller
         ->where('variations.id_entreprise', '=', $entreprise->id)->groupBy('products.id')->get();
         //dd($products);
 
-        return view('main.product.etatstock', compact('products','entreprise'));
+        return view('main.stock.product.etatstock', compact('products','entreprise'));
     }
 
     /**
@@ -314,7 +314,7 @@ class ProductController extends Controller
 
         //dd($variations);
 
-        return view('main.product.stockstory', compact('variations'));
+        return view('main.stock.product.stockstory', compact('variations'));
     }
 
     //Changer l'image du produit

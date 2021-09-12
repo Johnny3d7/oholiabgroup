@@ -19,7 +19,7 @@ class FournisseurController extends Controller
         //
         $fournisseurs = Fournisseur::where('status', 1)->orderBy('nom', 'asc')->get();
 
-        return view('main.fournisseur.index',compact('fournisseurs'));
+        return view('main.stock.fournisseur.index',compact('fournisseurs'));
     }
 
     /**

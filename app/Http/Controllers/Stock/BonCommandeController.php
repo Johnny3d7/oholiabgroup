@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Stock;
 
 use App\Http\Controllers\Controller;
 use App\Models\BonCommande;
+use App\Models\Commande;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ class BonCommandeController extends Controller
     {
         //
         $bonCommandes = BonCommande::whereIn('status', [0,1,2,3,5])->orderBy('created_at', 'desc')->get();
-        return view('main.bon_commande.index',compact('bonCommandes'));
+        return view('main.stock.bon_commande.index',compact('bonCommandes'));
     }
 
     /**
@@ -30,7 +31,7 @@ class BonCommandeController extends Controller
     public function create()
     {
         //
-        return view('main.bon_commande.create');
+        return view('main.stock.bon_commande.create');
     }
 
     /**
@@ -137,7 +138,7 @@ class BonCommandeController extends Controller
     {
         //
         $bonCommande = BonCommande::find($id);
-        return view('main.bon_commande.show',compact('bonCommande'));
+        return view('main.stock.bon_commande.show',compact('bonCommande'));
     }
 
     /**
@@ -266,5 +267,14 @@ class BonCommandeController extends Controller
         );
         return redirect()->back()->with($notification);
     }
+
+    public function viewcommande($slug)
+    {
+        //
+        $commande = Commande::where('slug', $slug)->first();
+        return view('main.stock.bon_commande.viewcommande',compact('commande'));
+    }
+
+
 
 }

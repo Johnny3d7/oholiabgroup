@@ -17,7 +17,7 @@ class ClientController extends Controller
     {
         //
         $clients = Client::where('status', 1)->orderBy('nom', 'asc')->get();
-        return view('main.client.index', compact('clients'));
+        return view('main.stock.client.index', compact('clients'));
     }
 
     /**
@@ -33,7 +33,7 @@ class ClientController extends Controller
             'alert-type' => 'success'
         );
         return redirect()->route('stock.client.index')->with($notification);*/
-        return view('main.client.create');
+        return view('main.stock.client.create');
     }
 
     /**
@@ -117,7 +117,7 @@ class ClientController extends Controller
         
         //dd($client);
         
-        return view('main.client.edit', compact('client'));
+        return view('main.stock.client.edit', compact('client'));
     }
 
     /**
