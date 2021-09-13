@@ -17,10 +17,12 @@ class Livraison extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nom_livreur',
-        'num_vehicule',
-        'date_reception',
+        'num_bl',
         'slug',
+        'date_reception_livreur',
+        'date_reception_client',
+        'id_commande',
+        'id_livreur',
         'status'
     ];
 
@@ -32,12 +34,22 @@ class Livraison extends Model
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('lib')
+            ->generateSlugsFrom('num_bl')
             ->saveSlugsTo('slug');
     }
 
-    public function commande()
+    /*public function commande()
     {
         return $this->belongsTo(Commande::class, 'id_commande');
+    }*/
+
+    public function commande_fournisseur()
+    {
+        return $this->belongsTo(CommandeFournisseur::class, 'id_commande');
+    }
+
+    public function livreur()
+    {
+        return $this->belongsTo(Livreur::class, 'id_livreur');
     }
 }

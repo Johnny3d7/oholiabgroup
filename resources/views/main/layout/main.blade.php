@@ -9,7 +9,7 @@
     {{--<link rel="icon" href="{{ url('images/main_img/favicon/favicon-32x32.png') }}" type="image/x-icon">--}}
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
     @php
-        $a =3 ;
+        $a = Auth::user()->entreprise->id;
     @endphp
     @if ($a == 1)
     <link href="{{ url('css/themes/lite-purple.css') }}" rel="stylesheet" />

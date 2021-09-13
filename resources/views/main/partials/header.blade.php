@@ -12,7 +12,17 @@
             <!-- Grid menu Dropdown-->
              <div class="dropdown dropleft"><i class="i-Safe-Box text-muted header-icon" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <div class="menu-icon-grid"><a href="{{ route('module.index') }}"><i class="i-Shop-4"></i> Modules</a><a href="#"><i class="i-Library"></i> Déconnexion</a></div>
+                    <div class="menu-icon-grid"><a href="{{ route('module.index') }}"><i class="i-Shop-4"></i> Modules</a>
+                        <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                      document.getElementById('logout-form').submit();">
+        
+                         <i class="i-Library"></i> Déconnexion
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

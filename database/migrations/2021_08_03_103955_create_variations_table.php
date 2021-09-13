@@ -26,8 +26,7 @@ class CreateVariationsTable extends Migration
 
             //Foreign_key
             $table->integer('id_product')->unsigned();
-            $table->integer('id_fournisseur')->unsigned()->nullable();
-            $table->integer('id_client')->unsigned()->nullable();
+            $table->integer('id_motif')->unsigned()->nullable();
             $table->integer('id_entreprise')->unsigned();
         });
     }

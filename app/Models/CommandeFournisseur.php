@@ -24,11 +24,11 @@ class CommandeFournisseur extends Model
         'lieu_livraison',
         'date_livraison',
         'mode_reglement',
-        'create_facture',
-        'create_bonlivraison',
-        'type',
+        'type_commande',
+        'id_user',
+        'id_entreprise',
         'id_fournisseur',
-        'id_boncommande',
+        'observation',
         'status'
     ];
 
@@ -42,8 +42,20 @@ class CommandeFournisseur extends Model
             ->saveSlugsTo('slug');
     }
 
-    public function bon_commande()
+    public function products()
     {
-        return $this->belongsTo(BonCommande::class, 'id_boncommande');
+        return $this->belongsToMany(Product::class, 'ligne_commande_fournisseurs', 'commande_fournisseur_id', 'product_id')->withPivot('qte','prix', 'status')->withTimestamps();
     }
+
+    public function entreprise()
+    {
+        return $this->belongsTo(Entreprise::class, 'id_entreprise');
+    }
+
+    public function fournisseur()
+    {
+        return $this->belongsTo(Fournisseur::class, 'id_fournisseur');
+    }
+
+    
 }

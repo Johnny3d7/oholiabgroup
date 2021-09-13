@@ -22,7 +22,8 @@ class Fournisseur extends Model
         'nom',
         'email',
         'contact',
-        'description',
+        'adresse',
+        'ncc',
         'status',
         'id_type_fournisseur'
     ];
@@ -50,5 +51,10 @@ class Fournisseur extends Model
     public function bon_commande()
     {
         return $this->hasMany(BonCommande::class, 'id_fournisseur');
+    }
+
+    public function commande_fournisseur()
+    {
+        return $this->hasMany(CommandeFournisseur::class, 'id_fournisseur');
     }
 }

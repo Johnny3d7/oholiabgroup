@@ -34,10 +34,6 @@ class BonCommande extends Model
         return $this->belongsToMany(Product::class, 'ligne_bon_commandes', 'bon_commande_id', 'product_id')->withPivot('qte','prix', 'status')->withTimestamps();
     }
 
-    public function commande_fournisseur()
-    {
-        return $this->hasMany(CommandeFournisseur::class, 'id_boncommande');
-    }
 
     public function fournisseur()
     {

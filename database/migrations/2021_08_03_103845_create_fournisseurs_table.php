@@ -20,7 +20,8 @@ class CreateFournisseursTable extends Migration
             $table->string('nom');
             $table->string('email')->unique();
             $table->string('contact')->unique();
-            $table->string('description')->nullable();
+            $table->string('adresse')->nullable();
+            $table->string('ncc')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
 

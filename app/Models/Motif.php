@@ -6,26 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-class Entreprise extends Model
+
+class Motif extends Model
 {
     use HasFactory;
     use HasSlug;
-
-    protected $table = 'entreprises';
-
-    protected $guarded = ['id'];
+    
+    protected $table = 'motifs';
 
     public $timestamps = true;
 
     protected $fillable = [
-        'nom',
+        'lib',
         'slug',
-        'adresse',
-        'email',
-        'contact',
-        'ncc',
         'status'
     ];
+
+    protected $guarded = ['id'];
 
     /**
      * Get the options for generating the slug.
@@ -33,22 +30,12 @@ class Entreprise extends Model
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('nom')
+            ->generateSlugsFrom('lib')
             ->saveSlugsTo('slug');
     }
 
     public function variations()
     {
-        return $this->hasMany(Variation::class, 'id_entreprise');
-    }
-
-    public function users()
-    {
-        return $this->hasMany(User::class, 'id_entreprise');
-    }
-
-    public function commande_fournisseur()
-    {
-        return $this->hasMany(CommandeFournisseur::class, 'id_entreprise');
+        return $this->hasMany(Variation::class, 'id_motif');
     }
 }

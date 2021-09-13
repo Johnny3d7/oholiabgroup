@@ -19,22 +19,31 @@ class FournisseursTableSeeder extends Seeder
 
 
         $faker = (new \Faker\Factory())::create();
-        
+
         Fournisseur::create([
             'codefour' => 'F' . 1,
+            'nom' => 'OHOLIAB',
+            'email' => $faker->email,
+            'contact' => rand(10, 99). '' . rand(10, 99) . '' . rand(10, 99) . '' . rand(10, 99) . '' . rand(10, 99),
+            'ncc' => 'XXXX-XXXX',
+            'id_type_fournisseur' => 2
+        ]);
+
+        Fournisseur::create([
+            'codefour' => 'F' . 2,
             'nom' => 'AKÉBIÉ',
             'email' => $faker->email,
             'contact' => rand(10, 99). '' . rand(10, 99) . '' . rand(10, 99) . '' . rand(10, 99) . '' . rand(10, 99),
-            'description' => $faker->text($maxNbChars = 100),
+            'ncc' => 'XXXX-XXXX',
             'id_type_fournisseur' => 2
         ]);
     
         Fournisseur::create([
-            'codefour' => 'F' . 2,
+            'codefour' => 'F' . 3,
             'nom' => 'OBP INC',
             'email' => $faker->email,
             'contact' => rand(10, 99). '' . rand(10, 99) . '' . rand(10, 99) . '' . rand(10, 99) . '' . rand(10, 99),
-            'description' => $faker->text($maxNbChars = 100),
+            'ncc' => 'XXXX-XXXX',
             'id_type_fournisseur' => 2
         ]);
 
@@ -49,7 +58,7 @@ class FournisseursTableSeeder extends Seeder
                 'nom' => $nom,
                 'email' => $faker->email,
                 'contact' => $contact,
-                'description' => $faker->text($maxNbChars = 100),
+                'ncc' => 'XXXX-XXXX',
                 'id_type_fournisseur' => 1
             ]);
     }

@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Entreprise;
+use App\Models\Livreur;
 use Illuminate\Database\Seeder;
 
-class EntreprisesTableSeeder extends Seeder
+class LivreursTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,19 +15,15 @@ class EntreprisesTableSeeder extends Seeder
     public function run()
     {
         //
-        Entreprise::truncate();
+        Livreur::truncate();
 
         $faker = (new \Faker\Factory())::create();
 
-        $entreprise= [
-            'Oholiab Group',
-            'Akébié SARL',
-            'OBP INC.'
-        ];
 
-        for ($i = 0; $i < 3; $i++) {
+
+        for ($i = 0; $i < 5; $i++) {
             Entreprise::create([
-                'nom' => $entreprise[$i],
+                'nom' => $faker->firstName().' '.$faker->lastName(),
                 'email' => $faker->email,
                 'adresse' => $faker->address(),
                 'ncc' => 'XXXX-XXXX',

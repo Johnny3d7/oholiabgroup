@@ -25,21 +25,10 @@ class Variation extends Model
         'observation',
         'status',
         'id_product',
-        'id_fournisseur',
-        'id_client',
         'id_entreprise'
     ];
 
-    public function fournisseur()
-    {
-        return $this->belongsTo(Fournisseur::class, 'id_fournisseur');
-    }
-
-    public function client()
-    {
-        return $this->belongsTo(Client::class, 'id_client');
-    }
-
+   
     public function entreprise()
     {
         return $this->belongsTo(Entreprise::class, 'id_entreprise');
@@ -48,5 +37,10 @@ class Variation extends Model
     public function product()
     {
         return $this->belongsTo(Product::class, 'id_product');
+    }
+
+    public function motif()
+    {
+        return $this->belongsTo(Motif::class, 'id_motif');
     }
 }

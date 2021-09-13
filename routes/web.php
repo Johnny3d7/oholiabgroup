@@ -17,10 +17,20 @@ use App\Http\Controllers;
 /*Route::get('/', function () {
     return view('main.dashboard.dashboard');
 });*/
+
 Route::get('/mail', 'App\Http\Controllers\Stock\ProductCategoryController@mail')->name('mail');
 
+Route::middleware(['guest'])->group(function(){
+    Route::view('login', 'main.user.login')->name('login');
+    Route::view('/register', '')->name('register');
+    Route::post('/checkuser', 'App\Http\Controllers\User\UserController@checkuser')->name('checkuser');
+});
+
 //Liste des modules
-Route::get('/modules', 'App\Http\Controllers\ModuleController@index')->name('module.index');
+Route::middleware('auth')->group(function(){
+    Route::get('/modules', 'App\Http\Controllers\ModuleController@index')->name('module.index');
+});
+
 
 
 //Les routes des bons de commande et de livraison
@@ -196,3 +206,7 @@ Route::prefix('/stock')->namespace('App\Http\Controllers\Stock')->name('stock.')
     Route::get('/type_fournisseur/destroy/{slug}', 'TypeFournisseurController@destroy')->name('type_fournisseur.destroy');
 
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -80,4 +80,9 @@ class Product extends Model
     {
         return $this->belongsToMany(BonCommande::class, 'ligne_bon_commandes','product_id', 'bon_commande_id')->withPivot('qte','prix', 'status')->withTimestamps();
     }
+
+    public function commande_fournisseurs()
+    {
+        return $this->belongsToMany(CommandeFournisseur::class, 'ligne_commande_fournisseurs', 'product_id', 'commande_fournisseur_id')->withPivot('qte','prix', 'status')->withTimestamps();
+    }
 }

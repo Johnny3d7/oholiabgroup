@@ -20,10 +20,11 @@ class TypeProductsTableSeeder extends Seeder
         $type= [
             'Produit périssable',
             'Produit durable',
-            'Matière première'
+            'Matière première',
+            'Produit fragile'
         ];
 
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             TypeProduct::create([
                 'lib' => $type[$i],
             ]);
