@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
         $this->call(MotifsTableSeeder::class);
         $this->command->info('Type fournisseur table seeded!');
 
+        $this->call(LivreursTableSeeder::class);
+        $this->command->info('Type fournisseur table seeded!');
+
         $this->call(TypeProductsTableSeeder::class);
         $this->command->info('Type fournisseur table seeded!');
         
