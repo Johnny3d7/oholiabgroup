@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,7 @@ Route::get('/bonlivraisonoholiab', 'App\Http\Controllers\Stock\LivraisonControll
 Route::get('/bonlivraisonakebie', 'App\Http\Controllers\Stock\LivraisonController@bonlivraisonakebie')->name('bonlivraisonakebie');
 Route::get('/bonlivraisonobp', 'App\Http\Controllers\Stock\LivraisonController@bonlivraisonobp')->name('bonlivraisonobp');
 
-//Akébié routes 
+//Akébié routes
 
 Route::get('/akebie/dashboard', 'App\Http\Controllers\Akebie\DashboardController@index')->name('index');
 
@@ -165,7 +166,7 @@ Route::prefix('/stock')->namespace('App\Http\Controllers\Stock')->name('stock.')
 
     //Tableau de bord
     Route::get('/dashboard', 'DashboardController@index')->name('index');
-    
+
     // Routes Catégorie des produits
     Route::get('/categories', 'ProductCategoryController@index')->name('categories_prod.index');
     Route::get('/category/create', 'ProductCategoryController@create')->name('category_prod.create');
@@ -251,3 +252,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 ////////////////////////////////
 
 Route::view('/parcauto', 'main.parcauto.index')->name('parcauto.index');
+Route::view('/parcinfo', 'main.parcinfo.index')->name('parcinfo.index');
+Route::view('/achats', 'main.achats.index')->name('achats.index');
+Route::view('/ressourceh', 'main.ressourceh.index')->name('ressourceh.index');

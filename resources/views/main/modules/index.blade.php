@@ -44,7 +44,7 @@ Liste des modules
                     <h5 class="card-title mb-2">Achats</h5>
                     <p class="card-text text-mute">Module</p>
                     <div class="mt-2">
-                        <button class="btn btn-primary btn-block m-1" type="button">Accéder</button>
+                        <a href="{{ route('achats.index') }}"><button class="btn btn-primary btn-block m-1" type="button">Accéder</button></a>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@ Liste des modules
                     <h5 class="card-title mb-2">Parc Informatique</h5>
                     <p class="card-text text-mute">Module</p>
                     <div class="mt-2">
-                        <button class="btn btn-primary btn-block m-1" type="button">Accéder</button>
+                        <a href="{{ route('parcinfo.index') }}"><button class="btn btn-primary btn-block m-1" type="button">Accéder</button></a>
                     </div>
                 </div>
             </div>
@@ -88,7 +88,7 @@ Liste des modules
                     <h5 class="card-title mb-2">Ressources humaines</h5>
                     <p class="card-text text-mute">Module</p>
                     <div class="mt-2">
-                        <button class="btn btn-primary btn-block m-1" type="button">Accéder</button>
+                        <a href="{{ route('ressourceh.index') }}"><button class="btn btn-primary btn-block m-1" type="button">Accéder</button></a>
                     </div>
                 </div>
             </div>
