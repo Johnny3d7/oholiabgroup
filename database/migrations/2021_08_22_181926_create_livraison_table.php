@@ -19,10 +19,11 @@ class CreateLivraisonTable extends Migration
             $table->string('num_bl');
             $table->string('date_reception_livreur')->nullable();
             $table->string('date_reception_client')->nullable();
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(1);
             $table->timestamps();
 
             //Foreign_key
+            $table->integer('id_entreprise')->unsigned()->nullable();
             $table->integer('id_commande')->unsigned()->nullable();
             $table->integer('id_livreur')->unsigned()->nullable();
         });

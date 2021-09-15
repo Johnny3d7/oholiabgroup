@@ -82,7 +82,7 @@ Route::get('/commande-client/annuler/{slug}', 'App\Http\Controllers\Stock\Comman
 //Classer comme livré
 Route::get('/commande-client/livrer/{slug}', 'App\Http\Controllers\Stock\CommandeController@livrer')->name('commande_client.livrer');
 
-//Produit d'une commande
+//Produit d'une commande client
 Route::post('/commande-client/add-product', 'App\Http\Controllers\Stock\CommandeController@addProduct')->name('commande_client.add_Product');
 Route::get('/commande-client/update-product/{commande}/{product}', 'App\Http\Controllers\Stock\CommandeController@updateProduct')->name('commande_client.update_Product');
 Route::get('/commande-client/delete-product/{commande}/{product}', 'App\Http\Controllers\Stock\CommandeController@deleteProduct')->name('commande_client.delete_Product');
@@ -96,6 +96,8 @@ Route::post('/bon-de-commandes/store', 'App\Http\Controllers\Stock\BonCommandeCo
 Route::get('/bon-de-commandes/edit/{id}', 'App\Http\Controllers\Stock\BonCommandeController@edit')->name('boncommande.edit');
 Route::any('/bon-de-commandes/update/{id}', 'App\Http\Controllers\Stock\BonCommandeController@update')->name('boncommande.update');
 Route::get('/bon-de-commandes/destroy/{id}', 'App\Http\Controllers\Stock\BonCommandeController@create')->name('boncommande.destroy');
+
+
 
 //Importer la proforma d'un bon de commande
 Route::any('/bon-de-commandes/add_proforma/{id}', 'App\Http\Controllers\Stock\BonCommandeController@addProforma')->name('boncommande.add_proforma');
@@ -113,12 +115,37 @@ Route::get('/expression_besoin', 'App\Http\Controllers\Stock\CommandeController@
 
 //Commande fournisseur
 Route::get('/commandes-fournisseur', 'App\Http\Controllers\Stock\CommandeFournisseurController@index')->name('commande_fournisseur.index');
-Route::get('/commandes-fournisseur/show/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@show')->name('commande_fournisseur.show');
+Route::get('/commandes-fournisseur-recu', 'App\Http\Controllers\Stock\CommandeFournisseurController@commandeRecu')->name('commande_fournisseur.recu');
+Route::get('/commandes-fournisseur/show/{id}', 'App\Http\Controllers\Stock\CommandeFournisseurController@show')->name('commande_fournisseur.show');
 Route::get('/commandes-fournisseur/create', 'App\Http\Controllers\Stock\CommandeFournisseurController@create')->name('commande_fournisseur.create');
 Route::post('/commandes-fournisseur/store', 'App\Http\Controllers\Stock\CommandeFournisseurController@store')->name('commande_fournisseur.store');
-Route::get('/commandes-fournisseur/edit/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@edit')->name('commande_fournisseur.edit');
-Route::any('/commandes-fournisseur/update/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@update')->name('commande_fournisseur.update');
-Route::get('/commandes-fournisseur/destroy/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@destroy')->name('commande_fournisseur.destroy');
+Route::get('/commandes-fournisseur/edit/{id}', 'App\Http\Controllers\Stock\CommandeFournisseurController@edit')->name('commande_fournisseur.edit');
+Route::any('/commandes-fournisseur/update/{id}', 'App\Http\Controllers\Stock\CommandeFournisseurController@update')->name('commande_fournisseur.update');
+Route::get('/commandes-fournisseur/destroy/{id}', 'App\Http\Controllers\Stock\CommandeFournisseurController@destroy')->name('commande_fournisseur.destroy');
+Route::get('/commandes-fournisseur/view/{id}', 'App\Http\Controllers\Stock\CommandeFournisseurController@view')->name('commande_fournisseur.view');
+Route::get('/commandes-fournisseur/viewlivraison/{id}', 'App\Http\Controllers\Stock\CommandeFournisseurController@viewlivraison')->name('commande_fournisseur.viewlivraison');
+
+//Produits d'une commande fournisseur
+Route::post('/commande-fournisseur/add-product', 'App\Http\Controllers\Stock\CommandeFournisseurController@addProduct')->name('commande_fournisseur.add_Product');
+Route::get('/commandes-fournisseur/update-product/{commande}/{product}', 'App\Http\Controllers\Stock\CommandeFournisseurController@updateProduct')->name('commande_fournisseur.update_Product');
+Route::get('/commandes-fournisseur/delete-product/{commande}/{product}', 'App\Http\Controllers\Stock\CommandeFournisseurController@deleteProduct')->name('commande_fournisseur.delete_Product');
+
+//Action commande fournisseur
+
+//Restauration de la commande
+Route::get('/commande-fournisseur/restaurer/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@restaurer')->name('commande_fournisseur.restaurer');
+// Quand stock disponible
+Route::get('/commande-fournisseur/valider/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@valider')->name('commande_fournisseur.valider');
+//En cas de défaut du stock
+Route::get('/commande-fournisseur/rejeter/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@rejeter')->name('commande_fournisseur.rejeter');
+//En cas d'annulation du client
+Route::get('/commande-fournisseur/annuler/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@annuler')->name('commande_fournisseur.annuler');
+//Classer comme livré
+Route::get('/commande-fournisseur/livrer/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@livrer')->name('commande_fournisseur.livrer');
+//Créer un bon de livraison
+Route::post('/commande-fournisseur/create-bon-livraison', 'App\Http\Controllers\Stock\CommandeFournisseurController@create_bon_livraison')->name('commande_fournisseur.create_bon_livraison');
+
+
 
 //Facture
 Route::get('/factures', 'App\Http\Controllers\Stock\FactureController@index')->name('facture.index');

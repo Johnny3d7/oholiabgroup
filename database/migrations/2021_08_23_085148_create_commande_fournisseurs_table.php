@@ -17,12 +17,12 @@ class CreateCommandeFournisseursTable extends Migration
             $table->increments('id');
             $table->string('num_cmd')->nullable();
             $table->string('slug');
-            $table->string('lieu_livraison');
-            $table->string('mode_reglement');
+            $table->string('lieu_livraison')->nullable();
+            $table->string('mode_reglement')->nullable();
             $table->string('type_commande');
             $table->string('id_user');
             $table->string('id_entreprise');
-            $table->string('observation');
+            $table->string('observation')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
 

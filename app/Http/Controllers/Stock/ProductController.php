@@ -282,6 +282,8 @@ class ProductController extends Controller
         ->join('products', 'products.id', '=', 'variations.id_product')
         ->join('entreprises', 'entreprises.id', '=', 'variations.id_entreprise')
         ->join('products_categories', 'products_categories.id', '=', 'products.id_product_category')
+        ->where('variations.status', '=', 1)
+        ->where('products.status', '=', 1)
         ->select('products.*','products_categories.lib as category',
         DB::raw('SUM(variations.qte_entree) as total_entree'),
         DB::raw('SUM(variations.qte_sortie) as total_sortie'),

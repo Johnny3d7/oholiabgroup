@@ -16,8 +16,7 @@
                         <a href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                       document.getElementById('logout-form').submit();">
-        
-                         <i class="i-Library"></i> Déconnexion
+                         <i class="i-Close"></i> Déconnexion
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf

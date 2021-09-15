@@ -236,7 +236,8 @@ return [
         'Entreprise' => App\Models\Entreprise::class,
         'TypeProduct' => App\Models\TypeProduct::class,
         'Commande' => App\Models\TypeProduct::class,
-        'Carbon' => Carbon\Carbon::class
+        'Carbon' => Carbon\Carbon::class,
+        'Livreur' => App\Models\Livreur::class,
         
     ],
 

@@ -24,12 +24,18 @@ class AjaxController extends Controller
     }
 
     public function getBonCommandeProduct($id)
-    {
-        if ($id == 1 || $id == 2) {
-            echo json_encode(Product::where(['status'=>1, 'id_product_category' => $id])->orderBy('lib', 'asc')->get());
+    {   
+        
+        if($id == 1){
+            echo json_encode(Product::where('status',1)->whereNotIn('id_product_category',[1,2])->orderBy('lib', 'asc')->get());
+        }elseif( $id == 2){
+            echo json_encode(Product::where('status',1)->whereIn('id_product_category',[1])->orderBy('lib', 'asc')->get());
         }
-        else {
-            echo json_encode(Product::where('status', 1)->whereNotIn('id_product_category',[1,2])->orderBy('lib', 'asc')->get());
+        elseif( $id == 3){
+            echo json_encode(Product::where('status',1)->whereIn('id_product_category',[2])->orderBy('lib', 'asc')->get());
+        }
+        else{
+            echo json_encode(Product::where('status',1)->whereNotIn('id_product_category',[1,2])->orderBy('lib', 'asc')->get());
         }    
     }
 }

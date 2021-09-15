@@ -57,5 +57,10 @@ class CommandeFournisseur extends Model
         return $this->belongsTo(Fournisseur::class, 'id_fournisseur');
     }
 
+    public function livraisons()
+    {
+        return $this->hasMany(Livraison::class, 'id_commande');
+    }
+
     
 }

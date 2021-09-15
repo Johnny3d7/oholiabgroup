@@ -22,7 +22,7 @@ Liste des modules
                     <h5 class="card-title mb-2">Stock Production</h5>
                     <p class="card-text text-mute">Module</p>
                     <div class="mt-2">
-                        <button class="btn btn-primary btn-block m-1" type="button">Accéder</button>
+                        <a href="{{ route('stock.products.index') }}"><button class="btn btn-primary btn-block m-1" type="button">Accéder</button></a>
                     </div>
                 </div>
             </div>

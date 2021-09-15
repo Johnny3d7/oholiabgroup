@@ -75,6 +75,14 @@ class ProductsTableSeeder extends Seeder
             'id_type_product' => 1  
         ]);
 
+        Product::create([
+            'ref' => 'P' . 8,
+            'lib' => "Bobine",
+            'price' => 3000,
+            'id_product_category' => 3,
+            'id_type_product' => 1  
+        ]);
+
         
 
         /*for ($i = 0; $i < 15; $i++) {

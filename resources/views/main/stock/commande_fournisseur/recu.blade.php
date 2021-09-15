@@ -1,28 +1,28 @@
 @extends('main.stock.partials.main')
+
 @php
     $entreprise = Auth::user()->entreprise->id;
 @endphp
+
 @section('stylesheets')
 
 @endsection
 
 @section('menuTitle')
-
 @if ($entreprise == 1)
-Commandes fournisseur
-@elseif($entreprise == 2 || $entreprise == 3)
 Expressions de besoin
+@elseif($entreprise == 2 || $entreprise == 3)
+Commandes client
 @endif
 
 @endsection
 
 @section('pageTitle')
 @if ($entreprise == 1)
-Liste des commandes fournisseurs
+Liste des expressions de besoin (Site de production)
 @elseif($entreprise == 2 || $entreprise == 3)
-Liste des expressions de besoin envoyées
+Liste des commandes client
 @endif
-
 @endsection
 
 @section('content')
@@ -31,11 +31,6 @@ Liste des expressions de besoin envoyées
         <div class="col-md-12 mb-4">
             <div class="card text-left">
                 <div class="card-header text-right bg-transparent">
-                    @if ($entreprise == 1)
-                        <a href="{{ route('commande_fournisseur.create') }}"><button class="btn btn-primary btn-md m-1" type="button"><i class="i-Add-User text-white mr-2"></i> Créer une commande fournisseur</button></a> 
-                    @elseif($entreprise == 2 || $entreprise == 3)
-                        <a href="{{ route('commande_fournisseur.create') }}"><button class="btn btn-primary btn-md m-1" type="button"><i class="i-Add-User text-white mr-2"></i> Etablir une expression de besoin</button></a> 
-                    @endif
                     
                 </div>
                 <div class="card-body">
@@ -44,7 +39,7 @@ Liste des expressions de besoin envoyées
                             <thead>
                                 <tr>
                                     <th>N°</th>
-                                    <th>Fournisseur</th>
+                                    <th>Client</th>
                                     <th>Contact</th>
                                     <th>Email</th>
                                     <th>Date création</th>
@@ -56,9 +51,9 @@ Liste des expressions de besoin envoyées
                                 @forelse ($commandes as $data)
                                     <tr>
                                         <td>{{ $data->num_cmd }}</td>
-                                        <td>{{ $data->fournisseur->nom }}</td>
-                                        <td>{{ $data->fournisseur->contact }}</td>
-                                        <td>{{ $data->fournisseur->email }}</td>
+                                        <td>{{ $data->entreprise->nom }}</td>
+                                        <td>{{ $data->entreprise->contact }}</td>
+                                        <td>{{ $data->entreprise->email }}</td>
                                         <td>{{ ucwords((new Carbon\Carbon($data->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                         <td>
                                             @if($data->status == 0)
@@ -68,14 +63,14 @@ Liste des expressions de besoin envoyées
                                             @elseif($data->status == 2)
                                                 <a class="badge badge-warning m-2 p-2" href="#">Attente livraison</a>
                                             @elseif($data->status == 3)
-                                                <a class="badge badge-success m-2 p-2" href="#">Livrée</a>
+                                                <a class="badge badge-warning m-2 p-2" href="#">Livrée</a>
                                             @elseif($data->status == 4)
                                                 <a class="badge badge-danger m-2 p-2" href="#">Refusée</a>
                                             @elseif($data->status == 5)
                                                 <a class="badge badge-danger m-2 p-2" href="#">Annulée</a>
                                             @endif
                                         </td>
-                                        <td><a href="{{ route('commande_fournisseur.show',['id'=>$data->id]) }}"><button class="btn btn-outline-warning m-1" type="button">Détail</button></a></td>
+                                        <td><a href="{{  route('commande_fournisseur.show',['id'=>$data->id]) }}"><button class="btn btn-outline-warning m-1" type="button">Visualiser</button></a></td>
                                     </tr>    
                                 @empty
                                     

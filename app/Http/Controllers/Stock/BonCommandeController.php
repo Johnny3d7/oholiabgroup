@@ -53,8 +53,6 @@ class BonCommandeController extends Controller
         ]);
         //dd($request->hasFile('proforma'));
 
-        
-
         $bonCommande = BonCommande::create([
             "id_fournisseur" => $request->id_fournisseur,
             "date_livraison" => $request->date_livraison,

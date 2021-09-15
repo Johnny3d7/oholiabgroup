@@ -23,6 +23,7 @@ class Livraison extends Model
         'date_reception_client',
         'id_commande',
         'id_livreur',
+        'id_entreprise',
         'status'
     ];
 

@@ -1,15 +1,23 @@
+@php
+    $entreprise = Auth::user()->entreprise->id;
+@endphp
 <ul class="metismenu" id="menu">
     {{-- <li class="Ul_li--hover"><a href="{{ route('stock.index') }}"><i class="i-Bar-Chart text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Tableau de bord</span></a></li> --}}
-    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Shop text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Inventaire</span></a>
-        <ul class="mm-collapse">
-            @foreach (Entreprise::all() as $data)
-                <li class="item-name"><a href="{{ route('stock.etat_stock.index',['slug'=> $data->slug]) }}"><i class="nav-icon i-Bell1"></i><span class="item-name">{{ $data->nom }}</span></a></li>
-            @endforeach
-            <li class="item-name"></li>
-            {{-- <li class="nav-item"><a href="#"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Journal | entrées</span></a></li>
-            <li class="item-name"><a href="#"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Journal | sorties</span></a></li> --}}
-        </ul>
-    </li>
+    @if ($entreprise == 1)
+        <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Shop text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Inventaire</span></a>
+            <ul class="mm-collapse">
+                @foreach (Entreprise::all() as $data)
+                    <li class="item-name"><a href="{{ route('stock.etat_stock.index',['slug'=> $data->slug]) }}"><i class="nav-icon i-Bell1"></i><span class="item-name">{{ $data->nom }}</span></a></li>
+                @endforeach
+                <li class="item-name"></li>
+                {{-- <li class="nav-item"><a href="#"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Journal | entrées</span></a></li>
+                <li class="item-name"><a href="#"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Journal | sorties</span></a></li> --}}
+            </ul>
+        </li>
+    @else()
+    <li class="Ul_li--hover"><a href="{{ route('stock.etat_stock.index',['slug'=> Auth::user()->entreprise->slug]) }}"><i class="i-Shop text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Inventaire</span></a></li>
+    @endif
+    
     <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Full-Cart text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Produit</span></a>
         <ul class="mm-collapse">
             <li class="nav-item"><a href="{{ route('stock.products.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
@@ -22,12 +30,40 @@
             
         </ul>
     </li>
-    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes fournisseur</span></a>
+    {{-- <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes fournisseur vvv</span></a>
         <ul class="mm-collapse">
             <li class="nav-item"><a href="{{ route('boncommande.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
            
         </ul>
+    </li> --}}
+    @if ($entreprise == 2 || $entreprise == 3)
+        <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Expression besoin</span></a>
+            <ul class="mm-collapse">
+                <li class="nav-item"><a href="{{ route('commande_fournisseur.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
+            
+            </ul>
+        </li>
+        <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes client</span></a>
+            <ul class="mm-collapse">
+                <li class="nav-item"><a href="{{ route('commande_fournisseur.recu') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
+            
+            </ul>
+        </li>
+    @elseif($entreprise == 1)
+    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes fournisseur</span></a>
+        <ul class="mm-collapse">
+            <li class="nav-item"><a href="{{ route('commande_fournisseur.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
+           
+        </ul>
     </li>
+    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Expressions besoin</span></a>
+        <ul class="mm-collapse">
+            <li class="nav-item"><a href="{{ route('commande_fournisseur.recu') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
+           
+        </ul>
+    </li>
+    @endif
+    
     <li class="Ul_li--hover"><a href="{{ route('facture.index') }}"><i class="i-Billing text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Factures</span></a></li>
     <li class="Ul_li--hover"><a href="{{ route('livraison.index') }}"><i class="i-Car text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Livraisons</span></a></li>
     <li class="Ul_li--hover"><a href="{{ route('stock.client.index') }}"><i class="i-Add-UserStar text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Client</span></a></li>

@@ -15,10 +15,11 @@ class CreateLigneCommandeFournisseursTable extends Migration
     {
         Schema::create('ligne_commande_fournisseurs', function (Blueprint $table) {
 
+            $table->increments('id');
             $table->integer('commande_fournisseur_id')->unsigned();
             $table->integer('product_id')->unsigned();
             $table->integer('qte');
-            $table->integer('prix');
+            $table->integer('prix')->nullable();
             $table->integer('status')->default(1);
             
             $table->foreign('commande_fournisseur_id')->references('id')->on('commande_fournisseurs')

@@ -19,16 +19,17 @@ class LivreursTableSeeder extends Seeder
 
         $faker = (new \Faker\Factory())::create();
 
+        Livreur::create([
+            'nom' => 'Jean martin'
+        ]);
 
+        Livreur::create([
+            'nom' => 'Pokou charles',
+        ]);
 
-        for ($i = 0; $i < 5; $i++) {
-            Entreprise::create([
-                'nom' => $faker->firstName().' '.$faker->lastName(),
-                'email' => $faker->email,
-                'adresse' => $faker->address(),
-                'ncc' => 'XXXX-XXXX',
-                'contact' =>rand(10, 99). '' . rand(10, 99) . '' . rand(10, 99) . '' . rand(10, 99) . '' . rand(10, 99),
-            ]);
-        }
+        Livreur::create([
+            'nom' => 'Victor mathieu',
+        ]);
+
     }
 }
