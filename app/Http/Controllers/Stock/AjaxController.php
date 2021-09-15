@@ -38,4 +38,11 @@ class AjaxController extends Controller
             echo json_encode(Product::where('status',1)->whereNotIn('id_product_category',[1,2])->orderBy('lib', 'asc')->get());
         }    
     }
+
+    public function index()
+    {
+        //
+        return view('main.parcauto.index');
+    }
+
 }
