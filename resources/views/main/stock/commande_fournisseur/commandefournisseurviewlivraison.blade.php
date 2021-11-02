@@ -1,7 +1,9 @@
 @extends('main.stock.partials.main')
 
 @section('stylesheets')
+@if ($commande->id_fournisseur == 1)
 <style>
+    
     #bl{
         background-repeat: no-repeat;
         background-position-x: center;
@@ -9,6 +11,31 @@
         background-image:url({{ url('images/faviconbrhxx.png') }}) ;
     }
 </style>
+@elseif($commande->id_fournisseur == 2)
+<style>
+    #bl{
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-position-y: center;
+        background-image:url({{ url('images/totem_akebie.png') }}) ;
+    }
+</style>
+@elseif($commande->id_fournisseur == 3)
+<style>
+    .slogan{
+       writing-mode: vertical-lr;
+       
+   }
+   #bl{
+       background-repeat: no-repeat;
+       background-position-x: center;
+       background-position-y: center;
+       background-size: 25%;
+       background-image:url({{ url('images/totem_obp.png') }}) ;
+   }
+  
+</style>
+@endif
 @endsection
 
 @section('menuTitle')
@@ -45,8 +72,8 @@ Affichage du bon de livraison
                                         <div class="col-md-7" style="border: 5px solid #332a6c; text-align:center; width:50% ">
                                             <strong style="color: #332a6c; font-size:32px; font-weight:800; font-family: Arial black !important;">BON DE LIVRAISON</strong>    
                                         </div>
-                                        <div class="col-md-5">
-                                            <strong style="color: #332a6c; font-size:32px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->livraisons->first()->num_bl }}</strong>    
+                                        <div class="col-md-5 mt-2" style="text-align: center">
+                                            <strong style="color: #d40707; font-size:22px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->livraisons->first()->num_bl }}</strong>    
                                         </div>
                                         <div class="col-md-12 mt-5" style="color: #332a6c; font-family: Cambria !important;font-size:20px;">
                                             <div class="row">
@@ -277,8 +304,8 @@ Affichage du bon de livraison
                                         <div class="col-md-7" style="border: 5px solid #8cbe22; text-align:center; width:50% ">
                                             <strong style="color: #8cbe22; font-size:32px; font-weight:800; font-family: Arial black !important;">BON DE LIVRAISON</strong>    
                                         </div>
-                                        <div class="col-md-5">
-                                            <strong style="color: #8cbe22; font-size:32px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->livraisons->first()->num_bl }}</strong>    
+                                        <div class="col-md-5 mt-2" style="text-align: center">
+                                            <strong style="color: #d40707; font-size:22px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->livraisons->first()->num_bl }}</strong>    
                                         </div>
                                         <div class="col-md-12 mt-5" style="color: #332a6c; font-family: Cambria !important;font-size:20px;">
                                             <div class="row">
@@ -509,8 +536,8 @@ Affichage du bon de livraison
                                         <div class="col-md-7" style="border: 5px solid #0f70b7; text-align:center; width:50% ">
                                             <strong style="color: #0f70b7; font-size:32px; font-weight:800; font-family: Arial black !important;">BON DE LIVRAISON</strong>    
                                         </div>
-                                        <div class="col-md-5">
-                                            <strong style="color: #0f70b7; font-size:32px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->livraisons->first()->num_bl }}</strong>    
+                                        <div class="col-md-5 mt-2" style="text-align: center">
+                                            <strong style="color: #d40707; font-size:22px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->livraisons->first()->num_bl }}</strong>    
                                         </div>
                                         <div class="col-md-12 mt-5" style="color: #332a6c; font-family: Cambria !important;font-size:20px;">
                                             <div class="row">

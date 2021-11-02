@@ -22,7 +22,7 @@ class CommandeFournisseurController extends Controller
      */
     public function index()
     {
-        $commandes = CommandeFournisseur::whereIn('status', [0,1,2,3,4,5])->where('id_entreprise',Auth::user()->entreprise->id)->orderBy('created_at', 'desc')->get();
+        $commandes = CommandeFournisseur::whereIn('status', [0,1,2,3,4,5,7,8])->where('id_entreprise',Auth::user()->entreprise->id)->orderBy('created_at', 'desc')->get();
         return view('main.stock.commande_fournisseur.index',compact('commandes'));
     }
 
@@ -34,9 +34,9 @@ class CommandeFournisseurController extends Controller
     public function commandeRecu()
     {
         if (Auth::user()->entreprise->id == 1) {
-            $commandes = CommandeFournisseur::whereIn('status', [0,1,2,3,4,5])->where('id_fournisseur',Auth::user()->entreprise->id)->orderBy('created_at', 'desc')->get();
+            $commandes = CommandeFournisseur::whereIn('status', [1,2,3,4,5,7,8])->where('id_fournisseur',Auth::user()->entreprise->id)->orderBy('created_at', 'desc')->get();
         }else{
-            $commandes = CommandeFournisseur::whereIn('status', [1,2,3,4,5])->where('id_fournisseur',Auth::user()->entreprise->id)->orderBy('created_at', 'desc')->get();
+            $commandes = CommandeFournisseur::whereIn('status', [1,2,3,4,5,7,8])->where('id_fournisseur',Auth::user()->entreprise->id)->orderBy('created_at', 'desc')->get();
         }
         
         return view('main.stock.commande_fournisseur.recu',compact('commandes'));
@@ -176,7 +176,7 @@ class CommandeFournisseurController extends Controller
             "alert-type" => "success"
         );
         
-        return redirect()->back()->with($notification);
+        return redirect()->route('commande_fournisseur.show',['id'=>$commande->id])->with($notification);
 
     }
 
@@ -389,8 +389,26 @@ class CommandeFournisseurController extends Controller
             "status" => 2
         ]);
 
+        foreach ($commande->products as $data) {
+
+            $variation = new Variation();
+
+            $variation->typemouv = 0;
+            $variation->id_entreprise = $commande->id_fournisseur;
+            $variation->id_product = $data->pivot->product_id;
+            $variation->production = 0;
+            $variation->datemouv = new DateTime();
+            $variation->observation = "Vente de produit";
+            $variation->datemouv = new DateTime();
+            $variation->qte_entree = 0;
+            $variation->qte_sortie = $data->pivot->qte;
+
+            $variation->save();
+            
+        }
+
         $notification = array(
-            "message" => "Vous avez crée un bon de livraison pour cette commande",
+            "message" => "Vous avez crée un bon de livraison pour cette commande. Consultez la liste des actions dans les détails de cette commande",
             "alert-type" => "success"
         );
 
@@ -412,6 +430,21 @@ class CommandeFournisseurController extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function accept($slug)
+    {
+        $commande = CommandeFournisseur::where('slug', $slug)->first();
+
+        $commande->status = 7;
+        $commande->save();
+
+        $notification = array(
+            "message" => "Vous avez valider la commande ".$commande->num_cmd." du client" .$commande->entreprise->nom."!",
+            "alert-type" => "success"
+        );
+        
+        return redirect()->back()->with($notification);
+    }
+
     public function rejeter($slug)
     {
         $commande = CommandeFournisseur::where('slug', $slug)->first();
@@ -421,6 +454,21 @@ class CommandeFournisseurController extends Controller
         $notification = array(
             "message" => "Vous avez rejeter cette commande!",
             "alert-type" => "success"
+        );
+        
+        return redirect()->back()->with($notification);
+    }
+
+
+    public function refuse($slug)
+    {
+        $commande = CommandeFournisseur::where('slug', $slug)->first();
+        $commande->status = 8;
+        $commande->save();
+
+        $notification = array(
+            "message" => "Vous avez rejeter la commande du client!",
+            "alert-type" => "danger"
         );
         
         return redirect()->back()->with($notification);
@@ -452,26 +500,13 @@ class CommandeFournisseurController extends Controller
             $variation->id_product = $data->pivot->product_id;
             $variation->production = 0;
             $variation->datemouv = new DateTime();
-            $variation->observation = "Achat produit";
+            $variation->observation = "Achat de produit, reçu du fournisseur ".$commande->fournisseur->nom;
             $variation->datemouv = new DateTime();
             $variation->qte_entree = $data->pivot->qte;
             $variation->qte_sortie = 0;
 
             $variation->save();
 
-            $variation = new Variation();
-
-            $variation->typemouv = 0;
-            $variation->id_entreprise = $commande->id_fournisseur;
-            $variation->id_product = $data->pivot->product_id;
-            $variation->production = 0;
-            $variation->datemouv = new DateTime();
-            $variation->observation = "Vente produit";
-            $variation->datemouv = new DateTime();
-            $variation->qte_entree = 0;
-            $variation->qte_sortie = $data->pivot->qte;
-
-            $variation->save();
             
         }
 

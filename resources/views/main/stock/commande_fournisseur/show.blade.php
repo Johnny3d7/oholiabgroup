@@ -25,7 +25,7 @@ Bon de commande
                         <div class="col-lg-12 mt-1">
                             <div class="ul-product-cart__invoice">
                                 <div class="card-title">
-                                    <h3 class="heading text-primary">BON COMMANDE</h3>
+                                    <h3 class="heading text-primary">BON DE COMMANDE INTERNE</h3>
                                 </div>
                                 <div>
                                 </div>
@@ -44,7 +44,20 @@ Bon de commande
                                                 </td> 
                                                 @elseif($commande->status == 1 )
                                                 <td class="text-16 text-warning font-weight-700">
-                                                    Bon pour accord
+                                                    @if (Auth::user()->entreprise->id == $commande->id_entreprise)
+                                                        Bon pour accord 
+                                                    @elseif(Auth::user()->entreprise->id == $commande->id_fournisseur)
+                                                        Attente de validation
+                                                    @endif
+                                                    
+                                                </td>
+                                                @elseif($commande->status == 7)
+                                                <td class="text-16 text-warning font-weight-700">
+                                                    @if (Auth::user()->entreprise->id == $commande->id_entreprise)
+                                                        Validée par le fournisseur
+                                                    @elseif(Auth::user()->entreprise->id == $commande->id_fournisseur)
+                                                        Validée
+                                                    @endif
                                                 </td>
                                                 @elseif($commande->status == 2)
                                                 <td class="text-16 text-warning font-weight-700">
@@ -67,6 +80,15 @@ Bon de commande
                                                 <td class="text-16 text-danger font-weight-700">
                                                     Annulée
                                                 </td>
+                                                @elseif($commande->status == 8)
+                                                    <td class="text-16 text-danger font-weight-700">
+                                                        @if (Auth::user()->entreprise->id == $commande->id_entreprise)
+                                                            Rejeter (fournisseur)
+                                                        @elseif(Auth::user()->entreprise->id == $commande->id_fournisseur)
+                                                            Rejeter
+                                                        @endif
+                                                
+                                                    </td>
                                                 @endif                                           
                                         </tr>
                                         
@@ -74,7 +96,11 @@ Bon de commande
                                             <th class="text-16 text-muted" scope="row">Accord d'achat</th>
                                           
                                                 <td class="text-16 text-success font-weight-700">
-                                                    Validé
+                                                    @if ($commande->status == 1 || $commande->status == 2 || $commande->status == 3 || $commande->status == 7)
+                                                        Validé
+                                                    @else
+                                                        Non validé
+                                                    @endif
                                                 </td>
                                             
                                               
@@ -166,15 +192,34 @@ Bon de commande
                         <div class="card-body">
                             <h6 class="mb-2 text-muted">Progression</h6>
                             @if ($commande->status == 0)
-                            <p class="mb-1 text-22 font-weight-light">50%</p>
+                            <p class="mb-1 text-22 font-weight-light">35%</p>
                             <div class="progress mb-1" style="height: 4px">
-                                <div class="progress-bar bg-primary" style="width: 50%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-primary" style="width: 35%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="35"></div>
                             </div><small class="text-muted">Attente validation</small>
                             @elseif($commande->status == 1)
+                            <p class="mb-1 text-22 font-weight-light">50%</p>
+                            <div class="progress mb-1" style="height: 4px">
+                                <div class="progress-bar bg-warning" style="width: 50%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="50"></div>
+                            </div>
+                            <small class="text-muted">
+                                                    @if (Auth::user()->entreprise->id == $commande->id_entreprise)
+                                                        Envoyée au fournisseur
+                                                    @elseif(Auth::user()->entreprise->id == $commande->id_fournisseur)
+                                                        Attente de validation
+                                                    @endif
+                            </small>
+                            @elseif($commande->status == 7)
                             <p class="mb-1 text-22 font-weight-light">70%</p>
                             <div class="progress mb-1" style="height: 4px">
-                                <div class="progress-bar bg-warning" style="width: 70%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="70"></div>
-                            </div><small class="text-muted">Validée</small>
+                                <div class="progress-bar bg-primary" style="width: 70%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="70"></div>
+                            </div><small class="text-muted">
+                               
+                                @if (Auth::user()->entreprise->id == $commande->id_entreprise)
+                                Validée par le fournisseur
+                                @elseif(Auth::user()->entreprise->id == $commande->id_fournisseur)
+                                    Validée
+                                @endif
+                        </small>
                             @elseif($commande->status == 2)
                             <p class="mb-1 text-22 font-weight-light">80%</p>
                             <div class="progress mb-1" style="height: 4px">
@@ -191,11 +236,24 @@ Bon de commande
                                     <div class="progress-bar bg-success" style="width: 100%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div><small class="text-muted">Livrée</small>
 
-                            @elseif($commande->status == 3)
+                            @elseif($commande->status == 4)
                             <p class="mb-1 text-22 font-weight-light">0%</p>
                             <div class="progress mb-1" style="height: 4px">
                                 <div class="progress-bar bg-danger" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0"></div>
-                            </div><small class="text-muted">Rejetée</small>          
+                            </div><small class="text-muted">Rejetée</small>
+
+                            @elseif($commande->status == 8)
+                            <p class="mb-1 text-22 font-weight-light">0%</p>
+                            <div class="progress mb-1" style="height: 4px">
+                                <div class="progress-bar bg-danger" style="width: 0%" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0"></div>
+                            </div><small class="text-muted">
+                                
+                                @if (Auth::user()->entreprise->id == $commande->id_entreprise)
+                                Rejetée par fournisseur
+                                @elseif(Auth::user()->entreprise->id == $commande->id_fournisseur)
+                                Rejetée
+                                @endif
+                            </small>            
                             @endif
                             
                         </div>
@@ -431,26 +489,34 @@ Bon de commande
                             </div>
                             @if ($commande->status == 0)
                                 
-                                @if (Auth::user()->entreprise->id == 1)
+                               
+                                @if (Auth::user()->entreprise->id == $commande->id_entreprise)
                                     <div class="ul-widget4__item">
                                         <div class="ul-widget4__pic-icon"><i class="i-Yes text-success"></i></div><a class="ul-widget4__title" href="{{ route('commande_fournisseur.valider',['slug'=> $commande->slug]) }}">Valider commande</a>
                                     </div>                            
                                     <div class="ul-widget4__item">
-                                        <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_fournisseur.rejeter',['slug'=> $commande->slug]) }}">Rejeter commande</a>
+                                        <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_fournisseur.rejeter',['slug'=> $commande->slug]) }}">Rejeter la commande</a>
                                     </div>
-                                @endif
-                                @if (Auth::user()->entreprise->id == $commande->id_entreprise)
-                                    <div class="ul-widget4__item">
-                                        <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_fournisseur.destroy',['id'=> $commande->id]) }}">Supprimer bon de commande</a>
+                                        <div class="ul-widget4__item">
+                                            <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_fournisseur.destroy',['id'=> $commande->id]) }}">Supprimer bon de commande</a>
                                     </div>
                                 @endif
                                 
                             @endif
-                            
                             @if ($commande->status == 1)
                                 @if (Auth::user()->entreprise->id == $commande->id_fournisseur)
                                     <div class="ul-widget4__item">
-                                        <div class="ul-widget4__pic-icon"><i class="i-Car text-warning"></i></div><a class="ul-widget4__title" href="#" type="button" data-toggle="modal" onclick="event.preventDefault();" data-target="#livraisonModalContent{{ $commande->id }}" data-whatever="@fat">Créer bon de sortie</a>
+                                        <div class="ul-widget4__pic-icon"><i class="i-Yes text-success"></i></div><a class="ul-widget4__title" href="{{ route('commande_fournisseur.accept',['slug'=> $commande->slug]) }}">Accepter la commande</a>
+                                    </div>
+                                    <div class="ul-widget4__item">
+                                        <div class="ul-widget4__pic-icon"><i class="i-Close text-danger"></i></div><a class="ul-widget4__title" href="{{ route('commande_fournisseur.refuse',['slug'=> $commande->slug]) }}">Rejeter la commande</a>
+                                    </div> 
+                                @endif
+                            @endif
+                            @if ($commande->status == 7)
+                                @if (Auth::user()->entreprise->id == $commande->id_fournisseur)
+                                    <div class="ul-widget4__item">
+                                        <div class="ul-widget4__pic-icon"><i class="i-Car text-warning"></i></div><a class="ul-widget4__title" href="#" type="button" data-toggle="modal" onclick="event.preventDefault();" data-target="#livraisonModalContent{{ $commande->id }}" data-whatever="@fat">Créer bon de livraison</a>
                                     </div> 
                                 @endif
                             @endif

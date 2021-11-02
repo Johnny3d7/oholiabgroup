@@ -39,7 +39,7 @@
                             <button class="btn btn-rounded btn-primary btn-block mt-2">Se connecter</button>
                         </form>
                         <div class="mt-3 text-center"><a class="text-muted" href="#">
-                                <u>Avez-vous oublié votre mot de passe?</u></a></div>
+                                {{-- <u>Avez-vous oublié votre mot de passe?</u> --}}</a></div>
                     </div>
                 </div>
                 <div class="col-md-6 text-center" style="background-size: cover;background-image: url({{ url('images/photologin1.png')  }});background-position:40% 60%;">

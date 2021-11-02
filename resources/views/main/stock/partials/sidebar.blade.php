@@ -24,12 +24,12 @@
             <li class="item-name"><a href="{{ route('stock.categories_prod.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Catégories</span></a></li>
         </ul>
     </li>
-    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes</span></a>
+    {{-- <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes</span></a>
         <ul class="mm-collapse">
             <li class="nav-item"><a href="{{ route('commande.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
             
         </ul>
-    </li>
+    </li> --}}
     {{-- <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes fournisseur vvv</span></a>
         <ul class="mm-collapse">
             <li class="nav-item"><a href="{{ route('boncommande.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
@@ -64,18 +64,22 @@
     </li>
     @endif
     
-    <li class="Ul_li--hover"><a href="{{ route('facture.index') }}"><i class="i-Billing text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Factures</span></a></li>
-    <li class="Ul_li--hover"><a href="{{ route('livraison.index') }}"><i class="i-Car text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Livraisons</span></a></li>
-    <li class="Ul_li--hover"><a href="{{ route('stock.client.index') }}"><i class="i-Add-UserStar text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Client</span></a></li>
-    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Affiliate text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Fournisseurs</span></a>
-        <ul class="mm-collapse">
-            <li class="nav-item"><a href="{{ route('stock.fournisseur.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
-            <li class="item-name"><a href="{{ route('stock.type_fournisseur.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Types</span></a></li>
-        </ul>
-    </li>
+    {{-- <li class="Ul_li--hover"><a href="{{ route('facture.index') }}"><i class="i-Billing text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Factures</span></a></li> --}}
+{{-- <li class="Ul_li--hover"><a href="{{ route('livraison.index') }}"><i class="i-Car text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Livraisons</span></a></li> --}}
+    {{-- <li class="Ul_li--hover"><a href="{{ route('stock.client.index') }}"><i class="i-Add-UserStar text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Client</span></a></li> --}}
+
+@if ($entreprise == 1)
+<li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Affiliate text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Fournisseurs</span></a>
+    <ul class="mm-collapse">
+        <li class="nav-item"><a href="{{ route('stock.fournisseur.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
+        <li class="item-name"><a href="{{ route('stock.type_fournisseur.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Types</span></a></li>
+    </ul>
+</li>
+@endif
+    
     
 
-    <li class="Ul_li--hover"><a href="{{ route('stock.entreprise.index') }}"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Entrepôt</span></a></li>
+    {{-- <li class="Ul_li--hover"><a href="{{ route('stock.entreprise.index') }}"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Entrepôt</span></a></li> --}}
     
 
     <!--  <p class="main-menu-title text-muted ml-3 font-weight-700 text-13 mt-4 mb-2">UI Elements</p> -->

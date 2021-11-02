@@ -4,7 +4,7 @@
 @if ($commande->id_entreprise == 1)
 <style>
     
-    #bl{
+b    #bl{
         background-repeat: no-repeat;
         background-position-x: center;
         background-position-y: center;
@@ -73,8 +73,8 @@ Affichage du bon de commande
                                         <div class="col-md-7" style="border: 5px solid #332a6c; text-align:center; width:50% ">
                                             <strong style="color: #332a6c; font-size:32px; font-weight:800; font-family: Arial black !important;">BON DE COMMANDE</strong>    
                                         </div>
-                                        <div class="col-md-5">
-                                            <strong style="color: #332a6c; font-size:32px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->num_cmd }}</strong>    
+                                        <div class="col-md-5 mt-2" style="text-align:center">
+                                            <strong style="color: #d40707; font-size:22px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->num_cmd }}</strong>    
                                         </div>
                                         <div class="col-md-12 mt-5" style="color: #332a6c; font-family: Cambria !important;font-size:20px;">
                                             <div class="row">
@@ -165,7 +165,7 @@ Affichage du bon de commande
                                             <strong style="color: #8cbe22; font-size:32px; font-weight:800; font-family: Arial black !important;">BON DE COMMANDE</strong>    
                                         </div>
                                         <div class="col-md-5">
-                                            <strong style="color: #8cbe22; font-size:32px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->num_cmd }}</strong>    
+                                            <strong style="color: #d40707; font-size:22px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->num_cmd }}</strong>    
                                         </div>
                                         <div class="col-md-12 mt-5" style="color: #332a6c; font-family: Cambria !important;font-size:20px;">
                                             <div class="row">
@@ -256,7 +256,7 @@ Affichage du bon de commande
                                             <strong style="color: #0f70b7; font-size:32px; font-weight:800; font-family: Arial black !important;">BON DE COMMANDE</strong>    
                                         </div>
                                         <div class="col-md-5">
-                                            <strong style="color: #0f70b7; font-size:32px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->num_cmd }}</strong>    
+                                            <strong style="color: #d40707; font-size:22px; font-weight:800; font-family: Arial black !important;">N° {{ $commande->num_cmd }}</strong>    
                                         </div>
                                         <div class="col-md-12 mt-5" style="color: #332a6c; font-family: Cambria !important;font-size:20px;">
                                             <div class="row">

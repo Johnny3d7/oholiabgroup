@@ -1,4 +1,4 @@
-@extends('production.partials.main')
+@extends('main.stock.partials.main')
 
 @section('stylesheets')
 

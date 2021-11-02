@@ -138,7 +138,7 @@ Historique des mouvements | {{ $variations[0]->product_lib }}
 <script>
     $(document).ready(function() {
     $('#inventaireTable').DataTable({
-        "order": [[ 4, "asc" ]],
+        ordering:false,
         paging: true,
         searching: true,
         dom: 'Bfrtip',

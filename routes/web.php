@@ -123,6 +123,7 @@ Route::post('/commandes-fournisseur/store', 'App\Http\Controllers\Stock\Commande
 Route::get('/commandes-fournisseur/edit/{id}', 'App\Http\Controllers\Stock\CommandeFournisseurController@edit')->name('commande_fournisseur.edit');
 Route::any('/commandes-fournisseur/update/{id}', 'App\Http\Controllers\Stock\CommandeFournisseurController@update')->name('commande_fournisseur.update');
 Route::get('/commandes-fournisseur/destroy/{id}', 'App\Http\Controllers\Stock\CommandeFournisseurController@destroy')->name('commande_fournisseur.destroy');
+
 Route::get('/commandes-fournisseur/view/{id}', 'App\Http\Controllers\Stock\CommandeFournisseurController@view')->name('commande_fournisseur.view');
 Route::get('/commandes-fournisseur/viewlivraison/{id}', 'App\Http\Controllers\Stock\CommandeFournisseurController@viewlivraison')->name('commande_fournisseur.viewlivraison');
 
@@ -143,6 +144,11 @@ Route::get('/commande-fournisseur/rejeter/{slug}', 'App\Http\Controllers\Stock\C
 Route::get('/commande-fournisseur/annuler/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@annuler')->name('commande_fournisseur.annuler');
 //Classer comme livré
 Route::get('/commande-fournisseur/livrer/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@livrer')->name('commande_fournisseur.livrer');
+
+//Validation au niveau du fournisseur
+Route::get('/commandes-fournisseur/accept/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@accept')->name('commande_fournisseur.accept');
+//REfuser par le fournisseur
+Route::get('/commandes-fournisseur/refuse/{slug}', 'App\Http\Controllers\Stock\CommandeFournisseurController@refuse')->name('commande_fournisseur.refuse');
 //Créer un bon de livraison
 Route::post('/commande-fournisseur/create-bon-livraison', 'App\Http\Controllers\Stock\CommandeFournisseurController@create_bon_livraison')->name('commande_fournisseur.create_bon_livraison');
 
