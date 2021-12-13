@@ -32,6 +32,7 @@ class LoginController extends Controller
     {
         return '/modules';
     }
+    
     /**
      * Create a new controller instance.
      *
