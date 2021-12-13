@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
     return view('main.dashboard.dashboard');
 });*/
 
+Route::get('/', function () {
+    return redirect('/login');
+});
+
 Route::get('/mail', 'App\Http\Controllers\Stock\ProductCategoryController@mail')->name('mail');
 
 Route::middleware(['guest'])->group(function(){
