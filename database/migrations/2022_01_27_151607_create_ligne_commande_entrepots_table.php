@@ -14,10 +14,11 @@ class CreateLigneCommandeEntrepotsTable extends Migration
     public function up()
     {
         Schema::create('ligne_commande_entrepots', function (Blueprint $table) {
+
             $table->id();
-            $table->integer('id_ligne_commande');
-            $table->integer('id_entrepot');
-            
+            $table->integer('id_ligne_commande')->unsigned();
+            $table->integer('id_entrepot')->unsigned();
+
             $table->foreign('id_ligne_commande')->references('id')->on('ligne_commandes')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
