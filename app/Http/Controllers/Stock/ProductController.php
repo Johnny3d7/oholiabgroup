@@ -20,7 +20,7 @@ class ProductController extends Controller
     {
         //
         $products = Product::where('status', 1)->orderBy('lib', 'asc')->get();
-
+        //dd($products);
         return view('main.stock.product.index',compact('products'));
     }
 

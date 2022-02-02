@@ -230,7 +230,7 @@ class CommandeFournisseurController extends Controller
         $commande->save();
 
         $notification = array(
-            "message" => "Vous avez supprimer une commande forunisseur!",
+            "message" => "Vous avez supprimer une commande fournisseur!",
             "alert-type" => "success"
         );
         

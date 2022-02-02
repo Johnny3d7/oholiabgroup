@@ -25,13 +25,13 @@ class Variation extends Model
         'observation',
         'status',
         'id_product',
-        'id_entreprise'
+        'id_entrepot'
     ];
 
    
-    public function entreprise()
+    public function entrepot()
     {
-        return $this->belongsTo(Entreprise::class, 'id_entreprise');
+        return $this->belongsTo(Entrepot::class, 'id_entrepot');
     }
 
     public function product()

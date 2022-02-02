@@ -65,6 +65,11 @@ class Product extends Model
     {
         return $this->hasMany(Variation::class, 'id_product');
     }
+    
+    public function variation_entrepot(Entrepot $entrepot)
+    {
+        return $this->hasMany(Variation::class, 'id_product')->whereIdEntrepot($entrepot->id)->get();
+    }
 
     /**
     * The roles that belong to the Commande
@@ -85,4 +90,45 @@ class Product extends Model
     {
         return $this->belongsToMany(CommandeFournisseur::class, 'ligne_commande_fournisseurs', 'product_id', 'commande_fournisseur_id')->withPivot('qte','prix', 'status')->withTimestamps();
     }
+
+    public function entrepots(){
+        $variations = $this->variations;
+
+        $entId = $entrepots = [];
+
+        foreach($variations as $variation){
+            if(!in_array($variation->id_entrepot, $entId)){
+                $entId []= $variation->id_entrepot;
+                $entrepots []= $variation->entrepot;
+            }
+        }
+        return $entrepots;
+    }
+
+    public function stock_physique_entrepot(Entrepot $entrepot){
+
+        $entrees = $this->variation_entrepot($entrepot)->sum('qte_entree');
+        $sorties = $this->variation_entrepot($entrepot)->sum('qte_sortie');
+
+        return $entrees - $sorties ;
+    }
+
+    public function stock_virtuel_entrepot(Entrepot $entrepot){
+
+        $entrees = $this->variation_entrepot($entrepot)->sum('qte_entree');
+        $sorties = $this->variation_entrepot($entrepot)->sum('qte_sortie');
+
+        return $entrees - $sorties ;
+    }
+
+    /*public function commande_en_cours_entrepot(Entrepot $entrepot){
+
+        $commandes = $this->commandes()-where("")
+
+        return $entrees - $sorties;
+    }*/
+
+
+
+    
 }

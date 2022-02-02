@@ -177,7 +177,8 @@ Créer une commande
                     <div class="mc-footer">
                         <div class="row">
                             <div class="col-lg-12 text-center">
-                                <button class="btn btn-primary m-1" type="submit">Valider</button>
+                                <button class="btn btn-primary btn-lg m-1" type="submit">Valider</button>
+
                                 <button class="btn btn-outline-secondary m-1" type="reset">annuler</button>
                             </div>
                         </div>
@@ -234,7 +235,7 @@ Créer une commande
     
      $('#addProduct').on('click', function(e){
         $i++;
-        e.preventDefault();
+            
         console.log('bonjour');
         $('#lotprod').append(`
                         <div class="form-group col-md-6" id="prod-${$i}">

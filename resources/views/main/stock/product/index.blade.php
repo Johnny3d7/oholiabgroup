@@ -29,7 +29,7 @@ Liste des produits
                  <a href="{{ route('stock.product.create') }}"><button class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right"  data-style="expand-right"><span class="ladda-label">Ajouter un produit</span></button></a>
                 
                 <div class="table-responsive">
-                    <table class="display table table-striped table-bordered" id="productsTable" style="width:100%">
+                    <table class="display table table-striped table-bordered table_oholiab"  style="width:100%">
                         <thead>
                             <tr>
                                 <th>Référence</th>
@@ -79,16 +79,18 @@ Liste des produits
 
 @section('javascripts')
 <script>
-    $(document).ready(function() {
-    $('#productsTable').DataTable({
-        "order": [[ 1, "asc" ]],
-        paging: true,
-        searching: true,
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    } );
-} );
+//     $(document).ready(function() {
+//     $('#productsTable').DataTable({
+//         "order": [[ 1, "asc" ]],
+//         paging: true,
+//         "language": {
+//                 "url": "{{ url('js/language/french_json.json')}}",
+//         searching: true,
+//         dom: 'Bfrtip',
+//         buttons: [
+//             'copy', 'csv', 'excel', 'pdf', 'print'
+//         ]
+//     } );
+// } );
 </script>
 @endsection

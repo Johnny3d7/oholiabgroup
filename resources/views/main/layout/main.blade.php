@@ -159,6 +159,21 @@
     }
   @endif
     </script>
+    <script>
+        $(document).ready(function () {
+        $('.table_oholiab').DataTable({
+            paging: true,
+            "language": {
+                "url": "{{ url('js/language/french_json.json')}}"
+     },
+            searching: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+} );
+    });
+    </script>
     @yield('javascripts')
 </body>
 

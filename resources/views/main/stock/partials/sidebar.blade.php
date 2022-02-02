@@ -50,7 +50,7 @@
             </ul>
         </li>
     @elseif($entreprise == 1)
-    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes fournisseur</span></a>
+    {{-- <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes fournisseur</span></a>
         <ul class="mm-collapse">
             <li class="nav-item"><a href="{{ route('commande_fournisseur.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
            
@@ -61,6 +61,12 @@
             <li class="nav-item"><a href="{{ route('commande_fournisseur.recu') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
            
         </ul>
+    </li> --}}
+    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Entrepôts</span></a>
+        <ul class="mm-collapse">
+            <li class="nav-item"><a href="{{ route('stock.entrepots.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
+            <li class="nav-item"><a href="{{ route('stock.entrepot.create') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Créer un entrepôt</span></a></li>
+        </ul>
     </li>
     @endif
     
@@ -68,14 +74,14 @@
 {{-- <li class="Ul_li--hover"><a href="{{ route('livraison.index') }}"><i class="i-Car text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Livraisons</span></a></li> --}}
     {{-- <li class="Ul_li--hover"><a href="{{ route('stock.client.index') }}"><i class="i-Add-UserStar text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Client</span></a></li> --}}
 
-@if ($entreprise == 1)
+{{-- @if ($entreprise == 1)
 <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Affiliate text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Fournisseurs</span></a>
     <ul class="mm-collapse">
         <li class="nav-item"><a href="{{ route('stock.fournisseur.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
         <li class="item-name"><a href="{{ route('stock.type_fournisseur.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Types</span></a></li>
     </ul>
 </li>
-@endif
+@endif --}}
     
     
 

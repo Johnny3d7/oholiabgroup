@@ -12,7 +12,7 @@
 @endsection
 
 @section('menuTitle')
-Produit
+Inventaire
 @endsection
 
 @section('pageTitle')

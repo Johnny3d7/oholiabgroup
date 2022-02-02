@@ -37,9 +37,9 @@ class Entreprise extends Model
             ->saveSlugsTo('slug');
     }
 
-    public function variations()
+    public function entrepots()
     {
-        return $this->hasMany(Variation::class, 'id_entreprise');
+        return $this->hasMany(Entrepot::class, 'id_entreprise');
     }
 
     public function users()

@@ -9,7 +9,7 @@ Produit
 @endsection
 
 @section('pageTitle')
-Détail du produit
+Détails du produit
 @endsection
 
 @section('content')
@@ -37,43 +37,36 @@ Détail du produit
                             @if ($product->price)
                                 <div class="ul-product-detail__price-and-rating d-flex align-items-baseline">
                                     <h5 class="font-weight-700 text-primary mb-0 mr-2">{{ number_format($product->price , 0, '', ' ') }} Fcfa</h5><span class="text-mute font-weight-800 mr-2">
-                                        {{-- <del>$1,150</del></span><small class="text-success font-weight-700">50% off</small> --}}
+                                        
                                 </div>
                             @endif
-                            
-                            <!--
-        <div class="ul-product-detail__rating">
-                                                        <ul>
-                                                            <li></li>
-                                                        </ul>
-                                                    </div> 
-        -->
-            <div class="ul-product-detail__features mt-4">
-                <h5 class="font-weight-700">Caractéristiques du produit:</h5>
-                <ul class="m-0 p-0">
-                    <div class="ul-widget-app__browser-list-1 mb-2 mt-4"><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Référence :</strong> {{ $product->ref }} </span><span class="text-mute" style="display: none">2 April </span></div>
-                    <div class="ul-widget-app__browser-list-1 mb-2"><i class="i-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Stock alerte (seuil) :</strong> {{ $product->stockalert }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                    @if ($product->typeProduct)
-                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Type de produit :</strong> {{ $product->typeProduct->lib }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                    @endif
-                    @if ($product->poids && $product->unite_poids )
-                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Poids :</strong> {{ $product->poids }} {{ $product->unite_poids }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                    @endif
-                    @if ($product->unite_mesure && $product->longueur)
-                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Dimensions :</strong> {{ $product->longueur }}x{{ $product->largeur }}x{{ $product->hauteur }} {{ $product->unite_mesure }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                    @endif
-                    @if ($product->volume && $product->unite_volume)
-                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Volume :</strong> {{ $product->volume }} {{ $product->unite_volume }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                    @endif
-                    @if ($product->liquide)
-                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Référence :</strong> {{ $product->liquide }} {{ $product->unite_liquide }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                    @endif
-                    @if ($product->status)
-                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Statut :</strong> {{ $product->status == 1 ? 'Actif': 'Inactif' }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                    @endif
-                
-                </ul>
-            </div>
+                        
+                            <div class="ul-product-detail__features mt-4">
+                                <h5 class="font-weight-700">Caractéristiques du produit:</h5>
+                                <ul class="m-0 p-0">
+                                    <div class="ul-widget-app__browser-list-1 mb-2 mt-4"><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Référence :</strong> {{ $product->ref }} </span><span class="text-mute" style="display: none">2 April </span></div>
+                                    <div class="ul-widget-app__browser-list-1 mb-2"><i class="i-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Stock alerte (seuil) :</strong> {{ $product->stockalert }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @if ($product->typeProduct)
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Type de produit :</strong> {{ $product->typeProduct->lib }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                    @if ($product->poids && $product->unite_poids )
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Poids :</strong> {{ $product->poids }} {{ $product->unite_poids }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                    @if ($product->unite_mesure && $product->longueur)
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Dimensions :</strong> {{ $product->longueur }}x{{ $product->largeur }}x{{ $product->hauteur }} {{ $product->unite_mesure }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                    @if ($product->volume && $product->unite_volume)
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Volume :</strong> {{ $product->volume }} {{ $product->unite_volume }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                    @if ($product->liquide)
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Référence :</strong> {{ $product->liquide }} {{ $product->unite_liquide }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                    @if ($product->status)
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Statut :</strong> {{ $product->status == 1 ? 'Actif': 'Inactif' }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                
+                                </ul>
+                            </div>
                            
                         </div>
                     </div>
