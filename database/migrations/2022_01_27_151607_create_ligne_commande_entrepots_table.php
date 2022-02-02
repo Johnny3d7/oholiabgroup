@@ -15,7 +15,9 @@ class CreateLigneCommandeEntrepotsTable extends Migration
     {
         Schema::create('ligne_commande_entrepots', function (Blueprint $table) {
             $table->id();
-
+            $table->integer('id_ligne_commande');
+            $table->integer('id_entrepot');
+            
             $table->foreign('id_ligne_commande')->references('id')->on('ligne_commandes')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
