@@ -25,9 +25,9 @@ Commande
                             <div class="ul-product-cart__invoice">
                                 <div class="card-title">
                                     <h3 class="heading text-primary"> COMMANDE</h3>
-                                    @if (strpos(strtolower($commande->products->first()->productCategory->lib), 'obp'))
+                                    @if (strpos(strtolower($commande->products->first()->category->lib), 'obp'))
                                     <img class="logo" style="height: 50px; width:auto; float:right !important; margin-top:-40px !important;" src="{{ url('images/logoobp.png') }}" alt="">
-                                    @elseif(strpos(strtolower($commande->products->first()->productCategory->lib), 'ak'))
+                                    @elseif(strpos(strtolower($commande->products->first()->category->lib), 'ak'))
                                     <img class="logo" style="height: 120px; width:auto; float:right !important; margin-top:-80px !important;" src="{{ url('images/logoakebie.png') }}" alt="">
                                     @endif                                    
                                 </div>
@@ -43,7 +43,7 @@ Commande
                                             </td>
                                             <th class="text-16 text-muted" scope="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nature commande</th>
                                             <td class="text-16 text-success font-weight-700">
-                                                {{ $commande->products->first()->productCategory->lib }}
+                                                {{ $commande->products->first()->category->lib }}
                                             </td>                                                 
                                         </tr>
                                         

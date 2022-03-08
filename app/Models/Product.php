@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -51,12 +52,16 @@ class Product extends Model
             ->saveSlugsTo('slug');
     }
 
-    public function productCategory()
+    public static function selectAll(){
+        return static::where('status', 1)->get();
+    }
+
+    public function category()
     {
         return $this->belongsTo(ProductCategory::class, 'id_product_category');
     }
 
-    public function typeProduct()
+    public function type()
     {
         return $this->belongsTo(TypeProduct::class, 'id_type_product');
     }
@@ -68,7 +73,21 @@ class Product extends Model
     
     public function variation_entrepot(Entrepot $entrepot)
     {
-        return $this->hasMany(Variation::class, 'id_product')->whereIdEntrepot($entrepot->id)->get();
+        return $this->variations->where('id_entrepot', $entrepot->id);
+    }
+    
+    public function variation_entreprise(Entreprise $entreprise)
+    {
+        $entrepots = $entreprise->entrepots;
+        $variations = new Collection();
+        foreach ($entrepots as $entrepot) {
+            foreach ($this->variation_entrepot($entrepot) as $variation) {
+                $variations->add($variation);
+            }
+            // if($this->variation_entrepot($entrepot)){
+            // }
+        }
+        return $variations;
     }
 
     /**
@@ -94,19 +113,24 @@ class Product extends Model
     public function entrepots(){
         $variations = $this->variations;
 
-        $entId = $entrepots = [];
+        $entIds = array_unique($variations->pluck('id_entrepot')->all());
 
-        foreach($variations as $variation){
-            if(!in_array($variation->id_entrepot, $entId)){
-                $entId []= $variation->id_entrepot;
-                $entrepots []= $variation->entrepot;
-            }
+        $entrepots = new Collection();
+        foreach ($entIds as $entId) {
+            $entrepots->add(Entrepot::find($entId));
         }
+        // $entId = $entrepots = [];
+
+        // foreach($variations as $variation){
+        //     if(!in_array($variation->id_entrepot, $entId)){
+        //         $entId []= $variation->id_entrepot;
+        //         $entrepots []= $variation->entrepot;
+        //     }
+        // }
         return $entrepots;
     }
 
     public function stock_physique_entrepot(Entrepot $entrepot){
-
         $entrees = $this->variation_entrepot($entrepot)->sum('qte_entree');
         $sorties = $this->variation_entrepot($entrepot)->sum('qte_sortie');
 
@@ -114,12 +138,30 @@ class Product extends Model
     }
 
     public function stock_virtuel_entrepot(Entrepot $entrepot){
-
         $entrees = $this->variation_entrepot($entrepot)->sum('qte_entree');
         $sorties = $this->variation_entrepot($entrepot)->sum('qte_sortie');
 
         return $entrees - $sorties ;
     }
+    
+    public function stock_physique_entreprise(Entreprise $entreprise){
+        $entrepots = $entreprise->entrepots;
+        $somme = 0;
+        foreach ($entrepots as $entrepot) {
+            $somme += $this->stock_physique_entrepot($entrepot);
+        }
+        return $somme;
+    }
+
+    public function stock_virtuel_entreprise(Entreprise $entreprise){
+        $entrepots = $entreprise->entrepots;
+        $somme = 0;
+        foreach ($entrepots as $entrepot) {
+            $somme += $this->stock_virtuel_entrepot($entrepot);
+        }
+        return $somme;
+    }
+
 
     /*public function commande_en_cours_entrepot(Entrepot $entrepot){
 

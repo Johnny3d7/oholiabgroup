@@ -24,18 +24,6 @@ class CreateDevisTable extends Migration
             $table->integer('id_client')->unsigned();
             $table->integer('id_entreprise')->unsigned();
         
-            $table->foreign('id_recorder')->references('id')->on('users')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->foreign('id_client')->references('id')->on('clients')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-            
-            $table->foreign('id_entreprise')->references('id')->on('entreprises')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-        
             $table->timestamps();
             $table->softDeletes();
         });

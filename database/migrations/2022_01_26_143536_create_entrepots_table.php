@@ -24,10 +24,11 @@ class CreateEntrepotsTable extends Migration
             $table->string('contact')->nullable();
             $table->integer('id_recorder');
             $table->integer('status')->default(1);
-            $table->timestamps();
-
+            
             //Foreign key
             $table->integer('id_entreprise');
+            
+            $table->timestamps();
         });
     }
 

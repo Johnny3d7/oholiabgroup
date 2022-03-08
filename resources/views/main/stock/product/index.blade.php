@@ -46,9 +46,9 @@ Liste des produits
                                 <tr>
                                     <td>{{ $data->ref }}</td>
                                     <td>{{ $data->lib }}</td>
-                                    <td>{{ $data->productCategory->lib }}</td>
+                                    <td>{{ $data->category->lib }}</td>
                                     <td>{{ $data->stockalert }}</td>
-                                    <td>{{ $data->typeProduct->lib }}</td>
+                                    <td>{{ $data->type->lib }}</td>
                                     <td>{{ ucwords((new Carbon\Carbon($data->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                     <td><a href="{{ route('stock.product.show',['slug'=>$data->slug]) }}"><button class="btn btn-outline-warning btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Eye"></i></span></button></a><a href="{{ route('stock.product.edit',['slug'=>$data->slug]) }}"><button class="btn btn-outline-success btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Edit"></i></span></button></a><a href="{{ route('stock.product.destroy',['slug'=>$data->slug]) }}"><button class="btn btn-outline-danger btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Close"></i></span></button></a></td>
                                 </tr>

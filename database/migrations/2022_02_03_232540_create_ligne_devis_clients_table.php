@@ -17,16 +17,9 @@ class CreateLignedevisclientsTable extends Migration
             $table->increments('id');
             $table->integer('qte');
             $table->integer('prix');
-            $table->integer('id_devis');
-            $table->integer('id_product');
-        
-            $table->foreign('id_devis')->references('id')->on('devis')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
 
-            $table->foreign('id_prduct')->references('id')->on('products')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->integer('id_devis')->unsigned();
+            $table->integer('id_product')->unsigned();
         
             $table->timestamps();
             $table->softDeletes();

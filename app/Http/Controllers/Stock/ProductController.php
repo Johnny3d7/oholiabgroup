@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Stock;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\Entreprise;
+use App\Models\Fournisseur;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
@@ -276,20 +278,28 @@ class ProductController extends Controller
     public function etatstock($slug)
     {
         //
+        $entreprises = Entreprise::selectAll();
+        $products = Product::selectAll();
+        $fournisseurs = Fournisseur::selectAll();
+        $clients = Client::selectAll();
         $entreprise = Entreprise::where('slug', $slug)->first();
 
-        $products = DB::table('variations')->distinct()
-        ->join('products', 'products.id', '=', 'variations.id_product')
-        ->join('entreprises', 'entreprises.id', '=', 'variations.id_entreprise')
-        ->join('products_categories', 'products_categories.id', '=', 'products.id_product_category')
-        ->where('variations.status', '=', 1)
-        ->where('products.status', '=', 1)
-        ->select('products.*','products_categories.lib as category',
-        DB::raw('SUM(variations.qte_entree) as total_entree'),
-        DB::raw('SUM(variations.qte_sortie) as total_sortie'),
-        DB::raw('SUM(variations.qte_entree) - SUM(variations.qte_sortie) as total_stock'))
-        ->where('variations.id_entreprise', '=', $entreprise->id)->groupBy('products.id')->get();
-        //dd($products);
+        // $products = Product::all();
+        // dd($products);
+        return view('main.stock.product.etatstock', compact('products', 'fournisseurs', 'entreprises', 'clients', 'entreprise'));
+
+        // $products = DB::table('variations')->distinct()
+        // ->join('products', 'products.id', '=', 'variations.id_product')
+        // ->join('entreprises', 'entreprises.id', '=', 'variations.id_entreprise')
+        // ->join('products_categories', 'products_categories.id', '=', 'products.id_product_category')
+        // ->where('variations.status', '=', 1)
+        // ->where('products.status', '=', 1)
+        // ->select('products.*','products_categories.lib as category',
+        // DB::raw('SUM(variations.qte_entree) as total_entree'),
+        // DB::raw('SUM(variations.qte_sortie) as total_sortie'),
+        // DB::raw('SUM(variations.qte_entree) - SUM(variations.qte_sortie) as total_stock'))
+        // ->where('variations.id_entreprise', '=', $entreprise->id)->groupBy('products.id')->get();
+        // dd($products);
 
         return view('main.stock.product.etatstock', compact('products','entreprise'));
     }
@@ -304,19 +314,22 @@ class ProductController extends Controller
         $entreprise = Entreprise::where('slug', $entreprise)->first();
         $prod = Product::where('slug', $slug)->first();
 
-        $variations = DB::table('variations')->distinct()
-        ->join('products', 'products.id', '=', 'variations.id_product')
-        ->join('entreprises', 'entreprises.id', '=', 'variations.id_entreprise')
-        ->select('variations.*','products.lib as product_lib')
-        ->where('variations.id_entreprise', '=', $entreprise->id)
-        ->where('products.id', '=', $prod->id)
-        ->where('variations.status', '=',1)
-        ->orderByDesc('variations.created_at')
-        ->groupBy('variations.id')->get();
+        // $variations = DB::table('variations')->distinct()
+        // ->join('products', 'products.id', '=', 'variations.id_product')
+        // ->join('entrepots', 'entrepots.id', '=', 'variations.id_entrepot')
+        // ->select('variations.*','products.lib as product_lib')
+        // ->where('variations.id_entreprise', '=', $entreprise->id)
+        // ->where('products.id', '=', $prod->id)
+        // ->where('variations.status', '=',1)
+        // ->orderByDesc('variations.created_at')
+        // ->groupBy('variations.id')->get();
 
         //dd($variations);
 
-        return view('main.stock.product.stockstory', compact('variations'));
+        $variations = $prod->variation_entreprise($entreprise);
+        // dd($variations);
+
+        return view('main.stock.product.stockstory', compact('variations', 'prod'));
     }
 
     //Changer l'image du produit

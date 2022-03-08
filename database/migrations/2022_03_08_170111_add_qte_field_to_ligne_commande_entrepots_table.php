@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIdEntrepotVariationsTable extends Migration
+class AddQteFieldToLigneCommandeEntrepotsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddIdEntrepotVariationsTable extends Migration
      */
     public function up()
     {
-        Schema::table('variations', function (Blueprint $table) {
-            $table->renameColumn('id_entreprise', 'id_entrepot');
+        Schema::table('ligne_commande_entrepots', function (Blueprint $table) {
+            $table->integer('qte')->unsigned();
         });
     }
 
@@ -25,6 +25,8 @@ class AddIdEntrepotVariationsTable extends Migration
      */
     public function down()
     {
-        
+        Schema::table('ligne_commande_entrepots', function (Blueprint $table) {
+            $table->dropColumn('qte');
+        });
     }
 }

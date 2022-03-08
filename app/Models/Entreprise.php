@@ -37,6 +37,10 @@ class Entreprise extends Model
             ->saveSlugsTo('slug');
     }
 
+    public static function selectAll(){
+        return static::where('status', 1)->get();
+    }
+
     public function entrepots()
     {
         return $this->hasMany(Entrepot::class, 'id_entreprise');

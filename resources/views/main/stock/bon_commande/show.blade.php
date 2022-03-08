@@ -26,9 +26,9 @@ Bon de commande
                             <div class="ul-product-cart__invoice">
                                 <div class="card-title">
                                     <h3 class="heading text-primary">BON COMMANDE</h3>
-                                   {{-- @if (strpos(strtolower($bonCommande->products->first()->productCategory->lib), 'obp'))
+                                   {{-- @if (strpos(strtolower($bonCommande->products->first()->category->lib), 'obp'))
                                     <img class="logo" style="height: 50px; width:auto; float:right !important; margin-top:-40px !important;" src="{{ url('images/logoobp.png') }}" alt="">
-                                    @elseif(strpos(strtolower($bonCommande->products->first()->productCategory->lib), 'ak'))
+                                    @elseif(strpos(strtolower($bonCommande->products->first()->category->lib), 'ak'))
                                     <img class="logo" style="height: 120px; width:auto; float:right !important; margin-top:-80px !important;" src="{{ url('images/logoakebie.png') }}" alt="">
                                     @endif --}} 
                                 </div>
