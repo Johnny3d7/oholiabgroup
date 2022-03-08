@@ -38,6 +38,10 @@ class Fournisseur extends Model
             ->saveSlugsTo('slug');
     }
 
+    public static function selectAll(){
+        return static::where('status', 1)->get();
+    }
+
     public function variations()
     {
         return $this->hasMany(Variation::class, 'id_fournisseur');

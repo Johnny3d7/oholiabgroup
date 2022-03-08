@@ -16,7 +16,7 @@ Stock
 @endsection
 
 @section('pageTitle')
-Historique des mouvements | {{ $variations[0]->product_lib }}
+Historique des mouvements | {{ $prod->lib }}
 @endsection
 
 @section('content')

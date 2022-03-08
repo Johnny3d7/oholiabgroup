@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Stock\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Etat du stock
-Route::get('/etat-du-stock/{slug}', 'ProductController@etatstock')->name('etat_stock.index');
+Route::get('/etat-du-stock/{slug}', [ProductController::class, 'etatstock'])->name('etat_stock.index');
 
 //Historique stock d'un produit
-Route::get('/historique-des-mouvements/{entreprise}/{slug}', 'ProductController@stockStory')->name('stock_story.index');
+Route::get('/historique-des-mouvements/{entreprise}/{slug}', [ProductController::class, 'stockStory'])->name('stock_story.index');
 
 // Routes Variations
 Route::get('/variations', 'VariationController@index')->name('variation.index');

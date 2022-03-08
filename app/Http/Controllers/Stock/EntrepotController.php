@@ -102,6 +102,7 @@ class EntrepotController extends Controller
         //
 
         $entrepot = Entrepot::where(['slug'=>$slug])->first();
+
         dd($entrepot->produits()[0]->stock_physique_entrepot($entrepot));
         $products = DB::table('variations')->distinct()
         ->join('products', 'products.id', '=', 'variations.id_product')
@@ -115,7 +116,7 @@ class EntrepotController extends Controller
         DB::raw('SUM(variations.qte_entree) - SUM(variations.qte_sortie) as total_stock'))
         ->where('variations.id_entrepot', '=', $entrepot->id)->groupBy('products.id')->get();
 
-        dd($products);
+        // dd($products);
 
         return view('main.stock.entrepot.show', compact('entrepot'));
     }

@@ -32,7 +32,7 @@ Détails du produit
                         </div>
                         <div class="col-lg-6">
                             <div class="ul-product-detail__brand-name mb-4">
-                                <h2 class="heading">{{ $product->lib }}</h2><span class="text-warning">{{ $product->productCategory->lib }}</span>
+                                <h2 class="heading">{{ $product->lib }}</h2><span class="text-warning">{{ $product->category->lib }}</span>
                             </div>
                             @if ($product->price)
                                 <div class="ul-product-detail__price-and-rating d-flex align-items-baseline">
@@ -46,8 +46,8 @@ Détails du produit
                                 <ul class="m-0 p-0">
                                     <div class="ul-widget-app__browser-list-1 mb-2 mt-4"><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Référence :</strong> {{ $product->ref }} </span><span class="text-mute" style="display: none">2 April </span></div>
                                     <div class="ul-widget-app__browser-list-1 mb-2"><i class="i-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Stock alerte (seuil) :</strong> {{ $product->stockalert }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                                    @if ($product->typeProduct)
-                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Type de produit :</strong> {{ $product->typeProduct->lib }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @if ($product->type)
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Type de produit :</strong> {{ $product->type->lib }}</span><span class="text-mute" style="display: none">2 April </span></div>
                                     @endif
                                     @if ($product->poids && $product->unite_poids )
                                         <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Poids :</strong> {{ $product->poids }} {{ $product->unite_poids }}</span><span class="text-mute" style="display: none">2 April </span></div>
