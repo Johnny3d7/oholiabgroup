@@ -117,7 +117,7 @@ class Product extends Model
 
         $entrepots = new Collection();
         foreach ($entIds as $entId) {
-            $entrepots->add(Entrepot::find($entId));
+            if(Entrepot::find($entId)) $entrepots->add(Entrepot::find($entId));
         }
         // $entId = $entrepots = [];
 

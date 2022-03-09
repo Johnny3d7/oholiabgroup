@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Stock;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Entrepot;
 use App\Models\Entreprise;
 use App\Models\Fournisseur;
 use App\Models\Product;
@@ -309,7 +310,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function stockStory($entreprise,$slug)
+    public function stockStoryComp($entreprise,$slug)
     {
         $entreprise = Entreprise::where('slug', $entreprise)->first();
         $prod = Product::where('slug', $slug)->first();
@@ -328,6 +329,16 @@ class ProductController extends Controller
 
         $variations = $prod->variation_entreprise($entreprise);
         // dd($variations);
+
+        return view('main.stock.product.stockstory', compact('variations', 'prod'));
+    }
+
+    public function stockStoryEntp($entrepot,$slug)
+    {
+        $entrepot = Entrepot::where('slug', $entrepot)->first();
+        $prod = Product::where('slug', $slug)->first();  
+
+        $variations = $prod->variation_entrepot($entrepot);
 
         return view('main.stock.product.stockstory', compact('variations', 'prod'));
     }

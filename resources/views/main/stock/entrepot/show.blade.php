@@ -93,7 +93,32 @@ Détail sur l'entrepôt {{ $entrepot->ref }} à {{ $entrepot->entreprise->nom }}
                                     </tr>
                                 </thead>
                                 <tbody> 
-                                        
+                                    @forelse ($products as $product)
+                                        <tr>
+                                            <td>{{ $product->ref }}</td>
+                                            <td>{{ $product->lib }}</td>
+                                            <td>{{ $product->category->lib }}</td>
+                                            <td>
+                                                @if ($product->total_stock < $product->stockalert)
+                                                <strong style="color: red">{{ $product->stockalert }}</strong>
+                                                @else
+                                                <strong style="color: green">{{ $product->stockalert }}</strong>
+                                                @endif
+                                            </td>
+                                            <td>{{ $product->stock_physique_entrepot($entrepot) }}</td>
+                                            <td>{{ $product->stock_virtuel_entrepot($entrepot) }}</td>
+                                            <td>
+                                                @if ($product->stock_virtuel_entrepot($entrepot) < $product->stockalert)
+                                                <a class="badge badge-danger text-white m-2 p-2">Rupture </a>
+                                                @else
+                                                <a class="badge badge-success text-white m-2 p-2">Disponible</a>
+                                                @endif
+                                             </td>
+                                            <td>
+                                                <button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#verifyModalContent{{ $product->id }}" data-whatever="@fat">Modifier</button><a href="{{ route('stock.stock_story_entrepot.index',['entrepot'=>$entrepot->slug, 'slug'=> $product->slug]) }}"><button class="btn btn-outline-warning m-1" type="button">Historique</button></a><!-- <a href="{{ route('stock.product.destroy',['slug'=>$product->id]) }}"><button class="btn btn-outline-danger m-1" type="button">Supprimer</button></a> -->
+                                            </td>
+                                        </tr>
+                                    @empty
                                         <tr>
                                             <td>4</td>
                                             <td>4</td>
@@ -104,8 +129,7 @@ Détail sur l'entrepôt {{ $entrepot->ref }} à {{ $entrepot->entreprise->nom }}
                                             <td>4</td>
                                             <td>4</td>
                                         </tr>
-                                       
-                                 
+                                    @endforelse
                                 </tbody>
                                 <tfoot>
                                     <tr>    
