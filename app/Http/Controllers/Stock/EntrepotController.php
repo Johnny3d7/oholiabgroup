@@ -102,8 +102,10 @@ class EntrepotController extends Controller
         //
 
         $entrepot = Entrepot::where(['slug'=>$slug])->first();
+        $products = $entrepot->products();
+        return view('main.stock.entrepot.show', compact('entrepot', 'products'));
 
-        dd($entrepot->produits()[0]->stock_physique_entrepot($entrepot));
+        dd($entrepot->products()[0]->stock_physique_entrepot($entrepot));
         $products = DB::table('variations')->distinct()
         ->join('products', 'products.id', '=', 'variations.id_product')
         ->join('entrepots', 'entrepots.id', '=', 'variations.id_entrepot')

@@ -22,7 +22,7 @@ Historique des mouvements | {{ $prod->lib }}
 @section('content')
 <section class="contact-list">
     <div class="row">
-        <div class="col-md-10 mb-4">
+        <div class="col-md-12 mb-4">
             <div class="card text-left">
                 <div class="card-header text-right bg-transparent">
                 </div>
@@ -41,7 +41,7 @@ Historique des mouvements | {{ $prod->lib }}
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($variations as $data)
+                                @forelse ($variations->sortByDesc('datemouv') as $data)
                                     <tr>
                                         <td>{{ ucwords((new Carbon\Carbon($data->datemouv))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                         @if ($data->typemouv == 1)
@@ -65,7 +65,8 @@ Historique des mouvements | {{ $prod->lib }}
                                         </td>
                                         <td>{{ ucwords((new Carbon\Carbon($data->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>        
                                         <td>
-                                            <button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#updateVariation{{ $data->id }}" data-whatever="@fat">Modifier</button><a class="ul-link-action text-danger mr-1 deletevariation" href="{{ route('stock.variation.destroy',['id'=>$data->id]) }}" data-toggle="tooltip" data-placement="top" title="Voulez-vous supprimer!!!"><i class="i-Eraser-2"></i></a></td>
+                                            <button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#updateVariation{{ $data->id }}" data-whatever="@fat">Modifier</button>
+                                            <a class="ul-link-action text-danger mr-1 deletevariation" href="{{-- route('stock.variation.destroy',['id'=>$data->id]) --}}" data-toggle="tooltip" data-placement="top" title="Voulez-vous supprimer!!!"><i class="i-Eraser-2"></i></a></td>
                                     </tr>
                                     <div class="modal fade" id="updateVariation{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="updateVariation{{ $data->id }}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">

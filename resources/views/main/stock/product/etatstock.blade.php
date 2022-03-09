@@ -164,7 +164,7 @@ Etat du stock {{ $entreprise->nom }}
                                     <td>{{ $data->stock_physique_entreprise($entreprise) }}</td>
                                     <td>{{ $data->stock_virtuel_entreprise($entreprise) }}</td>
                                     <td>
-                                        @if ($stock_virtuel < $data->stockalert)
+                                        @if ($data->stock_virtuel_entreprise($entreprise) < $data->stockalert)
                                         <a class="badge badge-danger text-white m-2 p-2">Rupture </a>
                                         @else
                                         <a class="badge badge-success text-white m-2 p-2">Disponible</a>

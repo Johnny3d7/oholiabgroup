@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -56,18 +57,25 @@ class Entrepot extends Model
         return self::where(['status'=>1,'id_entreprise'=>$this->id_entreprise])->whereNotIn('id',[$this->id])->orderBy('created_at', 'ASc')->get();
     }
 
-    public function produits(){
+    public function products(){
 
         $variations = $this->variations;
 
-        $prodId = $produits = [];
+        $prodIds = array_unique($variations->pluck('id_product')->all());
 
-        foreach($variations as $variation){
-            if(!in_array($variation->id_product, $prodId)){
-                $prodId []= $variation->id_product;
-                $produits []= $variation->product;
-            }
+        $products = new Collection();
+        foreach ($prodIds as $prodId) {
+            if(Product::find($prodId)) $products->add(Product::find($prodId));
         }
-        return $produits;
+
+        // $prodId = $produits = [];
+
+        // foreach($variations as $variation){
+        //     if(!in_array($variation->id_product, $prodId)){
+        //         $prodId []= $variation->id_product;
+        //         $produits []= $variation->product;
+        //     }
+        // }
+        return $products;
     }
 }

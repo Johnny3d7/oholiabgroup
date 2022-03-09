@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/etat-du-stock/{slug}', [ProductController::class, 'etatstock'])->name('etat_stock.index');
 
 //Historique stock d'un produit
-Route::get('/historique-des-mouvements/{entreprise}/{slug}', [ProductController::class, 'stockStory'])->name('stock_story.index');
+Route::get('/historique-des-mouvements/comp/{entreprise}/{slug}', [ProductController::class, 'stockStoryComp'])->name('stock_story.index');
+Route::get('/historique-des-mouvements/entp/{entrepot}/{slug}', [ProductController::class, 'stockStoryEntp'])->name('stock_story_entrepot.index');
 
 // Routes Variations
 Route::get('/variations', 'VariationController@index')->name('variation.index');
