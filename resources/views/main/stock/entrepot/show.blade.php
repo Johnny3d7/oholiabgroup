@@ -115,19 +115,14 @@ Détail sur l'entrepôt {{ $entrepot->ref }} à {{ $entrepot->entreprise->nom }}
                                                 @endif
                                              </td>
                                             <td>
-                                                <button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#verifyModalContent{{ $product->id }}" data-whatever="@fat">Modifier</button><a href="{{ route('stock.stock_story_entrepot.index',['entrepot'=>$entrepot->slug, 'slug'=> $product->slug]) }}"><button class="btn btn-outline-warning m-1" type="button">Historique</button></a><!-- <a href="{{ route('stock.product.destroy',['slug'=>$product->id]) }}"><button class="btn btn-outline-danger m-1" type="button">Supprimer</button></a> -->
+                                                <button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#verifyModalContent{{ $product->id }}" data-whatever="@fat">Modifier</button>
+                                                <a href="{{ route('stock.stock_story_entrepot.index',['entrepot'=>$entrepot->slug, 'slug'=> $product->slug]) }}"><button class="btn btn-outline-warning m-1" type="button">Historique</button></a>
+                                                <!-- <a href="{{ route('stock.product.destroy',['slug'=>$product->id]) }}"><button class="btn btn-outline-danger m-1" type="button">Supprimer</button></a> -->
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td>4</td>
-                                            <td>4</td>
-                                            <td>4</td>
-                                            <td>4</td>
-                                            <td>4</td>
-                                            <td>4</td>
-                                            <td>4</td>
-                                            <td>4</td>
+
                                         </tr>
                                     @endforelse
                                 </tbody>

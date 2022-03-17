@@ -110,14 +110,16 @@ class Product extends Model
         return $this->belongsToMany(CommandeFournisseur::class, 'ligne_commande_fournisseurs', 'product_id', 'commande_fournisseur_id')->withPivot('qte','prix', 'status')->withTimestamps();
     }
 
-    public function entrepots(){
+    public function entrepots(Entreprise $entreprise = null){
         $variations = $this->variations;
 
         $entIds = array_unique($variations->pluck('id_entrepot')->all());
 
         $entrepots = new Collection();
         foreach ($entIds as $entId) {
-            if(Entrepot::find($entId)) $entrepots->add(Entrepot::find($entId));
+            $entrepot = Entrepot::find($entId);
+            if($entreprise && $entrepot) $entrepot = $entrepot->entreprise == $entreprise ? $entrepot : null;
+            if($entrepot) $entrepots->add($entrepot);
         }
         // $entId = $entrepots = [];
 
