@@ -23,6 +23,7 @@ Route::get('/historique-des-mouvements/entp/{entrepot}/{slug}', [ProductControll
 Route::get('/variations', 'VariationController@index')->name('variation.index');
 Route::get('/variation/create', 'VariationController@create')->name('variation.create');
 Route::post('/variations/store', 'VariationController@store')->name('variation.store');
+Route::post('/variations/transfert', 'VariationController@transfert')->name('variation.transfert');
 Route::get('/variations/edit/{id}', 'VariationController@edit')->name('variation.edit');
 Route::get('/variations/update/{id}', 'VariationController@update')->name('variation.update');
 Route::get('/variations/destroy/{id}', 'VariationController@destroy')->name('variation.destroy');

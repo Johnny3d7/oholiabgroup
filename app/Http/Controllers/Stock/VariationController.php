@@ -75,7 +75,7 @@ class VariationController extends Controller
 
         $variation = [
             'typemouv' => $request->typemouv,
-            'id_entreprise' => $request->entreprise,
+            'id_entrepot' => $request->id_entrepot,
             'id_product' => $request->product,
             'production' => 0,
             'datemouv'=> $date[2].'-'.$date[1].'-'.$date[0],
@@ -95,6 +95,91 @@ class VariationController extends Controller
         }
         
         $variation = Variation::create($variation);
+        
+        $notification = array(
+            "message" => "Mouvement ajouté avec succès!",
+            "alert-type" => "success"
+        );
+        
+        return redirect()->back()->with($notification);
+    }
+
+    /**
+     * Transfert de stock d'un entrepot à l'autre
+     */
+    public function transfert(Request $request)
+    {
+        //  
+        //dd($request->typemouv);
+        $validatedData = $request->validate([
+            "qte" => "required|integer",
+            "datemouv"=>"required",
+            "observation" => "required"
+        ]);
+        $date = explode('-',$request->datemouv);
+
+        //Voir si le format de la date est respecté
+        if (strtotime($date[2].'-'.$date[1].'-'.$date[0]) == false) {
+           
+            //dd('bonjour');
+            $notification = array(
+                "message" => "La date du mouvement est incorrecte. Veuillez réessayer svp!",
+                "alert-type" => "error"
+            );
+            
+            return redirect()->back()->with($notification);
+
+        }
+
+        if (strtotime($date[2].'-'.$date[1].'-'.$date[0]) > strtotime("today")) {
+           
+            $notification = array(
+                "message" => "La date du mouvement doit être inférieure ou égale à la date d'aujourd'hui. Veuillez réessayer svp!",
+                "alert-type" => "error"
+            );
+            
+            return redirect()->back()->with($notification);
+
+        }
+
+
+        ///(time()-(60*60*24)) < strtotime($var);
+
+        $ypemouv = 0;
+
+        $variation = [
+            'typemouv' => $ypemouv,
+            'id_entrepot' => $request->id_entrepot_source,
+            'id_product' => $request->product,
+            'production' => 0,
+            'datemouv'=> $date[2].'-'.$date[1].'-'.$date[0],
+            'observation' => $request->observation
+        ];
+
+        $variation = $variation +[
+            'qte_entree' => 0,
+            'qte_sortie' => $request->qte,
+        ];
+    
+        $variation = Variation::create($variation);
+
+        $ypemouv = 1;
+
+        $variation2 = [
+            'typemouv' => $ypemouv,
+            'id_entrepot' => $request->id_entrepot_destination,
+            'id_product' => $request->product,
+            'production' => 0,
+            'datemouv'=> $date[2].'-'.$date[1].'-'.$date[0],
+            'observation' => $request->observation
+        ];
+
+        $variation2 = $variation2 +[
+            'qte_entree' => $request->qte,
+            'qte_sortie' => 0,
+        ];
+        
+        $variation2 = Variation::create($variation2);
         
         $notification = array(
             "message" => "Mouvement ajouté avec succès!",

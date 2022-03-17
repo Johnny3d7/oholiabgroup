@@ -13,70 +13,8 @@ Détails du produit
 @endsection
 
 @section('content')
-<!--  content goes here -->
-<section class="ul-product-detail">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="ul-product-detail__image">
-                                @if ($product->image && $product->image_path)
-                                    <img style="max-height:450px;" src="{{ asset($product->image_path) }}" alt="alt" />
-                                @else
-                                    <img src="{{ url('images/product_picture.jpg') }}" alt="alt" />
-                                @endif
-                                
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="ul-product-detail__brand-name mb-4">
-                                <h2 class="heading">{{ $product->lib }}</h2><span class="text-warning">{{ $product->category->lib }}</span>
-                            </div>
-                            @if ($product->price)
-                                <div class="ul-product-detail__price-and-rating d-flex align-items-baseline">
-                                    <h5 class="font-weight-700 text-primary mb-0 mr-2">{{ number_format($product->price , 0, '', ' ') }} Fcfa</h5><span class="text-mute font-weight-800 mr-2">
-                                        
-                                </div>
-                            @endif
-                        
-                            <div class="ul-product-detail__features mt-4">
-                                <h5 class="font-weight-700">Caractéristiques du produit:</h5>
-                                <ul class="m-0 p-0">
-                                    <div class="ul-widget-app__browser-list-1 mb-2 mt-4"><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Référence :</strong> {{ $product->ref }} </span><span class="text-mute" style="display: none">2 April </span></div>
-                                    <div class="ul-widget-app__browser-list-1 mb-2"><i class="i-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Stock alerte (seuil) :</strong> {{ $product->stockalert }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                                    @if ($product->type)
-                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Type de produit :</strong> {{ $product->type->lib }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                                    @endif
-                                    @if ($product->poids && $product->unite_poids )
-                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Poids :</strong> {{ $product->poids }} {{ $product->unite_poids }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                                    @endif
-                                    @if ($product->unite_mesure && $product->longueur)
-                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Dimensions :</strong> {{ $product->longueur }}x{{ $product->largeur }}x{{ $product->hauteur }} {{ $product->unite_mesure }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                                    @endif
-                                    @if ($product->volume && $product->unite_volume)
-                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Volume :</strong> {{ $product->volume }} {{ $product->unite_volume }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                                    @endif
-                                    @if ($product->liquide)
-                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Référence :</strong> {{ $product->liquide }} {{ $product->unite_liquide }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                                    @endif
-                                    @if ($product->status)
-                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Statut :</strong> {{ $product->status == 1 ? 'Actif': 'Inactif' }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                                    @endif
-                                
-                                </ul>
-                            </div>
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<section class="ul-product-detail__box">
+<section class="ul-product-detail__box mb-3 pb-2">
     <div class="row">
             <div class="col-lg-3 col-md-3 mt-4 text-center">
                 <a href="{{ route('stock.product.edit',['slug'=>$product->slug]) }}">
@@ -159,57 +97,7 @@ Détails du produit
             </div>
             </a>
         </div>
-        <div class="modal fade" id="add_variation{{ $product->id }}" tabindex="-1" role="dialog" aria-labelledby="add_variation{{ $product->id }}" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="add_variation{{ $product->id }}_title">Effectuer un mouvement de stock</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" action="{{ route('stock.variation.store', ['product'=>$product->id]) }}" enctype="multipart/form-data">
-                            @csrf
-                            @method('POST')
-                            <div class="form-group ">
-                                <label class="col-form-label" for="entreprise">Entrepôt:</label>
-                                <select name="entreprise" class="form-control" id="entreprise" required>
-                                    @forelse (Entreprise::where('status', 1)->orderBy('nom', 'asc')->get() as $data)
-                                        <option value="{{ $data->id }}">{{ $data->nom }}</option>
-                                    @empty
-                                        
-                                    @endforelse
-                                </select>
-                            </div>
-                            <div class="form-group ">
-                                <label class="col-form-label" for="typemouv">Nature mouvement:</label>
-                                <select name="typemouv" class="form-control" id="typemouv" required>
-                                        <option value="1">Entrée</option>
-                                        <option value="0">Sortie</option>
-                                </select>
-                            </div>
-                            <div class="form-group ">
-                                <label class="col-form-label" for="qte">Quantité mouvement:</label>
-                                <input class="form-control" id="qte" type="text" name="qte" required/>
-                            </div>
-                            <div class="form-group ">
-                                <label class="col-form-label" for="datemouv">Date mouvement:</label>
-                                <input class="form-control" id="datemouv" type="text" name="datemouv" data-inputmask='"mask": "99-99-9999"' data-mask required/>
-                            </div>
-                            <div class="form-group ">
-                                <label class="col-form-label" for="observation">Observation:</label>
-                                <textarea name="observation" id="observation" class="form-control"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
-                                <button class="btn btn-primary" type="submit">Valider</button>
-                            </div>
-                        </form>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-        </div>   
+        @include('main.stock.product._mouvement')
         <div class="col-lg-3 col-md-3 mt-4 text-center">
             <a href="{{ route('stock.product.destroy',['slug'=> $product->slug]) }}">
             <div class="card">
@@ -223,6 +111,127 @@ Détails du produit
             </div>
             </a>
         </div>
+    </div>
+</section>
+
+<!--  content goes here -->
+<section class="ul-product-detail">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="ul-product-detail__image">
+                                @if ($product->image && $product->image_path)
+                                    <img style="max-height:450px;" src="{{ asset($product->image_path) }}" alt="alt" />
+                                @else
+                                    <img src="{{ url('images/product_picture.jpg') }}" alt="alt" />
+                                @endif
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="ul-product-detail__brand-name mb-4">
+                                <h2 class="heading">{{ $product->lib }}</h2><span class="text-warning">{{ $product->category->lib }}</span>
+                            </div>
+                            @if ($product->price)
+                                <div class="ul-product-detail__price-and-rating d-flex align-items-baseline">
+                                    <h5 class="font-weight-700 text-primary mb-0 mr-2">{{ number_format($product->price , 0, '', ' ') }} Fcfa</h5><span class="text-mute font-weight-800 mr-2">
+                                        
+                                </div>
+                            @endif
+                        
+                            <div class="ul-product-detail__features mt-4">
+                                <h5 class="font-weight-700">Caractéristiques du produit:</h5>
+                                <ul class="m-0 p-0">
+                                    <div class="ul-widget-app__browser-list-1 mb-2 mt-4"><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Référence :</strong> {{ $product->ref }} </span><span class="text-mute" style="display: none">2 April </span></div>
+                                    <div class="ul-widget-app__browser-list-1 mb-2"><i class="i-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Stock alerte (seuil) :</strong> {{ $product->stockalert }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @if ($product->type)
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Type de produit :</strong> {{ $product->type->lib }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                    @if ($product->poids && $product->unite_poids )
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Poids :</strong> {{ $product->poids }} {{ $product->unite_poids }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                    @if ($product->unite_mesure && $product->longueur)
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Dimensions :</strong> {{ $product->longueur }}x{{ $product->largeur }}x{{ $product->hauteur }} {{ $product->unite_mesure }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                    @if ($product->volume && $product->unite_volume)
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Volume :</strong> {{ $product->volume }} {{ $product->unite_volume }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                    @if ($product->liquide)
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Référence :</strong> {{ $product->liquide }} {{ $product->unite_liquide }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                    @if ($product->status)
+                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Statut :</strong> {{ $product->status == 1 ? 'Actif': 'Inactif' }}</span><span class="text-mute" style="display: none">2 April </span></div>
+                                    @endif
+                                
+                                </ul>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ul-product-detail__box">
+    <div class="row">
+        @foreach ($product->entrepots(Auth::user()->entreprise->id <> 1 ? Auth::user()->entreprise : null) as $entrepot)
+        @include('main.stock.product._mouvement', ['type' => 'entrée'])
+        @include('main.stock.product._mouvement', ['type' => 'sortie'])
+        @php
+            $e = $entrepot->entreprise->id;
+            $color = ($e == 1) ? 'success' : (($e == 2) ? 'info' : (($e == 3) ? 'primary' : ''));
+        @endphp
+            <div class="col-md-4 mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="user-profile mb-4">
+                            <div class="ul-widget-card__user-info row">
+                                <div class="col-md border-md-right">
+                                    <div class="ul-product-detail--icon mb-2">
+                                        <a href="{{ route('stock.entrepot.show', [$entrepot->slug]) }}">
+                                            <i class="i-Shop{{ $e <> 1 ? '-'.$e : '' }} text-{{ $color }} text-25 font-weight-500" style="font-size: 50px;"></i>
+                                        </a>
+                                    </div>
+                                    <a href="{{ route('stock.entrepot.show', [$entrepot->slug]) }}">
+                                        <p class="m-0 text-18 heading">{{ $entrepot->lib }}</p>
+                                    </a>
+                                    @if (Auth::user()->entreprise->id == 1)
+                                        <p class="text-muted m-0">{{ $entrepot->entreprise->nom }}</p>
+                                    @endif
+                                </div>
+                                <div class="col-md pt-3">
+                                    <h3>
+                                        <div class="text-muted h5">Stock Physique</div>
+                                        <div>
+                                            {{ number_format($product->stock_physique_entrepot($entrepot), 0, ',', ' ') }}
+                                        </div>
+                                    </h3>
+                                    <h3>
+                                        <div class="text-muted h5">Stock Virtuel</div>
+                                        <div>
+                                            {{ number_format($product->stock_virtuel_entrepot($entrepot), 0, ',', ' ') }}
+                                        </div>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-2 border-top px-md-2">
+                            <a href="" class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#add_variation{{ $product->id }}{{ $entrepot->id }}entrée"><i class="nav-icon i-Down mr-1"></i> Entrée </a>
+                            <a href="" class="btn btn-outline-danger m-1" type="button" data-toggle="modal" data-target="#add_variation{{ $product->id }}{{ $entrepot->id }}sortie"><i class="nav-icon i-Up mr-1"></i> Sortie </a>
+                            <a href="{{ route('stock.stock_story_entrepot.index',['entrepot'=>$entrepot->slug, 'slug'=> $product->slug]) }}" class="btn btn-outline-warning m-1"><i class="nav-icon i-Repeat-4 mr-1"></i> Historique </a>
+                            <a href="" class="btn btn-outline-primary m-1 float-right" type="button"><i class="nav-icon i-Data-Transfer mr-1"></i> Transfert </a>
+                            {{-- <button class="btn btn-outline-success m-1 float-right" type="button">Message</button> --}}
+                            {{-- <button class="btn btn-outline-success m-1 float-right" type="button">Message</button> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </div>
 </section>
 
