@@ -1,5 +1,5 @@
 @php
-    $entreprise = Auth::user()->entreprise->id;
+    $entreprise = Auth::user()->entreprise->id ?? 1;
 @endphp
 <ul class="metismenu" id="menu">
     {{-- <li class="Ul_li--hover"><a href="{{ route('stock.index') }}"><i class="i-Bar-Chart text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Tableau de bord</span></a></li> --}}
@@ -7,7 +7,7 @@
         <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Shop text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Inventaire</span></a>
             <ul class="mm-collapse">
                 @foreach (Entreprise::all() as $data)
-                    <li class="item-name"><a href="{{ route('stock.etat_stock.index',['slug'=> $data->slug]) }}"><i class="nav-icon i-Bell1"></i><span class="item-name">{{ $data->nom }}</span></a></li>
+                    <li class="item-name"><a href="{{-- route('stock.etat_stock.index',$data) --}}"><i class="nav-icon i-Bell1"></i><span class="item-name">{{ $data->name }}</span></a></li>
                 @endforeach
                 <li class="item-name"></li>
                 {{-- <li class="nav-item"><a href="#"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Journal | entrées</span></a></li>
@@ -21,7 +21,7 @@
     <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Full-Cart text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Produit</span></a>
         <ul class="mm-collapse">
             <li class="nav-item"><a href="{{ route('stock.products.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
-            <li class="item-name"><a href="{{ route('stock.categories_prod.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Catégories</span></a></li>
+            <li class="item-name"><a href="{{ route('stock.categories.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Catégories</span></a></li>
         </ul>
     </li>
     {{-- <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes</span></a>
@@ -65,7 +65,7 @@
     <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Entrepôts</span></a>
         <ul class="mm-collapse">
             <li class="nav-item"><a href="{{ route('stock.entrepots.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
-            <li class="nav-item"><a href="{{ route('stock.entrepot.create') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Créer un entrepôt</span></a></li>
+            <li class="nav-item"><a href="{{-- route('stock.entrepots.create') --}}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Créer un entrepôt</span></a></li>
         </ul>
     </li>
     @endif

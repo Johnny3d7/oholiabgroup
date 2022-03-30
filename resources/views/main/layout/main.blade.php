@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Gestion de stock | Oholiab Group</title>
+    <title>@yield('title') {{ $moduleTitle ?? '' }} | {{ $entrepriseTitle ?? 'Oholiab Group' }}</title>
     {{--<link rel="icon" href="{{ url('images/main_img/favicon/favicon-32x32.png') }}" type="image/x-icon">--}}
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
     @php
-        $a = Auth::user()->entreprise->id;
+        $a = Auth::user()->entreprise->id ?? 1;
     @endphp
     @if ($a == 1)
     <link href="{{ url('css/themes/lite-purple.css') }}" rel="stylesheet" />

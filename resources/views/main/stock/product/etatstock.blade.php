@@ -26,7 +26,7 @@ Etat du stock {{ $entreprise->nom }}
             
             <div class="card-body">
                 
-                {{--  <a href="{{ route('stock.product.create') }}">--}}{{-- <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#addvariation" data-whatever="@fat" style="float: right" data-style="expand-right"><span class="ladda-label">Ajouter un mouvement</span></button> --}} {{--</a>--}}
+                {{--  <a href="{{ route('stock.products.create') }}">--}}{{-- <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#addvariation" data-whatever="@fat" style="float: right" data-style="expand-right"><span class="ladda-label">Ajouter un mouvement</span></button> --}} {{--</a>--}}
                 <div class="modal fade" id="addvariation" tabindex="-1" role="dialog" aria-labelledby="addvariation" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -35,7 +35,7 @@ Etat du stock {{ $entreprise->nom }}
                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" action="{{ route('stock.variation.store')}}">
+                                <form method="post" action="{{ route('stock.variations.store')}}">
                                     @csrf
                                     @method('POST')
                                     <div class="form-group ">
@@ -170,7 +170,7 @@ Etat du stock {{ $entreprise->nom }}
                                         <a class="badge badge-success text-white m-2 p-2">Disponible</a>
                                         @endif
                                      </td>
-                                    <td><button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#verifyModalContent{{ $data->id }}" data-whatever="@fat">Modifier</button><a href="{{ route('stock.stock_story.index',['entreprise'=>$entreprise->slug, 'slug'=> $data->slug]) }}"><button class="btn btn-outline-warning m-1" type="button">Historique</button></a><!-- <a href="{{ route('stock.product.destroy',['slug'=>$data->id]) }}"><button class="btn btn-outline-danger m-1" type="button">Supprimer</button></a> --></td>
+                                    <td><button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#verifyModalContent{{ $data->id }}" data-whatever="@fat">Modifier</button><a href="{{ route('stock.stock_story.index',['entreprise'=>$entreprise->slug, 'slug'=> $data->slug]) }}"><button class="btn btn-outline-warning m-1" type="button">Historique</button></a><!-- <a href="{{ route('stock.products.destroy',['slug'=>$data->id]) }}"><button class="btn btn-outline-danger m-1" type="button">Supprimer</button></a> --></td>
                                 </tr>
                                 <div class="modal fade" id="verifyModalContent{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="verifyModalContent{{ $data->id }}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -180,7 +180,7 @@ Etat du stock {{ $entreprise->nom }}
                                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="post" action="{{ route('stock.variation.store', ['product'=>$data->id, 'entreprise'=>$entreprise->id])}}">
+                                                <form method="post" action="{{ route('stock.variations.store', ['product'=>$data->id, 'entreprise'=>$entreprise->id])}}">
                                                     @csrf
                                                     @method('POST')
                                                     <div class="form-group ">

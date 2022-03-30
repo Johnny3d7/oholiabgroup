@@ -19,7 +19,7 @@ Liste des fournisseurs
             
             <div class="card-body">
                 
-                {{--  <a href="{{ route('stock.product.create') }}">--}}<button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#addfournisseur" data-whatever="@fat" style="float: right" data-style="expand-right"><span class="ladda-label">Ajouter un fournisseur</span></button>{{--</a>--}}
+                {{--  <a href="{{ route('stock.products.create') }}">--}}<button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#addfournisseur" data-whatever="@fat" style="float: right" data-style="expand-right"><span class="ladda-label">Ajouter un fournisseur</span></button>{{--</a>--}}
                 <div class="modal fade" id="addfournisseur" tabindex="-1" role="dialog" aria-labelledby="addfournisseur" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">

@@ -1,5 +1,7 @@
 @extends('main.stock.partials.main')
 
+@section('title', 'Ajout produit -')
+
 @section('stylesheets')
 
 @endsection
@@ -14,7 +16,7 @@ Ajouter un produit
 
 @section('content')
 <div class="row">
-    <div class="col-md-10">
+    <div class="container-fluid">
         <section class="ul-product-detail__box">
             <div class="row">
                     <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">
@@ -37,7 +39,7 @@ Ajouter un produit
             <h3 class="card-title">Ajout d'un nouveau produit</h3>
             </div>
             <!-- begin::form-->
-            <form method="post" action="{{ route('stock.product.store')}}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('stock.products.store')}}" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
                 <div class="card-body">    

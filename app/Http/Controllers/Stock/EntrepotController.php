@@ -18,9 +18,8 @@ class EntrepotController extends Controller
      */
     public function index()
     {
-        //
-        $entrepots = Entrepot::where(['status'=>1])->get();
-        return view('main.stock.entrepot.index', compact('entrepots'));
+        $entrepots = Entrepot::all();
+        return view('main.stock.entrepots.index', compact('entrepots'));
     }
 
     /**
@@ -31,7 +30,7 @@ class EntrepotController extends Controller
     public function create()
     {
         //
-        return view('main.stock.entrepot.create');
+        return view('main.stock.entrepots.create');
 
     }
 
@@ -97,13 +96,10 @@ class EntrepotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(Entrepot $entrepot)
     {
-        //
-
-        $entrepot = Entrepot::where(['slug'=>$slug])->first();
         $products = $entrepot->products();
-        return view('main.stock.entrepot.show', compact('entrepot', 'products'));
+        return view('main.stock.entrepots.show', compact('entrepot', 'products'));
 
         dd($entrepot->products()[0]->stock_physique_entrepot($entrepot));
         $products = DB::table('variations')->distinct()
@@ -120,7 +116,7 @@ class EntrepotController extends Controller
 
         // dd($products);
 
-        return view('main.stock.entrepot.show', compact('entrepot'));
+        return view('main.stock.entrepots.show', compact('entrepot'));
     }
 
     /**
@@ -134,7 +130,7 @@ class EntrepotController extends Controller
         //
         $entrepot = Entrepot::where(['slug'=>$slug])->first();
 
-        return view('main.stock.entrepot.edit',compact('entrepot'));
+        return view('main.stock.entrepots.edit',compact('entrepot'));
     }
 
     /**

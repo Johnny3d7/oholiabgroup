@@ -1,4 +1,6 @@
-@extends('main.layout.main')
+@extends('main.layout.main', [
+    'moduleTitle' => 'Stock',
+])
 
 @section('stylesheets')
 

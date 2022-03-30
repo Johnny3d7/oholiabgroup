@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -74,6 +75,9 @@ Route::middleware('route-stack')->group(function(){
     
     //Gestion de stock routes
     require('web/modules/stock/main.php');
+
+    // role & permission routes
+    require('web/admin.php');
 });
 
 Route::get('back', function () {
@@ -86,12 +90,16 @@ Route::get('back', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 require('web/modules/achat/main.php');
 require('web/modules/parc-auto/main.php');
 require('web/modules/parc-info/main.php');
 require('web/modules/ressourceh/main.php');
+
+Route::fallback(function(){
+    return redirect()->route('backStack');
+});
 
 // Route::view('/parcauto', 'main.parcauto.index')->name('parcauto.index');
 // Route::view('/parcinfo', 'main.parcinfo.index')->name('parcinfo.index');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -12,11 +13,10 @@ class UserController extends Controller
     function checkuser(Request $request){
         $request->validate([
             'username' => 'required',
-            'password' => 'required|min:8|max:30'
+            'password' => 'required'
         ],
         [
             'username.required'=>"Le nom d'utilidateur est un champ requis",
-            'password.min' => "Le mot de passe doit avoir au moins 8 caractères",
             'password.required'=>"Le mot de passe est un champ requis"
         ]);
 
@@ -25,7 +25,14 @@ class UserController extends Controller
             return redirect()->route('module.index');
         }
         else{
-            return redirect()->route('login');
+            $old = ['username' => $request->username,'password' => $request->password];
+            if(User::whereUsername($request->username)->first()){
+                $msg = ['password' => "Le mot de passe saisi est incorrect"];
+            } else {
+                $msg = ['username' => "Le nom d'utilisateur saisi est incorrect"];
+            }
+            session()->flash('old', $old);
+            return redirect()->route('login')->withErrors($msg);
         }
     }
 }

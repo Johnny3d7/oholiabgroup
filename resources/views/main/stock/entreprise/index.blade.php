@@ -19,7 +19,7 @@ Liste des entreprises
             
             <div class="card-body">
                 
-                {{--  <a href="{{ route('stock.product.create') }}">--}}<button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#addentreprise" data-whatever="@fat" style="float: right" data-style="expand-right"><span class="ladda-label">Ajouter un fournisseur</span></button>{{--</a>--}}
+                {{--  <a href="{{ route('stock.products.create') }}">--}}<button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#addentreprise" data-whatever="@fat" style="float: right" data-style="expand-right"><span class="ladda-label">Ajouter un fournisseur</span></button>{{--</a>--}}
                 <div class="modal fade" id="addentreprise" tabindex="-1" role="dialog" aria-labelledby="addentreprise" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">

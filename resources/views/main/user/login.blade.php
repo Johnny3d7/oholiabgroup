@@ -20,7 +20,7 @@
                             @csrf
                             <div class="form-group">
                                 <label for="username">Nom d'utilisateur</label>
-                                <input class="form-control form-control-rounded @error('username') is-invalid @enderror" id="username"  name="username" type="text" value="{{ old('username') }}" required autocomplete="username" autofocus>
+                                <input class="form-control form-control-rounded @error('username') is-invalid @enderror" id="username"  name="username" type="text" value="{{ old('username') }}" required autofocus>
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -29,7 +29,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="password">Mot de passe</label>
-                                <input class="form-control form-control-rounded @error('password') is-invalid @enderror" id="password" name="password" type="password" value="{{ old('password') }}" required autocomplete="password" autofocus>
+                                <input class="form-control form-control-rounded @error('password') is-invalid @enderror" id="password" name="password" type="password" value="{{ old('password') }}" required>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -2,80 +2,92 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
-
-class Entrepot extends Model
+class Entrepot extends BaseModel
 {
-    use HasFactory;
-    use HasSlug;
-
+    /**
+    * Database table name
+    */
     protected $table = 'entrepots';
 
-    protected $guarded = ['id'];
-
-    public $timestamps = true;
-
-    protected $fillable = [
-        'ref',
-        'lib',
-        'slug',
-        'email',
-        'contact',
-        'lieu',
-        'adresse',
-        'id_recorder',
-        'id_entreprise',
-        'status'
-    ];
+    /**
+    * Mass assignable columns
+    */
+    protected $fillable = ['uuid', 'name', 'id_entreprises'];
 
     /**
-     * Get the options for generating the slug.
-     */
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('ref')
-            ->saveSlugsTo('slug');
-    }
+    * Date time columns.
+    */
+    protected $dates=[];
 
+    /**
+    * entreprise
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
     public function entreprise()
     {
-        return $this->belongsTo(Entreprise::class, 'id_entreprise');
+        return $this->belongsTo(Entreprise::class,'id_entreprises');
     }
 
-    public function variations()
+    /**
+    * employes
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
+    public function employes()
     {
-        return $this->hasMany(Variation::class, 'id_entrepot');
+        return $this->belongsToMany(Employe::class,'entrepots_has_employes');
+    }
+    /**
+    * ehp
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
+    public function ehp()
+    {
+        return $this->hasMany(EntrepotsHasProduct::class, 'id_entrepots');
+    }
+    
+    /**
+    * products
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
+    public function products()
+    {
+        $ids = $this->ehp->pluck('id_products');
+        return Product::whereIn('id', $ids)->get();
+    }
+   
+    /**
+    * voisins
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
+    public function voisins()
+    {
+        $ids = [$this->entreprise->id];
+        array_push($ids, 1); // Add Oholiab entrepots
+        return parent::whereIn('id_entreprises', $ids)->where('id', '!=', $this->id)->get();
     }
 
-    public function entrepots_voisin()
-    {   
-        return self::where(['status'=>1,'id_entreprise'=>$this->id_entreprise])->whereNotIn('id',[$this->id])->orderBy('created_at', 'ASc')->get();
+    /**
+    * ligneinventaires
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
+    public function ligneinventaires()
+    {
+        return $this->belongsToMany(Ligneinventaire::class,'ligne_inventaires');
+    }
+    /**
+    * lignemouvements
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
+    public function lignemouvements()
+    {
+        return $this->belongsToMany(Lignemouvement::class,'ligne_mouvement');
     }
 
-    public function products(){
-
-        $variations = $this->variations;
-
-        $prodIds = array_unique($variations->pluck('id_product')->all());
-
-        $products = new Collection();
-        foreach ($prodIds as $prodId) {
-            if(Product::find($prodId)) $products->add(Product::find($prodId));
-        }
-
-        // $prodId = $produits = [];
-
-        // foreach($variations as $variation){
-        //     if(!in_array($variation->id_product, $prodId)){
-        //         $prodId []= $variation->id_product;
-        //         $produits []= $variation->product;
-        //     }
-        // }
-        return $products;
-    }
 }

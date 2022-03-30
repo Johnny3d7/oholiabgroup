@@ -1,58 +1,45 @@
 <?php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
-class Entreprise extends Model
+/**
+ * @property varchar $uuid uuid
+ * @property varchar $name name
+ * @property varchar $ncc ncc
+ * @property varchar $email email
+ * @property varchar $contact contact
+ * @property varchar $addresse addresse
+ * @property \Illuminate\Database\Eloquent\Collection $entrepot belongsToMany
+ * 
+ */
+class Entreprise extends BaseModel 
 {
-    use HasFactory;
-    use HasSlug;
-
+    
+    /**
+    * Database table name
+    */
     protected $table = 'entreprises';
 
-    protected $guarded = ['id'];
-
-    public $timestamps = true;
-
-    protected $fillable = [
-        'nom',
-        'slug',
-        'adresse',
-        'email',
-        'contact',
-        'ncc',
-        'status'
-    ];
+    /**
+    * Mass assignable columns
+    */
+    protected $fillable = ['addresse', 'uuid', 'name', 'ncc', 'email', 'contact', 'addresse'];
 
     /**
-     * Get the options for generating the slug.
-     */
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('nom')
-            ->saveSlugsTo('slug');
-    }
+    * Date time columns.
+    */
+    protected $dates=[];
 
-    public static function selectAll(){
-        return static::where('status', 1)->get();
-    }
-
+    /**
+    * entrepots
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
     public function entrepots()
     {
-        return $this->hasMany(Entrepot::class, 'id_entreprise');
+        return $this->belongsToMany(Entrepot::class,'entrepots');
     }
 
-    public function users()
-    {
-        return $this->hasMany(User::class, 'id_entreprise');
-    }
 
-    public function commande_fournisseur()
-    {
-        return $this->hasMany(CommandeFournisseur::class, 'id_entreprise');
-    }
+
 }

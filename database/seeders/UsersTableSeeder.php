@@ -18,6 +18,35 @@ class UsersTableSeeder extends Seeder
         //
         User::truncate();
 
+        $user = User::create([
+            'username' => "geststock",
+            'email'=> "geststock@oholiab.com",
+            'password' => Hash::make('1234567890'),
+            // 'id_entreprise' => $entreprises[$i]
+        ]);
+
+        $user->assignRole('geststock');
+        
+        $user = User::create([
+            'username' => "admin",
+            'email'=> "admin@oholiab.com",
+            'password' => Hash::make('1234567890'),
+            // 'id_entreprise' => $entreprises[$i]
+        ]);
+
+        $user->assignRole('admin');
+        
+        $user = User::create([
+            'username' => "sadmin",
+            'email'=> "sadmin@oholiab.com",
+            'password' => Hash::make('1234567890'),
+            // 'id_entreprise' => $entreprises[$i]
+        ]);
+
+        $user->assignRole('superadmin');
+
+        /*
+
         $name= [
             'oholiab',
             'akebie',
@@ -44,6 +73,6 @@ class UsersTableSeeder extends Seeder
                 'id_entreprise' => $entreprises[$i]
             ]);
 
-        }
+        }*/
     }
 }

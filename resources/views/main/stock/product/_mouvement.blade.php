@@ -11,18 +11,19 @@
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ route('stock.variation.store', ['product'=>$product->id]) }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('stock.variations.store') }}" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
+                    <input type="hidden" name="id_products" value="{{ $product->id }}">
                     @if ($entrepot)
-                        <input type="hidden" name="id_entrepot" value="{{ $entrepot->id }}">
+                        <input type="hidden" name="id_entrepots" value="{{ $entrepot->id }}">
                     @else
                         <div class="form-group ">
-                            <label class="col-form-label" for="id_entrepot">Entrepôt:</label>
-                            <select name="id_entrepot" class="form-control" id="id_entrepot" required>
+                            <label class="col-form-label" for="id_entrepots">Entrepôt:</label>
+                            <select name="id_entrepots" class="form-control" id="id_entrepots" required>
                                 {{-- @forelse (Entreprise::where('status', 1)->orderBy('nom', 'asc')->get() as $data) --}}
-                                @forelse (App\Models\Entrepot::all() as $data)
-                                    <option value="{{ $data->id }}">{{ $data->lib }}</option>
+                                @forelse ($product->entrepots() as $entrepot)
+                                    <option value="{{ $entrepot->id }}">{{ $entrepot->name }}</option>
                                 @empty
                                     
                                 @endforelse
@@ -30,13 +31,13 @@
                         </div>
                     @endif
                     @if ($type)
-                        <input type="hidden" name="typemouv" value="{{ $type == 'sortie' ? 0 : 1 }}">
+                        <input type="hidden" name="typemouv" value="{{ $type == 'sortie' ? 'out' : 'in' }}">
                     @else
                         <div class="form-group ">
                             <label class="col-form-label" for="typemouv">Nature mouvement:</label>
                             <select name="typemouv" class="form-control" id="typemouv" required>
-                                <option value="1">Entrée</option>
-                                <option value="0">Sortie</option>
+                                <option value="in">Entrée</option>
+                                <option value="out">Sortie</option>
                             </select>
                         </div>
                     @endif

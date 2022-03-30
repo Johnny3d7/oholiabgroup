@@ -1,5 +1,7 @@
 @extends('main.modules.partials.main')
 
+@section('title', 'Modules')
+
 @section('stylesheets')
 
 @endsection
@@ -104,6 +106,30 @@ Liste des modules
                 </div>
             </div>
         </div>
+        {{-- <div class="col-lg-3 col-xl-3 mt-3">
+            <div class="card"><img class="d-block w-100 rounded rounded" src="{{ url('images/module/role-permission.jpg') }}" alt="Role & Permission" />
+                <div class="card-body">
+                    <h5 class="card-title mb-2">Role & Permission</h5>
+                    <p class="card-text text-mute">Module</p>
+                    <div class="mt-2">
+                        <a href="{{ route('role_permission.index') }}"><button class="btn btn-primary btn-block m-1" type="button">Accéder</button></a>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+        @can('Show Aministration')
+        <div class="col-lg-3 col-xl-3 mt-3">
+            <div class="card"><img class="d-block w-100 rounded rounded" src="{{ url('images/module/role-permission.jpg') }}" alt="Administration" />
+                <div class="card-body">
+                    <h5 class="card-title mb-2">Administration</h5>
+                    <p class="card-text text-mute">Module</p>
+                    <div class="mt-2">
+                        <a href="{{ route('admin.index') }}"><button class="btn btn-primary btn-block m-1" type="button">Accéder</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endcan
 
 
     </div>
