@@ -1,5 +1,7 @@
 @extends('main.stock.partials.main')
 
+@section('title', 'Edition produit -')
+
 @section('stylesheets')
 
 @endsection
@@ -22,14 +24,14 @@ Modifier produit
             <h3 class="card-title">Modifier le produit</h3>
             </div>
             <!-- begin::form-->
-            <form method="put" action="{{ route('stock.product.update', ['slug'=>$product->slug])}}">
+            <form method="put" action="{{ route('stock.products.update', $product)}}">
                 @csrf
                 @method('PUT')
                 <div class="card-body">    
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label class="ul-form__label" for="lib">Libellé produit:</label>
-                            <input class="form-control" value="{{ $product->lib }}" name="lib" id="lib" type="text" placeholder="Ex: Papier rame" required/><small class="ul-form__text form-text" id="">
+                            <input class="form-control" value="{{ $product->name }}" name="lib" id="lib" type="text" placeholder="Ex: Papier rame" required/><small class="ul-form__text form-text" id="">
                                 Entrez le libellé du produit svp!
                             </small>
                             @if ($errors->has('lib'))
@@ -42,8 +44,8 @@ Modifier produit
                             <label class="ul-form__label" for="id_product_category">Catégorie produit:</label>
                             <select name="id_product_category" id="id_product_category" class="form-control" required>
                                 <option value="" >-- Sélectionner --</option>
-                                @forelse (ProductCategory::where('status', 1)->orderBy('lib', 'asc')->get() as $data)
-                                    <option value="{{ $data->id }}"  @if ($data->id == $product->id_product_category) selected="selected" @endif>{{ $data->lib }}</option>
+                                @forelse ($categories as $product)
+                                    <option value="{{ $product->id }}"  @if ($product->id == $product->id_categories) selected="selected" @endif>{{ $product->lib }}</option>
                                 @empty
                                     
                                 @endforelse
@@ -60,8 +62,8 @@ Modifier produit
                             <label class="ul-form__label" for="id_type_product">Type produit:</label>
                             <select name="id_type_product" class="form-control" required>
                                 <option value=""  selected>-- Sélectionner --</option>
-                                @forelse (TypeProduct::where('status', 1)->orderBy('lib', 'asc')->get() as $data)
-                                    <option value="{{ $data->id }}" @if ($data->id == $product->id_type_product) selected="selected" @endif>{{ $data->lib }}</option>
+                                @forelse ($categories as $category)
+                                    <option value="{{ $category->id }}" @if ($category->id == $product->id_type_product) selected="selected" @endif>{{ $category->lib }}</option>
                                 @empty
                                     
                                 @endforelse
@@ -216,7 +218,7 @@ Modifier produit
         <section class="ul-product-detail__box">
             <div class="row mb-3">
                     <div class="col-lg-4 col-md-4 mt-4 text-center">
-                        <a href="{{ route('stock.product.show',['slug'=>$product->slug]) }}">
+                        <a href="{{ route('stock.products.show', $product) }}">
                         <div class="card">
                             <div class="card-body">
                                 <div class="ul-product-detail__border-box">
@@ -262,14 +264,14 @@ Modifier produit
                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" action="{{ route('stock.variation.store', ['product'=>$product->id]) }}" enctype="multipart/form-data">
+                                <form method="post" action="{{ route('stock.variations.store', ['product'=>$product->id]) }}" enctype="multipart/form-data">
                                     @csrf
                                     @method('POST')
                                     <div class="form-group ">
                                         <label class="col-form-label" for="entreprise">Entrepôt:</label>
                                         <select name="entreprise" class="form-control" id="entreprise" required>
-                                            @forelse (Entreprise::where('status', 1)->orderBy('nom', 'asc')->get() as $data)
-                                                <option value="{{ $data->id }}">{{ $data->nom }}</option>
+                                            @forelse ($entrepots as $entrepot)
+                                                <option value="{{ $entrepot->id }}">{{ $entrepot->name }}</option>
                                             @empty
                                                 
                                             @endforelse

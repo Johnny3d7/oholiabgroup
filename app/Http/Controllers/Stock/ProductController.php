@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Stock;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Client;
 use App\Models\Entrepot;
 use App\Models\Entreprise;
@@ -19,12 +20,13 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $products = Product::where('status', 1)->orderBy('lib', 'asc')->get();
+        $view = $request->view;
+        $products = Product::all();
         //dd($products);
-        return view('main.stock.product.index',compact('products'));
+        return view('main.stock.product.index',compact('products', 'view'));
     }
 
     /**
@@ -122,8 +124,6 @@ class ProductController extends Controller
             $product->image = $fileName;
 
             $product->image_path = 'storage/' . $path;
-
-         
         }
 
         $product->save();
@@ -142,10 +142,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(Product $product)
     {
         //
-        $product = Product::where('slug', $slug)->first();
+        // $product = Product::where('slug', $slug)->first();
 
         return view('main.stock.product.show',compact('product'));
     }
@@ -156,12 +156,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($slug)
+    public function edit(Product $product)
     {
-        
-        $product = Product::where('slug', $slug)->first();
-
-        return view('main.stock.product.edit',compact('product'));
+        $categories = Category::all();
+        $entrepots = Entrepot::all();
+        // $product = Product::where('slug', $slug)->first();
+        return view('main.stock.product.edit',compact('product', 'categories', 'entrepots'));
     }
 
     /**
@@ -333,14 +333,11 @@ class ProductController extends Controller
         return view('main.stock.product.stockstory', compact('variations', 'prod'));
     }
 
-    public function stockStoryEntp($entrepot,$slug)
+    public function stockStoryEntp(Entrepot $entrepot,Product $product)
     {
-        $entrepot = Entrepot::where('slug', $entrepot)->first();
-        $prod = Product::where('slug', $slug)->first();  
-
-        $variations = $prod->variation_entrepot($entrepot);
-
-        return view('main.stock.product.stockstory', compact('variations', 'prod'));
+        $variations = $product->variation_entrepot($entrepot);
+        // dd($variations);
+        return view('main.stock.product.stockstory', compact('variations', 'product'));
     }
 
     //Changer l'image du produit

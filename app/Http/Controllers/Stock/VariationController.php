@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Stock;
 
 use App\Http\Controllers\Controller;
+use App\Models\EntrepotsHasProduct;
+use App\Models\LigneMouvement;
+use App\Models\Mouvement;
 use App\Models\Variation;
 use Illuminate\Http\Request;
 
@@ -39,7 +42,7 @@ class VariationController extends Controller
         //  
         //dd($request->typemouv);
         $validatedData = $request->validate([
-            "typemouv" => "required|integer",
+            "typemouv" => "required",
             "qte" => "required|integer",
             "datemouv"=>"required",
             "observation" => "required"
@@ -74,28 +77,36 @@ class VariationController extends Controller
         ///(time()-(60*60*24)) < strtotime($var);
 
         $variation = [
-            'typemouv' => $request->typemouv,
-            'id_entrepot' => $request->id_entrepot,
-            'id_product' => $request->product,
-            'production' => 0,
-            'datemouv'=> $date[2].'-'.$date[1].'-'.$date[0],
-            'observation' => $request->observation
+            'type' => $request->typemouv,
+            'id_entrepots' => $request->id_entrepots,
+            'date_mouvement'=> $date[2].'-'.$date[1].'-'.$date[0],
+            'observation' => $request->observation,
+            // 'production' => 0,
         ];
+        
+        // dd($variation);
 
-        if ($request->typemouv == 1) {
-            $variation = $variation +[
-                'qte_entree' => $request->qte,
-                'qte_sortie' => 0,
-            ];
-        } else {
-            $variation = $variation +[
-                'qte_entree' => 0,
-                'qte_sortie' => $request->qte,
-            ];
+        $created = null;
+        $created = $created ?? Mouvement::create($variation)->id;
+        $ligne = LigneMouvement::create([
+            'id_products' => $request->id_products,
+            'id_mouvements' => $created,
+            'quantite' => $request->qte,
+        ]);
+
+        if ($request->typemouv == 'in') {
+            $ehp = EntrepotsHasProduct::whereIdProducts($request->id_products)->whereIdEntrepots($request->id_entrepots)->first();
+            $ehp->update([
+                'quantite' => $ehp->quantite + $ligne->quantite,
+            ]);
         }
-        
-        $variation = Variation::create($variation);
-        
+        if ($request->typemouv == 'out') {
+            $ehp = EntrepotsHasProduct::whereIdProducts($request->id_products)->whereIdEntrepots($request->id_entrepots)->first();
+            $ehp->update([
+                'quantite' => $ehp->quantite - $ligne->quantite,
+            ]);
+        }
+
         $notification = array(
             "message" => "Mouvement ajouté avec succès!",
             "alert-type" => "success"

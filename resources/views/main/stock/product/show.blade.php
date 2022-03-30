@@ -1,5 +1,7 @@
 @extends('main.stock.partials.main')
 
+@section('title', 'Details produit -')
+
 @section('stylesheets')
 
 @endsection
@@ -17,7 +19,7 @@ Détails du produit
 <section class="ul-product-detail__box mb-3 pb-2">
     <div class="row">
             <div class="col-lg-3 col-md-3 mt-4 text-center">
-                <a href="{{ route('stock.product.edit',['slug'=>$product->slug]) }}">
+                <a href="{{ route('stock.products.edit', $product) }}">
                 <div class="card">
                     <div class="card-body">
                         <div class="ul-product-detail__border-box">
@@ -50,7 +52,7 @@ Détails du produit
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="{{ route('stock.product.add_image',['slug'=>$product->slug]) }}" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('stock.products.add_image',['slug'=>$product->slug]) }}" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="form-group ">
@@ -99,7 +101,7 @@ Détails du produit
         </div>
         @include('main.stock.product._mouvement')
         <div class="col-lg-3 col-md-3 mt-4 text-center">
-            <a href="{{ route('stock.product.destroy',['slug'=> $product->slug]) }}">
+            <a href="{{ route('stock.products.destroy', $product) }}">
             <div class="card">
                 <div class="card-body">
                     <div class="ul-product-detail__border-box">
@@ -121,35 +123,50 @@ Détails du produit
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="ul-product-detail__image">
-                                @if ($product->image && $product->image_path)
-                                    <img style="max-height:450px;" src="{{ asset($product->image_path) }}" alt="alt" />
+                                @if ($product->image)
+                                    <img class="w-100" src="{{ asset($product->image) }}" alt="alt" />
                                 @else
-                                    <img src="{{ url('images/product_picture.jpg') }}" alt="alt" />
+                                    <img class="w-100" src="{{ url('images/product_picture.jpg') }}" alt="alt" />
                                 @endif
                                 
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-8">
                             <div class="ul-product-detail__brand-name mb-4">
-                                <h2 class="heading">{{ $product->lib }}</h2><span class="text-warning">{{ $product->category->lib }}</span>
+                                <h2 class="heading">{{ $product->name }}</h2><span class="text-warning">{{ $product->category->name }}</span>
                             </div>
                             @if ($product->price)
                                 <div class="ul-product-detail__price-and-rating d-flex align-items-baseline">
-                                    <h5 class="font-weight-700 text-primary mb-0 mr-2">{{ number_format($product->price , 0, '', ' ') }} Fcfa</h5><span class="text-mute font-weight-800 mr-2">
-                                        
+                                    <h5 class="font-weight-700 text-primary mb-0 mr-2">{{ number_format($product->price , 0, '', ' ') }} Fcfa</h5>
+                                    <span class="text-mute font-weight-800 mr-2">    
                                 </div>
                             @endif
                         
                             <div class="ul-product-detail__features mt-4">
                                 <h5 class="font-weight-700">Caractéristiques du produit:</h5>
                                 <ul class="m-0 p-0">
-                                    <div class="ul-widget-app__browser-list-1 mb-2 mt-4"><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Référence :</strong> {{ $product->ref }} </span><span class="text-mute" style="display: none">2 April </span></div>
-                                    <div class="ul-widget-app__browser-list-1 mb-2"><i class="i-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Stock alerte (seuil) :</strong> {{ $product->stockalert }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                                    @if ($product->type)
-                                        <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Type de produit :</strong> {{ $product->type->lib }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                                    @endif
+                                    <div class="ul-widget-app__browser-list-1 mb-2 mt-4">
+                                        <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
+                                        <span class="text-15"><strong>Référence :</strong> {{ $product->reference }} </span>
+                                        <span class="text-mute" style="display: none">2 April </span>
+                                    </div>
+                                    <div class="ul-widget-app__browser-list-1 mb-2">
+                                        <i class="i-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
+                                        <span class="text-15"><strong>Stock alerte (seuil) :</strong> {{ $product->stockalert }}</span>
+                                        <span class="text-mute" style="display: none">2 April </span>
+                                    </div>
+                                    <div class="ul-widget-app__browser-list-1 mb-2 ">
+                                        <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
+                                        <span class="text-15"><strong>Type :</strong> {{ $product->type }}</span>
+                                        <span class="text-mute" style="display: none">2 April </span>
+                                    </div>
+                                    <div class="ul-widget-app__browser-list-1 mb-2 ">
+                                        <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
+                                        <span class="text-15"><strong>Nature :</strong> {{ $product->nature }}</span>
+                                        <span class="text-mute" style="display: none">2 April </span>
+                                    </div>
                                     @if ($product->poids && $product->unite_poids )
                                         <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Poids :</strong> {{ $product->poids }} {{ $product->unite_poids }}</span><span class="text-mute" style="display: none">2 April </span></div>
                                     @endif
@@ -179,9 +196,14 @@ Détails du produit
 
 <section class="ul-product-detail__box">
     <div class="row">
-        @foreach ($product->entrepots(Auth::user()->entreprise->id <> 1 ? Auth::user()->entreprise : null) as $entrepot)
+        @php
+            // $entrepots = $product->entrepots(Auth::user()->entreprise->id <> 1 ? Auth::user()->entreprise : null);
+            $entrepots = $product->entrepots();
+        @endphp
+        @foreach ($entrepots as $entrepot)
         @include('main.stock.product._mouvement', ['type' => 'entrée'])
         @include('main.stock.product._mouvement', ['type' => 'sortie'])
+        @include('main.stock.product._transfert')
         @php
             $e = $entrepot->entreprise->id;
             $color = ($e == 1) ? 'success' : (($e == 2) ? 'info' : (($e == 3) ? 'primary' : ''));
@@ -193,16 +215,16 @@ Détails du produit
                             <div class="ul-widget-card__user-info row">
                                 <div class="col-md border-md-right">
                                     <div class="ul-product-detail--icon mb-2">
-                                        <a href="{{ route('stock.entrepot.show', [$entrepot->slug]) }}">
+                                        <a href="{{ route('stock.entrepots.show', $entrepot) }}">
                                             <i class="i-Shop{{ $e <> 1 ? '-'.$e : '' }} text-{{ $color }} text-25 font-weight-500" style="font-size: 50px;"></i>
                                         </a>
                                     </div>
-                                    <a href="{{ route('stock.entrepot.show', [$entrepot->slug]) }}">
-                                        <p class="m-0 text-18 heading">{{ $entrepot->lib }}</p>
+                                    <a href="{{ route('stock.entrepots.show', $entrepot) }}">
+                                        <p class="m-0 text-18 heading">{{ $entrepot->name }}</p>
                                     </a>
-                                    @if (Auth::user()->entreprise->id == 1)
+                                    {{-- @if (Auth::user()->entreprise->id == 1)
                                         <p class="text-muted m-0">{{ $entrepot->entreprise->nom }}</p>
-                                    @endif
+                                    @endif --}}
                                 </div>
                                 <div class="col-md pt-3">
                                     <h3>
@@ -223,8 +245,8 @@ Détails du produit
                         <div class="pt-2 border-top px-md-2">
                             <a href="" class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#add_variation{{ $product->id }}{{ $entrepot->id }}entrée"><i class="nav-icon i-Down mr-1"></i> Entrée </a>
                             <a href="" class="btn btn-outline-danger m-1" type="button" data-toggle="modal" data-target="#add_variation{{ $product->id }}{{ $entrepot->id }}sortie"><i class="nav-icon i-Up mr-1"></i> Sortie </a>
-                            <a href="{{ route('stock.stock_story_entrepot.index',['entrepot'=>$entrepot->slug, 'slug'=> $product->slug]) }}" class="btn btn-outline-warning m-1"><i class="nav-icon i-Repeat-4 mr-1"></i> Historique </a>
-                            <a href="" class="btn btn-outline-primary m-1 float-right" type="button"><i class="nav-icon i-Data-Transfer mr-1"></i> Transfert </a>
+                            <a href="{{ route('stock.stock_story_entrepot.index',['entrepot'=>$entrepot, 'product'=> $product]) }}" class="btn btn-outline-warning m-1"><i class="nav-icon i-Repeat-4 mr-1"></i> Historique </a>
+                            <a href="" class="btn btn-outline-primary m-1 float-right" type="button" data-toggle="modal" data-target="#add_variation{{ $product->id }}{{ $entrepot->id }}transfert"><i class="nav-icon i-Data-Transfer mr-1"></i> Transfert </a>
                             {{-- <button class="btn btn-outline-success m-1 float-right" type="button">Message</button> --}}
                             {{-- <button class="btn btn-outline-success m-1 float-right" type="button">Message</button> --}}
                         </div>

@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\EntrepotsHasProduct;
+use App\Models\LigneMouvement;
+use App\Models\Mouvement;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 
@@ -14,89 +17,225 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Mouvement::truncate();
+        LigneMouvement::truncate();
         Product::truncate();
-
-        $faker = (new \Faker\Factory())::create();
+        EntrepotsHasProduct::truncate();
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');    
 
         Product::create([
-            'ref' => 'P' . 1,
-            'lib' => "Eau minérale Harod - Pack de 6 x 1L",
-            'price' => 5000,
-            'id_product_category' => 2,
-            'id_type_product' => 2  
+            'name' => "Eau minérale Harod - Pack de 6 x 1L",
+            'type' => 'Fragile',
+            'nature' => 'Pack',
+            'unite' => 'unité',
+            'image' => 'storage/Products/Optimized-bo.png',
+            'id_categories' => 2,
+            'id_entreprises' => 3,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 1,
+            'id_entrepots' => 1,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 1,
+            'id_entrepots' => 3,
         ]);
 
         Product::create([
-            'ref' => 'P' . 2,
-            'lib' => "Eau minérale Harod - Pack de 9 x 570ml",
-            'price' => 3600,
-            'id_product_category' => 2,
-            'id_type_product' => 2  
+            'name' => "Eau minérale Harod - Pack de 9 x 570ml",
+            'type' => 'Fragile',
+            'nature' => 'Pack',
+            'unite' => 'unité',
+            'image' => 'storage/Products/Optimized-bo.png',
+            'id_categories' => 2,
+            'id_entreprises' => 3,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 2,
+            'id_entrepots' => 1,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 2,
+            'id_entrepots' => 3,
         ]);
 
         Product::create([
-            'ref' => 'P' . 3,
-            'lib' => "Eau minérale Harod - Carton gobelets de 24 x 330ml",
-            'price' => 3000,
-            'id_product_category' => 2,
-            'id_type_product' => 2  
+            'name' => "Eau minérale Harod - Carton gobelets de 24 x 330ml",
+            'type' => 'Périssable',
+            'nature' => 'Pack',
+            'unite' => 'unité',
+            'image' => 'storage/Products/Optimized-gobelet-250-ml.jpg',
+            'id_categories' => 2,
+            'id_entreprises' => 3,
         ]);
-
-        Product::create([
-            'ref' => 'P' . 4,
-            'lib' => "Poulet bio THALILA (3Kg)",
-            'price' => 5000,
-            'id_product_category' => 1,
-            'id_type_product' => 1  
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 3,
+            'id_entrepots' => 1,
         ]);
-
-        Product::create([
-            'ref' => 'P' . 5,
-            'lib' => "Poulet de chair THALILA (1,5 - 2Kg)",
-            'price' => 3000,
-            'id_product_category' => 1,
-            'id_type_product' => 1  
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 3,
+            'id_entrepots' => 3,
         ]);
-
-        Product::create([
-            'ref' => 'P' . 6,
-            'lib' => "Poisson Tilapia 1Kg",
-            'price' => 3000,
-            'id_product_category' => 1,
-            'id_type_product' => 1  
-        ]);
-
-        Product::create([
-            'ref' => 'P' . 7,
-            'lib' => "Poisson Silure 1Kg",
-            'price' => 3000,
-            'id_product_category' => 1,
-            'id_type_product' => 1  
-        ]);
-
-        Product::create([
-            'ref' => 'P' . 8,
-            'lib' => "Bobine",
-            'price' => 3000,
-            'id_product_category' => 3,
-            'id_type_product' => 1  
-        ]);
-
         
+        Product::create([
+            'name' => "Poulet bio THALILA (3Kg)",
+            'type' => 'Périssable',
+            'nature' => 'Unité',
+            'unite' => 'unité',
+            'image' => 'storage/Products/Thalila_Boutique-300x300.png',
+            'id_categories' => 1,
+            'id_entreprises' => 2,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 4,
+            'id_entrepots' => 1,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 4,
+            'id_entrepots' => 2,
+        ]);
 
+        Product::create([
+            'name' => "Poulet de chair (1,5 - 2Kg)",
+            'type' => 'Périssable',
+            'nature' => 'Unité',
+            'unite' => 'unité',
+            'image' => 'storage/Products/Poulet-de-chair_Boutique-300x300.png',
+            'id_categories' => 1,
+            'id_entreprises' => 2,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 5,
+            'id_entrepots' => 1,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 5,
+            'id_entrepots' => 2,
+        ]);
+
+        Product::create([
+            'name' => "Poisson Tilapia 1Kg",
+            'type' => 'Périssable',
+            'nature' => 'Unité',
+            'unite' => 'unité',
+            'image' => 'storage/Products/Tilapia_Boutique-300x300.png',
+            'id_categories' => 1,
+            'id_entreprises' => 2,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 6,
+            'id_entrepots' => 1,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 6,
+            'id_entrepots' => 2,
+        ]);
+
+        Product::create([
+            'name' => "Poisson Silure 1Kg",
+            'type' => 'Périssable',
+            'nature' => 'Unité',
+            'unite' => 'unité',
+            'image' => 'storage/Products/Silure_Boutique-300x300.png',
+            'id_categories' => 1,
+            'id_entreprises' => 2,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 7,
+            'id_entrepots' => 1,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 7,
+            'id_entrepots' => 2,
+        ]);
+
+        Product::create([
+            'name' => "Alevins de Silure",
+            'type' => 'Périssable',
+            'nature' => 'Unité',
+            'unite' => 'unité',
+            // 'image' => 'storage/Products/Silure_Boutique-300x300.png',
+            'id_categories' => 1,
+            'id_entreprises' => 2,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 8,
+            'id_entrepots' => 1,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 8,
+            'id_entrepots' => 2,
+        ]);
+
+        Product::create([
+            'name' => "Alevins de Tilapia",
+            'type' => 'Périssable',
+            'nature' => 'Unité',
+            'unite' => 'unité',
+            // 'image' => 'storage/Products/Silure_Boutique-300x300.png',
+            'id_categories' => 1,
+            'id_entreprises' => 2,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 9,
+            'id_entrepots' => 1,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 9,
+            'id_entrepots' => 2,
+        ]);
+
+        Product::create([
+            'name' => "Gants médicaux (propres)",
+            'type' => 'Périssable',
+            'nature' => 'Unité',
+            'unite' => 'unité',
+            // 'image' => 'storage/Products/Silure_Boutique-300x300.png',
+            'id_categories' => 3,
+            'id_entreprises' => 3,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 10,
+            'id_entrepots' => 1,
+        ]);
+        EntrepotsHasProduct::create([
+            'quantite' => 0,
+            'id_products' => 10,
+            'id_entrepots' => 3,
+        ]);
+        
         /*for ($i = 0; $i < 15; $i++) {
             $j = $i+1;
             $client = Product::create([
-                'ref' => 'P' . $j,
-                'lib' => $faker->lastName(),
+                'name' => $faker->lastName(),
                 'description' => $faker->text($maxNbChars = 100),
                 'stockalert' => rand(100,500),
                 'unite_poids' => $faker->randomElement($array = ['Tonne', 'Kilogramme','Gramme']),
                 'poids' => rand(1, 200),
-                'price' => rand(140, 240000),
-                'id_product_category' => rand(1, 4),
-                'id_type_product' => rand(1, 2)
+                'type' => ''(140, 240000),
+                'nature' => rand(1,'solide',
+                'unite' => runité(1,'solide',
+                'id_categories' => rand(1, 4),
             ]);
         }*/
     }

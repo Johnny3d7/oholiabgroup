@@ -14,7 +14,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('main.stock.dashboard.dashboard');
+        return redirect()->route('stock.products.index');
+        return view('main.stock.dashboard');
     }
 
     /**

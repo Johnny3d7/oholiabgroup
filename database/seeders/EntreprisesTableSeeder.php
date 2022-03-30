@@ -16,7 +16,11 @@ class EntreprisesTableSeeder extends Seeder
     public function run()
     {
         //
+        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Entreprise::truncate();
+        Entrepot::truncate();
+        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
 
         $faker = (new \Faker\Factory())::create();
 
@@ -28,21 +32,13 @@ class EntreprisesTableSeeder extends Seeder
 
         for ($i = 0; $i < 3; $i++) {
             $entreprise = Entreprise::create([
-                'nom' => $entreprises[$i],
-                'email' => $faker->email,
-                'adresse' => $faker->address(),
+                'name' => $entreprises[$i],
                 'ncc' => 'XXXX-XXXX',
-                'contact' =>rand(10, 99). '' . rand(10, 99) . '' . rand(10, 99) . '' . rand(10, 99) . '' . rand(10, 99),
             ]);
 
-            $suffix= "ENT";
-
             $entrepot = Entrepot::create([
-                'ref'=> $suffix.$entreprise->id,
-                'lib' => "Principal ".$entreprises[$i],
-                'contact' => $faker->phoneNumber(),
-                'id_entreprise' => $entreprise->id,
-                'id_recorder' => 1
+                'name' => "Principal ".$entreprises[$i],
+                'id_entreprises' => $entreprise->id,
             ]);
         }
     }

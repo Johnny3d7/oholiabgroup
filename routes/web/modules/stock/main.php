@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Stock\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::prefix('/stock')->namespace('App\Http\Controllers\Stock')->name('stock.')->group(function () {
+Route::prefix('/stock')->name('stock.')->group(function () {
     //Tableau de bord
-    Route::get('/dashboard', 'DashboardController@index')->name('index');
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     // Routes Catégorie des produits
     require('categorie.php');

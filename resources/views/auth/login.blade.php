@@ -18,9 +18,12 @@
                         <h1 class="mb-3 text-18">Connexion</h1>
                         <form method="POST" action="{{ route('checkuser') }}" autocomplete="off"> 
                             @csrf
+                            @php
+                                $old = session('old') ?? ['username' => '', 'password' => ''];
+                            @endphp
                             <div class="form-group">
                                 <label for="username">Nom d'utilisateur</label>
-                                <input class="form-control form-control-rounded @error('username') is-invalid @enderror" id="username"  name="username" type="text" value="{{ old('username') }}" required autocomplete="username" autofocus>
+                                <input class="form-control form-control-rounded @error('username') is-invalid @enderror" id="username"  name="username" type="text" value="{{ old('username') ?? $old['username'] }}" required autocomplete="username" {{ (($old['username'] == '') || $errors->has('username')) ? 'autofocus' : '' }}>
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -29,7 +32,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="password">Mot de passe</label>
-                                <input class="form-control form-control-rounded @error('password') is-invalid @enderror" id="password" name="password" type="password" value="{{ old('password') }}" required autocomplete="password" autofocus>
+                                <input class="form-control form-control-rounded @error('password') is-invalid @enderror" id="password" name="password" type="password" value="{{ old('password') ?? $old['password'] }}" required autocomplete="password" autofocus>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

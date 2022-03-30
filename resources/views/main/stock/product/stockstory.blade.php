@@ -1,5 +1,7 @@
 @extends('main.stock.partials.main')
 
+@section('title', 'Historique mouvements ['.$product->name.'] -')
+
 @section('stylesheets')
 <style>
     label {
@@ -16,7 +18,7 @@ Stock
 @endsection
 
 @section('pageTitle')
-Historique des mouvements | {{ $prod->lib }}
+Historique des mouvements | {{ $product->name }}
 @endsection
 
 @section('content')
@@ -32,41 +34,48 @@ Historique des mouvements | {{ $prod->lib }}
                         <table class="display table" id="inventaireTable" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Date mouvement</th>
-                                    <th>Type </th>
-                                    <th>Quantité</th>
-                                    <th>Observation</th>
-                                    <th>Date d'ajout</th>
-                                    <th>Action</th>
+                                    <th style="width: 10%;">Date mouvement</th>
+                                    <th style="width: 10%;">Type </th>
+                                    <th style="width: 20%;">Entrepot</th>
+                                    <th style="width: 10%;">Quantité</th>
+                                    <th style="width: 30%;">Observation</th>
+                                    <th style="width: 10%;">Date d'ajout</th>
+                                    <th style="width: 10%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($variations->sortByDesc('datemouv') as $data)
+                                @forelse ($variations as $data)
                                     <tr>
-                                        <td>{{ ucwords((new Carbon\Carbon($data->datemouv))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
-                                        @if ($data->typemouv == 1)
                                         <td>
-                                            <a class="badge badge-success m-2 p-2" href="#">Entrée</a>
+                                            {{ ucwords((new Carbon\Carbon($data->mouvement->date_mouvement))->locale('fr')->isoFormat('DD/MM/YYYY')) }}
                                         </td>
-                                        <td>{{ $data->qte_entree }}</td>  
-                                        @else
                                         <td>
-                                            <a class="badge badge-info m-2 p-2" href="#">Sortie</a>
+                                            @if ($data->mouvement->type == 'in')
+                                                <a class="badge badge-success m-2 p-2" href="#">Entrée</a>
+                                            @endif
+                                            @if ($data->mouvement->type == 'out')
+                                                <a class="badge badge-info m-2 p-2" href="#">Sortie</a>
+                                            @endif
                                         </td>
-                                        <td>{{ $data->qte_sortie }}</td>  
-                                        @endif
                                         <td>
-                                            @if ($data->observation == "")
+                                            {{ $data->mouvement->entrepot->name }}
+                                        </td>
+                                        <td>
+                                            {{ $data->quantite }}
+                                        </td>
+                                        <td>
+                                            @if ($data->mouvement->observation == "")
                                                 Néant
                                             @else
-                                            {{ $data->observation }}
+                                            {{ $data->mouvement->observation }}
                                             @endif
-                                            
                                         </td>
-                                        <td>{{ ucwords((new Carbon\Carbon($data->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>        
+                                        <td>{{ ucwords((new Carbon\Carbon($data->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                         <td>
-                                            <button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#updateVariation{{ $data->id }}" data-whatever="@fat">Modifier</button>
-                                            <a class="ul-link-action text-danger mr-1 deletevariation" href="{{-- route('stock.variation.destroy',['id'=>$data->id]) --}}" data-toggle="tooltip" data-placement="top" title="Voulez-vous supprimer!!!"><i class="i-Eraser-2"></i></a></td>
+                                            {{-- <button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#updateVariation{{ $data->id }}" data-whatever="@fat">Modifier</button> --}}
+                                            <a href="" class="text-success m-1" type="button" data-toggle="modal" data-target="#updateVariation{{ $data->id }}" data-whatever="@fat"><i class="i-Pen-3"></i></a>
+                                            <a class="ul-link-action text-danger mr-1 deletevariation" href="{{ route('stock.variations.destroy', $data) }}" data-toggle="tooltip" data-placement="top" title="Voulez-vous supprimer!!!"><i class="i-Eraser-2"></i></a>
+                                        </td>
                                     </tr>
                                     <div class="modal fade" id="updateVariation{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="updateVariation{{ $data->id }}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -76,7 +85,7 @@ Historique des mouvements | {{ $prod->lib }}
                                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="get" action="{{ route('stock.variation.update', ['id'=>$data->id])}}">
+                                                <form method="get" action="{{ route('stock.variations.update', $data)}}">
                                                     @csrf
                                                     @method('GET')
                                                     <div class="form-group ">

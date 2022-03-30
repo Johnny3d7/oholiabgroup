@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Stock\ProductController;
+use App\Http\Controllers\Stock\VariationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,13 +18,14 @@ Route::get('/etat-du-stock/{slug}', [ProductController::class, 'etatstock'])->na
 
 //Historique stock d'un produit
 Route::get('/historique-des-mouvements/comp/{entreprise}/{slug}', [ProductController::class, 'stockStoryComp'])->name('stock_story.index');
-Route::get('/historique-des-mouvements/entp/{entrepot}/{slug}', [ProductController::class, 'stockStoryEntp'])->name('stock_story_entrepot.index');
+Route::get('/historique-des-mouvements/entp/{entrepot}/{product}', [ProductController::class, 'stockStoryEntp'])->name('stock_story_entrepot.index');
 
 // Routes Variations
-Route::get('/variations', 'VariationController@index')->name('variation.index');
-Route::get('/variation/create', 'VariationController@create')->name('variation.create');
-Route::post('/variations/store', 'VariationController@store')->name('variation.store');
-Route::post('/variations/transfert', 'VariationController@transfert')->name('variation.transfert');
-Route::get('/variations/edit/{id}', 'VariationController@edit')->name('variation.edit');
-Route::get('/variations/update/{id}', 'VariationController@update')->name('variation.update');
-Route::get('/variations/destroy/{id}', 'VariationController@destroy')->name('variation.destroy');
+Route::resource('variations', VariationController::class);
+Route::post('variations/transfert', [VariationController::class, 'transfert'])->name('variations.transfert');
+// Route::get('/variations', 'VariationController@index')->name('variation.index');
+// Route::get('/variation/create', 'VariationController@create')->name('variation.create');
+// Route::post('/variations/store', 'VariationController@store')->name('variation.store');
+// Route::get('/variations/edit/{id}', 'VariationController@edit')->name('variation.edit');
+// Route::get('/variations/update/{id}', 'VariationController@update')->name('variation.update');
+// Route::get('/variations/destroy/{id}', 'VariationController@destroy')->name('variation.destroy');
