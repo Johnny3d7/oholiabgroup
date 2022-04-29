@@ -1,7 +1,7 @@
 @extends('admin.partials.main')
 
 @section('raccourcis')
-    @include('admin.categories._header')
+    @include('admin.entreprises._header')
 @endsection
 
 @section('stylesheets')
@@ -9,15 +9,15 @@
 @endsection
 
 @section('menuTitle')
-Catégories
+Entreprises
 @endsection
 
 @section('pageTitle')
-Catégories
+Entreprises
 @endsection
 
 @section('content')
-@include('admin.partials.addModal', ['type' => 'categorie', 'genre' => 'F'])
+{{-- @include('admin.partials.addModal', ['type' => 'role']) --}}
 <div class="row">
     <div class="col">
         <button class="btn btn-outline-primary float-right expandAll"><i class="i-Arrow-Down-2 t-font-boldest"></i> Expand all</button>
@@ -27,23 +27,27 @@ Catégories
     </div>
 </div>
 <div class="row mb-4">
-    @forelse ($categories as $categorie)
-        <div class="col-md-3 py-3">
+    @forelse ($entreprises->sortBy('name') as $entreprise)
+        <div class="col-md-4 py-3">
             <div class="card card-body ul-border__bottom">
                 <div class="text-center">
-                    <i class="i-Folder-Open text-30 text-primary"></i>
-                    <h5 class="heading text-primary mt-2">{{ $categorie->name }}</h5>
+                    {{-- <img class="w-25" src="{{ url('images/logo.png') }}" alt="alt" /> --}}
+                    {{-- <img class="w-25" src="{{ url('images/faviconobp.png') }}" alt="alt" /> --}}
+                    {{-- <img class="w-25" src="{{ url('images/logoakebie1.png') }}" alt="alt" /> --}}
+                    <img class="w-25" src="{{ asset($entreprise->logo) }}" alt="logo" />
+                    <h5 class="heading text-primary pt-3">{{ $entreprise->name }}</h5>
                     {{-- <p class="mb-3 text-muted">Icons in block or inline elements</p> --}}
-                    <a class="text-default collapseBtn" href="#collapse-icon-{{ $categorie->uuid }}" data-toggle="collapse" aria-expanded="false">
+                    <a class="text-default collapseBtn" href="#collapse-icon-{{ $entreprise->uuid }}" data-toggle="collapse" aria-expanded="false">
                         <i class="i-Arrow-Up-2 t-font-boldest"></i>
                     </a>
                 </div>
-                <div class="collapse collapse-table show" id="collapse-icon-{{ $categorie->uuid }}" style="">
+                <div class="collapse collapse-table show" id="collapse-icon-{{ $entreprise->uuid }}" style="">
                     <div class="mt-3">
                         <ul class="list-group">
-                            @foreach ($categorie->children() as $cat)
-                                <li class="list-group-item disabled">{{ $cat->name }}</li>
-                            @endforeach
+                            {{-- @foreach ($entreprise->permissions as $perm)
+                                <li class="list-group-item disabled">{{ $perm->display_name }}</li>
+                            @endforeach --}}
+                            
                         </ul>
                     </div>
                 </div>

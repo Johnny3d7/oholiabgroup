@@ -43,7 +43,7 @@ Liste des entrepôts
                             @forelse ($entrepots as $entrepot)
                                 <tr>
                                     <td>{{ $entrepot->name }}</td>
-                                    <td>{{ $entrepot->entreprise ? $entrepot->entreprise->name : ''  }}</td>
+                                    <td class="text-center">{!! $entrepot->entreprise ? '<img class="py-2" style="height:3.5rem;" src="'.asset($entrepot->entreprise->logo).'" alt="logo" />' : ''  !!}</td>
                                     <td>{{ $entrepot->lieu }}</td>
                                     <td>{{ ucwords((new Carbon\Carbon($entrepot->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                     <td>

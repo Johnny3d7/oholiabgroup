@@ -23,7 +23,7 @@ class Entreprise extends BaseModel
     /**
     * Mass assignable columns
     */
-    protected $fillable = ['addresse', 'uuid', 'name', 'ncc', 'email', 'contact', 'addresse'];
+    protected $fillable = ['addresse', 'uuid', 'name', 'ncc', 'email', 'contact', 'addresse', 'logo'];
 
     /**
     * Date time columns.

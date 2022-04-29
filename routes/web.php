@@ -78,6 +78,9 @@ Route::middleware('route-stack')->group(function(){
 
     // role & permission routes
     require('web/admin.php');
+    
+    // Achats
+    require('web/modules/achat/main.php');
 });
 
 Route::get('back', function () {
@@ -92,7 +95,6 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-require('web/modules/achat/main.php');
 require('web/modules/parc-auto/main.php');
 require('web/modules/parc-info/main.php');
 require('web/modules/ressourceh/main.php');

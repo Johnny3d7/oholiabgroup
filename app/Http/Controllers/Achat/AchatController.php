@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Stock;
+namespace App\Http\Controllers\Achat;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class AchatController extends Controller
      */
     public function index()
     {
-        //
+        return view('main.achats.index');
     }
 
     /**

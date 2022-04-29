@@ -46,7 +46,8 @@ Ajouter un produit
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label class="ul-form__label" for="lib">Libellé produit:</label>
-                            <input class="form-control" value="{{ old('lib') }}" name="lib" id="lib" type="text" placeholder="Ex: Papier rame" required/><small class="ul-form__text form-text" id="">
+                            <input class="form-control" value="{{ old('lib') }}" name="lib" id="lib" type="text" placeholder="Ex: Papier rame" required/>
+                            <small class="ul-form__text form-text" id="">
                                 Entrez le libellé du produit svp!
                             </small>
                             @if ($errors->has('lib'))
@@ -59,8 +60,8 @@ Ajouter un produit
                             <label class="ul-form__label" for="id_product_category">Catégorie produit:</label>
                             <select name="id_product_category" id="id_product_category" class="form-control" required>
                                 <option value=""  selected>-- Sélectionner --</option>
-                                @forelse (ProductCategory::where('status', 1)->orderBy('lib', 'asc')->get() as $data)
-                                    <option value="{{ $data->id }}" @if (old('id_product_category')== '{{ $data->id }}') selected="selected" @endif>{{ $data->lib }}</option>
+                                @forelse (Category::all() as $data)
+                                    <option value="{{ $data->id }}" @if (old('id_product_category')== '{{ $data->id }}') selected="selected" @endif>{{ $data->name }}</option>
                                 @empty
                                     
                                 @endforelse

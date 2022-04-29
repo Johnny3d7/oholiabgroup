@@ -34,7 +34,26 @@
     <link href="{{ url('css/plugins/bootstrap-colorpicker.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
  
-    
+    <style>
+        /* Make the badge float in the top right corner of the button */
+        .button__badge {
+            background-color: red;
+            border-radius: 50%;
+            color: white;
+
+            height: 18px;
+            width: 18px;
+
+            text-align: center;
+            
+            padding: 0 2px;
+            font-size: 12px;
+            
+            position: absolute; /* Position the badge within the relatively positioned button */
+            top: 0;
+            right: 2px;
+        }
+    </style>
     @yield('stylesheets')
     
 </head>
@@ -44,7 +63,7 @@
 
         @include('main.partials.sidebar')
 
-        <div class="switch-overlay"></div>
+        {{-- <div class="switch-overlay"></div> --}}
         <div class="main-content-wrap mobile-menu-content bg-off-white m-0" style="background-image: url({{ url('images/back2.jpg') }}) !important; background-position: center center !important;     background-size: contain !important; ">
             @include('main.partials.header')
 
@@ -161,18 +180,59 @@
     </script>
     <script>
         $(document).ready(function () {
-        $('.table_oholiab').DataTable({
-            paging: true,
-            "language": {
-                "url": "{{ url('js/language/french_json.json')}}"
-     },
-            searching: true,
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
-} );
-    });
+            $('.table_oholiab').each(function(){
+                $this = $(this);
+                $toExport = $this.data('to-export') ?? [':visible'];
+                $title = $this.data('title-to-display') ?? '[ Votre titre ici ]';
+                $this.DataTable({
+                    paging: true,
+                    // ordering:false,
+                    "language": {
+                        "url": "{{ url('js/language/french_json.json')}}"
+                    },
+                    searching: true,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend:'copy',
+                            title: $title,
+                            exportOptions: {
+                                columns: $toExport,
+                            }
+                        },
+                        {
+                            extend:'csv',
+                            title: $title,
+                            exportOptions: {
+                                columns: $toExport,
+                            }
+                        },
+                        {
+                            extend:'excel',
+                            title: $title,
+                            exportOptions: {
+                                columns: $toExport,
+                            }
+                        },
+                        {
+                            extend:'pdf',
+                            title: $title,
+                            exportOptions: {
+                                columns: $toExport,
+                            }
+                        },
+                        {
+                            extend:'print',
+                            title: $title,
+                            exportOptions: {
+                                columns: $toExport,
+                            }
+                        },
+                    ]
+                });
+            })
+            // $('.table_oholiab').
+        });
     </script>
     @yield('javascripts')
 </body>

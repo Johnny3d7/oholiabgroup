@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Achat\AchatController;
+use App\Http\Controllers\Achat\BesoinController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::prefix('/achat')->namespace('App\Http\Controllers\Achat')->name('achats.')->group(function () {
-    Route::view('/', 'main.achats.index')->name('index');
+Route::prefix('/achats')->name('achats.')->group(function () {
+    Route::get('/', [AchatController::class, 'index'])->name('index');
+    
+    Route::resource('besoins', BesoinController::class);
 });

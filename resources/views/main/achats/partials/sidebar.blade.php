@@ -1,12 +1,11 @@
 @php
-    $entreprise = Auth::user()->entreprise->id;
+    $entreprise = Auth::user()->entreprise->id ?? 1;
 @endphp
 <ul class="metismenu" id="menu">
     {{-- <li class="Ul_li--hover"><a href="{{ route('stock.index') }}"><i class="i-Bar-Chart text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Tableau de bord</span></a></li> --}}
-    <li class="Ul_li--hover"><a href="#"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Tableau de bord</span></a></li>
-    <li class="Ul_li--hover"><a href="#"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Commandes fournisseurs</span></a></li>
-    <li class="Ul_li--hover"><a href="#"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Contact Fournisseurs</span></a></li>
-    <li class="Ul_li--hover"><a href="#"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Livraisons</span></a></li>
+    <li class="Ul_li--hover"><a href="{{ route('achats.index') }}"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Tableau de bord</span></a></li>
+    <li class="Ul_li--hover"><a href="{{ route('achats.besoins.index') }}"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Expressions besoin</span></a></li>
+    <li class="Ul_li--hover"><a href="#"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Achats</span></a></li>
     <li class="Ul_li--hover"><a href="#"><i class="i-Building text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Factures</span></a></li>
 
 

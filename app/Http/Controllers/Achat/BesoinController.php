@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Achat;
 
+use App\Http\Controllers\Controller;
+use App\Models\Entreprise;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Permission;
 
-use \Auth;
-class ModuleController extends Controller
+class BesoinController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,40 +15,8 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        //
-
-        $tabs = [
-            'browse' => 'Lister',
-            'read' => 'Consulter',
-            'edit' => 'Modifier',
-            'add' => 'Ajouter',
-            'delete' => 'Supprimer',
-        ];
-
-        $tables = DB::select('SHOW TABLES');
-        $tables_to_ignore = [
-            'migrations', 
-        ];
-        
-        $name = 'Tables_in_'.env('DB_DATABASE');
-        foreach($tables as $table)
-        {
-            foreach ($tabs as $key=>$value) {
-                if(!Permission::whereName($table->{$name}.'_'.$key)->first()){
-                    Permission::create([
-                        'name' => $table->{$name}.'_'.$key,
-                        'display_name' => $value.' '.$table->{$name},
-                        'table' => $table->{$name},
-                    ]);
-                }
-            }
-        }
-
-        $user = Auth::user();
-        if($user->hasRole('geststock')) return redirect()->route('stock.index');
-        if($user->hasRole('chgachat')) return redirect()->route('achats.index');
-
-        return view('main.modules.index');
+        $besoins = [];
+        return view('main.achats.besoins.index', compact('besoins'));
     }
 
     /**
@@ -59,7 +26,8 @@ class ModuleController extends Controller
      */
     public function create()
     {
-        //
+        $entreprises = Entreprise::all();
+        return view('main.achats.besoins.create', compact('entreprises'));
     }
 
     /**

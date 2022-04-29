@@ -33,8 +33,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     });
     
     Route::prefix('/entreprises')->name('entreprises.')->group(function () {
-        Route::get('/', [AdminController::class, 'rolesIndex'])->name('index');
-        Route::post('create', [AdminController::class, 'rolesStore'])->name('store');
+        Route::get('/', [AdminController::class, 'entreprisesIndex'])->name('index');
+        Route::post('create', [AdminController::class, 'entreprisesStore'])->name('store');
     });
     
     Route::prefix('/employes')->name('employes.')->group(function () {
@@ -53,8 +53,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     });
     
     Route::prefix('/produits')->name('products.')->group(function () {
-        Route::get('/', [AdminController::class, 'rolesIndex'])->name('index');
-        Route::post('create', [AdminController::class, 'rolesStore'])->name('store');
+        Route::get('/', [AdminController::class, 'productsIndex'])->name('index');
+        Route::post('create', [AdminController::class, 'productsStore'])->name('store');
     });
     
     Route::prefix('/icons')->name('icons.')->group(function () {

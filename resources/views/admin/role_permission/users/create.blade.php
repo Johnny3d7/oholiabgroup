@@ -44,61 +44,65 @@ Ajouter un utilisateur
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label class="ul-form__label" for="username">Nom d'utilisateur:</label>
-                            <input class="form-control" value="{{ old('username') }}" name="username" id="username" type="text" placeholder="Ex: Papier rame" required/><small class="ul-form__text form-text" id="">
-                                Entrez le nom d'utilisateur svp!
-                            </small>
+                            <input class="form-control" value="{{ old('username') }}" name="username" id="username" type="text" placeholder="Ex: Papier rame" required/>
                             @if ($errors->has('username'))
-                                <div class="invalid-feedback">
+                                <div class="alert-danger p-1 ">
                                     {{ $errors->first('username') }}
                                 </div>
                             @endif
+                            <small class="ul-form__text form-text" id="">
+                                Entrez le nom d'utilisateur svp!
+                            </small>
                         </div>
                         <div class="form-group col-md-7">
                             <label class="ul-form__label" for="email">Email:</label>
-                            <input class="form-control" value="{{ old('email') }}" name="email" id="email" type="text" placeholder="Ex: Papier rame" required/><small class="ul-form__text form-text" id="">
-                                Entrez l'adresse email de l'utilisateur svp!
-                            </small>
+                            <input class="form-control" value="{{ old('email') }}" name="email" id="email" type="text" placeholder="Ex: Papier rame" required/>
                             @if ($errors->has('email'))
-                                <div class="invalid-feedback">
+                                <div class="alert-danger p-1 ">
                                     {{ $errors->first('email') }}
                                 </div>
                             @endif
+                            <small class="ul-form__text form-text" id="">
+                                Entrez l'adresse email de l'utilisateur svp!
+                            </small>
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="ul-form__label" for="id_entreprise">Entreprise:</label>
-                            <select name="id_entreprise" id="id_entreprise" class="form-control" required>
+                            <label class="ul-form__label" for="id_entreprises">Entreprise:</label>
+                            <select name="id_entreprises" id="id_entreprises" class="form-control" required>
                                 <option value=""  selected>-- Sélectionner --</option>
-                                @forelse ($entreprises->sortBy('lib') as $entreprise)
-                                    <option value="{{ $entreprise->id }}" @if (old('id_entreprise')== '{{ $entreprise->id }}') selected="selected" @endif>{{ $entreprise->nom }}</option>
+                                @forelse ($entreprises->sortBy('name') as $entreprise)
+                                    <option value="{{ $entreprise->id }}" @if (old('id_entreprises')== '{{ $entreprise->id }}') selected="selected" @endif>{{ $entreprise->name }}</option>
                                 @empty
                                     
                                 @endforelse
-                            </select><small class="ul-form__text form-text" id="">
+                            </select>
+                            @if ($errors->has('id_entreprises'))
+                                <div class="alert-danger p-1 ">
+                                    {{ $errors->first('id_entreprises') }}
+                                </div>
+                            @endif
+                            <small class="ul-form__text form-text" id="">
                                 Choisissez l'entreprise de l'utilisateur svp!
                             </small>
-                            @if ($errors->has('id_entreprise'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('id_entreprise') }}
-                                </div>
-                            @endif
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="ul-form__label" for="id_role">Role:</label>
-                            <select name="id_role" id="id_role" class="form-control" required>
+                            <label class="ul-form__label" for="id_roles">Role:</label>
+                            <select name="id_roles" id="id_roles" class="form-control" required>
                                 <option value=""  selected>-- Sélectionner --</option>
                                 @forelse ($roles->sortBy('name') as $role)
-                                    <option value="{{ $role->id }}" @if (old('id_role')== '{{ $role->id }}') selected="selected" @endif>{{ $role->name }}</option>
+                                    <option value="{{ $role->id }}" @if (old('id_roles')== '{{ $role->id }}') selected="selected" @endif>{{ $role->name }}</option>
                                 @empty
                                     
                                 @endforelse
-                            </select><small class="ul-form__text form-text" id="">
-                                Choisissez le role de l'utilisateur svp!
-                            </small>
-                            @if ($errors->has('id_role'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('id_role') }}
+                            </select>
+                            @if ($errors->has('id_roles'))
+                                <div class="alert-danger p-1 ">
+                                    {{ $errors->first('id_roles') }}
                                 </div>
                             @endif
+                            <small class="ul-form__text form-text" id="">
+                                Choisissez le role de l'utilisateur svp!
+                            </small>
                         </div>
                     </div>
                         
