@@ -21,7 +21,7 @@ class EntrepotsHasProduct extends BaseModel
     /**
     * Mass assignable columns
     */
-    protected $fillable = ['quantite', 'id_entrepots'];
+    protected $fillable = ['quantite', 'id_entrepots', 'id_products'];
 
     /**
     * Date time columns.
@@ -33,7 +33,7 @@ class EntrepotsHasProduct extends BaseModel
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
-    public function idEntrepot()
+    public function entrepot()
     {
         return $this->belongsTo(Entrepot::class,'id_entrepots');
     }
@@ -43,9 +43,9 @@ class EntrepotsHasProduct extends BaseModel
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
-    public function id()
+    public function product()
     {
-        return $this->belongsTo(Product::class,'id');
+        return $this->belongsTo(Product::class,'id_products');
     }
 
 

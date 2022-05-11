@@ -32,6 +32,7 @@
     <link href="{{ url('css/plugins/buttons.datatables.min.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/daterangepicker.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/bootstrap-colorpicker.min.css') }}" rel="stylesheet" />
+    <link href="{{ url('fonts/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
  
     <style>

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Entrepot;
 use App\Models\Entreprise;
@@ -93,6 +94,7 @@ class AdminController extends Controller
     public function iconsIndex()
     {
         return view('admin.icons');
+        return view('admin.fontawesome');
     }
 
     /*--------------------------------------------- Users Routes ------------------------------------------------ */
@@ -161,6 +163,7 @@ class AdminController extends Controller
     /*------------------------------------------ Permissions Routes --------------------------------------------- */
     public function permissionsIndex()
     {
+        // dd(session('routeStack'));
         $permissions = Permission::all();
         return view('admin.role_permission.permissions.index', compact('permissions'));
     }
@@ -169,7 +172,9 @@ class AdminController extends Controller
     {
         if($request->name && $request->name != ''){
             $permission = Permission::create([
-                'name' => $request->name
+                'name' => $request->name,
+                'display_name' => $request->display_name,
+                'table' => $request->table,
             ]);
         }
         return back();

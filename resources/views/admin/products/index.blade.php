@@ -22,7 +22,7 @@ Produits
         <div class="card text-left">
             
             <div class="card-body">
-                <a href="{{ route('stock.products.create') }}">
+                <a href="{{ route('admin.products.create') }}">
                     <button class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right"  data-style="expand-right">
                         <span class="ladda-label">Ajouter un produit</span>
                     </button>

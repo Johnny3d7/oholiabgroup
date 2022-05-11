@@ -34,7 +34,7 @@ Ajouter un produit
                     </div>
             </div>
         </section>
-        <div class="card animate__animated animate__backInDown">
+        {{-- <div class="card animate__animated animate__backInDown">
             <div class="card-header bg-transparent">
             <h3 class="card-title">Ajout d'un nouveau produit</h3>
             </div>
@@ -202,19 +202,6 @@ Ajouter un produit
                             @endif
                         </div>
                         
-                        {{--<div class="form-group col-md-4">
-                            <label class="ul-form__label" for="inputEmail18">User Group:</label>
-                            <div class="ul-form__radio-inline">
-                                <label class="ul-radio__position radio radio-primary form-check-inline">
-                                    <input type="radio" name="radio" value="0" /><span class="ul-form__radio-font">Sales Person</span><span class="checkmark"></span>
-                                </label>
-                                <label class="ul-radio__position radio radio-primary">
-                                    <input type="radio" name="radio" value="0" /><span class="ul-form__radio-font">Customer</span><span class="checkmark"></span>
-                                </label>
-                            </div><small class="ul-form__text form-text" id="passwordHelpBlock">
-                                Please select user group
-                            </small>
-                        </div>  --}}
                     </div>
                     <div class="custom-separator"></div>
                     <div class="form-group col-md-4">
@@ -222,6 +209,151 @@ Ajouter un produit
                         <div class="custom-file">
                             <input class="custom-file-input" id="inputGroupFile01" type="file" name="image" aria-describedby="inputGroupFileAddon01" />
                             <label class="custom-file-label" for="inputGroupFile01">Choisir une image </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="mc-footer">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <button class="btn btn-primary m-1" type="submit">Valider</button>
+                                <button class="btn btn-outline-secondary m-1" type="reset">annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--  end::form 3-->
+        </div> --}}
+
+        <div class="card animate__animated animate__backInDown">
+            <div class="card-header bg-transparent">
+            <h3 class="card-title">Ajout d'un nouveau produit</h3>
+            </div>
+            <!-- begin::form-->
+            <form method="post" action="{{ route('stock.products.store')}}" enctype="multipart/form-data">
+                @csrf
+                @method('POST')
+                <div class="card-body">    
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label class="ul-form__label" for="name">Nom produit:</label>
+                            <input class="form-control" value="{{ old('name') }}" name="name" id="name" type="text" placeholder="Ex: Papier rame" required/>
+                            <small class="ul-form__text form-text" id="">
+                                Entrez le nom du produit svp!
+                            </small>
+                            @if ($errors->has('name'))
+                                <div class="alert-danger p-2 rounded">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="ul-form__label" for="id_categories">Catégorie produit:</label>
+                            <select name="id_categories" id="id_categories" class="form-control" required>
+                                <option value="" selected>-- Sélectionner --</option>
+                                @forelse ($categories as $category)
+                                    <option value="{{ $category->id }}" @if (old('id_categories') == $category->id) selected="selected" @endif>{{ $category->name }}</option>
+                                @empty
+                                    
+                                @endforelse
+                            </select><small class="ul-form__text form-text" id="">
+                                Choisissez la catégorie du produit svp!
+                            </small>
+                            @if ($errors->has('id_categories'))
+                                <div class="alert-danger p-2 rounded">
+                                    {{ $errors->first('id_categories') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="ul-form__label" for="type">Type produit:</label>
+                            <select id="type" name="type" class="form-control" required>
+                                <option value=""  selected>-- Sélectionner --</option>
+                                @php $types = ["Périssable", "Fragile"] ;@endphp
+                                @forelse ($types as $type)
+                                    <option value="{{ $type }}" @if (old('type') == $type) selected="selected" @endif>{{ $type }}</option>
+                                @empty
+                                    
+                                @endforelse
+                            </select>
+                            <small class="ul-form__text form-text" id="">
+                                Choisissez le type du produit svp!
+                            </small>
+                            @if ($errors->has('type'))
+                                <div class="alert-danger p-2 rounded">
+                                    {{ $errors->first('type') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="ul-form__label" for="nature">Nature produit:</label>
+                            <select id="nature" name="nature" class="form-control" required>
+                                <option value=""  selected>-- Sélectionner --</option>
+                                @php $natures = ["Pack", "Unité"] ;@endphp
+                                @forelse ($natures as $nature)
+                                    <option value="{{ $nature }}" @if (old('nature') == $nature) selected="selected" @endif>{{ $nature }}</option>
+                                @empty
+                                    
+                                @endforelse
+                            </select>
+                            <small class="ul-form__text form-text" id="">
+                                Choisissez la nature du produit svp!
+                            </small>
+                            @if ($errors->has('nature'))
+                                <div class="alert-danger p-2 rounded">
+                                    {{ $errors->first('nature') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="ul-form__label" for="unite">Unité produit:</label>
+                            <select id="unite" name="unite" class="form-control" required>
+                                <option value=""  selected>-- Sélectionner --</option>
+                                @php $unites = ["Pack", "Unité"] ;@endphp
+                                @forelse ($unites as $unite)
+                                    <option value="{{ $unite }}" @if (old('unite') == $unite) selected="selected" @endif>{{ $unite }}</option>
+                                @empty
+                                    
+                                @endforelse
+                            </select>
+                            <small class="ul-form__text form-text" id="">
+                                Choisissez l'unité du produit svp!
+                            </small>
+                            @if ($errors->has('unite'))
+                                <div class="alert-danger p-2 rounded">
+                                    {{ $errors->first('unite') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="ul-form__label">Entreprise de production</label>
+                            <div class="">
+                                @foreach ($entreprises->sortBy('name') as $entreprise)
+                                    <label class="radio radio-outline-primary ml-5" style="display: inline">
+                                        <input type="radio" name="id_entreprises" value="{{ $entreprise->id }}" @if (old('id_entreprises') == $entreprise->id) selected="checked" @endif>
+                                        <span><img src="{{ asset($entreprise->logo) }}" alt="" style="height: 4rem;"></span>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                @endforeach
+                            </div>
+                            @if ($errors->has('id_entreprises'))
+                                <div class="alert-danger p-2 rounded">
+                                    {{ $errors->first('id_entreprises') }}
+                                </div>
+                            @endif
+                        </div>
+                        
+                    </div>
+                    <div class="custom-separator"></div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label class="col-form-label" for="image">Image (.png | .jpg | .jpeg): </label>               
+                            <input type="file" name="image" class="dropify" data-bs-height="180" accept=".png, .jpg, .jpeg" />
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label class="col-form-label" for="description">Description: </label>               
+                            <textarea class="form-control" name="description" id="description" cols="30" rows="5" placeholder="Veuillez donner une description du produit (Ce champs est facultatif)">@if (old('description')) {{ old('description') }} @endif</textarea>
                         </div>
                     </div>
                 </div>

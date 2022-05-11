@@ -22,10 +22,9 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        //
         $view = $request->view;
         $products = Product::all();
-        //dd($products);
+        //  dd($products);
         return view('main.stock.product.index',compact('products', 'view'));
     }
 
@@ -36,7 +35,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $entreprises = Entreprise::all();
+        return view('admin.products.create', compact('categories', 'entreprises'));
+        // $categories
         return view('main.stock.product.create');
     }
 

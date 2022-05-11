@@ -17,29 +17,32 @@ class RouteStack
      */
     public function handle(Request $request, Closure $next)
     {
-
         $home = 'module.index';
-        $to_ignore = [];
+        $to_ignore = [
+            'df'
+        ];
 
         if($request->method() == "GET" && !in_array(Route::currentRouteName(), $to_ignore)){
-            $array = session('routeStack');
+            $array = $tab = session('routeStack');
             if(Route::currentRouteName() == $home){
                 session(['routeStack' => []]);
             } else {
                 try {
-                    if(count($array) == 0 || $array[array_unshift($array)-1]["name"] != Route::currentRouteName()){
-                        array_push($array, [
+                    if(count($array) == 0 || $array[count($array)-1]["name"] != Route::currentRouteName()){
+                        array_push($tab, [
                             'name' => Route::currentRouteName(),
                             'params' => Route::getCurrentRoute()->parameters()
                         ]);
-                        session(['routeStack' => $array]);
+                        // dd($array, session('routeStack'));
                     }
+                    session(['routeStack' => $tab]);
                 } catch (\Throwable $th) {
                     return redirect()->route($home);
                 }
             }
-        }
+        } else { var_dump('Not valid'); }
 
+        // var_dump(session('routeStack'));
 
         // $home = 'module.index';
         // $array = session('routeStack');
