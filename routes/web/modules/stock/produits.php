@@ -1,5 +1,6 @@
 <?php
 
+// use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Stock\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Routes Produits
+// Route::get('products', [App\Http\Controllers\Stock\ProductController::class, 'index'])->name('products.index');
 Route::resource('products', ProductController::class);
 // Route::get('/products', 'ProductController@index')->name('products.index');
 // Route::get('/product/create', 'ProductController@create')->name('product.create');

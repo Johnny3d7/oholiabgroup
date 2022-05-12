@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Entrepot;
 use App\Models\Entreprise;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -91,6 +94,7 @@ class AdminController extends Controller
     public function iconsIndex()
     {
         return view('admin.icons');
+        return view('admin.fontawesome');
     }
 
     /*--------------------------------------------- Users Routes ------------------------------------------------ */
@@ -108,6 +112,31 @@ class AdminController extends Controller
         $permissions = Permission::all();
         // dd($users[0]->entreprise);
         return view('admin.role_permission.users.create', compact('entreprises', 'roles', 'permissions'));
+    }
+
+    public function usersStore(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|unique:users',
+            'email' => 'required|email',
+            'id_roles' => 'required|exists:roles,id'
+        ],[
+            'username.required' => "Le nom d'utilisateur est un champs obligatoire",
+            'username.unique' => "Ce nom d'utilisateur est déjà attribué !",
+            'email.required' => "L'adresse mail est un champs obligatoire",
+            'email.email' => "Veuillez fournir une email correcte de la forme example@domain.xx",
+            'id_roles.required' => "Veuillez sélectionner le rôle de l'utilisateur",
+            'id_roles.exists' => "Le rôle que vous avez sélectionné n'existe pas",
+        ]);
+        $user = User::create([
+            'username' => $request->username,
+            'email'=> $request->email,
+            'password' => Hash::make('1234567890'),
+            // 'id_entreprise' => $entreprises[$i]
+        ]);
+
+        $user->assignRole(Role::find($request->id_roles)->name);
+        return back();
     }
 
     /*------------------------------------------- End Users Routes ---------------------------------------------- */
@@ -134,6 +163,7 @@ class AdminController extends Controller
     /*------------------------------------------ Permissions Routes --------------------------------------------- */
     public function permissionsIndex()
     {
+        // dd(session('routeStack'));
         $permissions = Permission::all();
         return view('admin.role_permission.permissions.index', compact('permissions'));
     }
@@ -142,12 +172,33 @@ class AdminController extends Controller
     {
         if($request->name && $request->name != ''){
             $permission = Permission::create([
-                'name' => $request->name
+                'name' => $request->name,
+                'display_name' => $request->display_name,
+                'table' => $request->table,
             ]);
         }
         return back();
     }
     /*---------------------------------------- End Permissions Routes ------------------------------------------- */
+
+    /*--------------------------------------------- Entreprises Routes ------------------------------------------------ */
+    public function entreprisesIndex()
+    {
+        $entreprises = Entreprise::all();
+        return view('admin.entreprises.index', compact('entreprises'));
+    }
+    
+    public function entreprisesStore(Request $request)
+    {
+        if($request->name && $request->name != ''){
+            $entreprise = Entreprise::create([
+                'name' => $request->name
+            ]);
+        }
+        return back();
+    }
+    
+    /*------------------------------------------- End Entreprises Routes ---------------------------------------------- */
     
     /*------------------------------------------ Entrepots Routes --------------------------------------------- */
     public function entrepotsIndex()
@@ -160,6 +211,24 @@ class AdminController extends Controller
     {
         if($request->name && $request->name != ''){
             $entrepot = Entrepot::create([
+                'name' => $request->name
+            ]);
+        }
+        return back();
+    }
+    /*---------------------------------------- End Entrepots Routes ------------------------------------------- */
+
+    /*------------------------------------------ Entrepots Routes --------------------------------------------- */
+    public function productsIndex()
+    {
+        $products = Product::all();
+        return view('admin.products.index', compact('products'));
+    }
+    
+    public function productsStore(Request $request)
+    {
+        if($request->name && $request->name != ''){
+            $product = Entrepot::create([
                 'name' => $request->name
             ]);
         }

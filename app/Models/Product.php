@@ -31,7 +31,7 @@ class Product extends BaseModel
     /**
     * Mass assignable columns
     */
-    protected $fillable = ['uuid', 'reference', 'name', 'reference_achat', 'description', 'image', 'type', 'nature', 'unite', 'id_categories'];
+    protected $fillable = ['uuid', 'reference', 'name', 'reference_achat', 'description', 'image', 'type', 'nature', 'unite', 'id_categories', 'id_entreprises'];
 
     /**
     * Date time columns.
@@ -50,6 +50,29 @@ class Product extends BaseModel
                             ($last+1)));
             $item->reference = static::$prefix.$num;
         });
+
+        static::created(function($item) {
+            foreach (Entreprise::find(1)->entrepots as $entrepot) {
+                EntrepotsHasProduct::create([
+                    'quantite' => 0,
+                    'id_products' => $item->id,
+                    'id_entrepots' => $entrepot->id,
+                ]);
+            }
+            if($item->id_entreprises != 1){
+                foreach (Entreprise::find($item->id_entreprises)->entrepots as $entrepot) {
+                    EntrepotsHasProduct::create([
+                        'quantite' => 0,
+                        'id_products' => $item->id,
+                        'id_entrepots' => $entrepot->id,
+                    ]);
+                }
+            }
+        });
+    }
+
+    public function image(){
+        return $this->image ?? 'images/product_picture.jpg';
     }
 
     /**
@@ -60,6 +83,16 @@ class Product extends BaseModel
     public function category()
     {
         return $this->belongsTo(Category::class,'id_categories');
+    }
+
+    /**
+    * entreprise
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+    public function entreprise()
+    {
+        return $this->belongsTo(Entreprise::class,'id_entreprises');
     }
 
     /**

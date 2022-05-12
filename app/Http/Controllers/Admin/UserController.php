@@ -1,0 +1,114 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Entreprise;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
+class UserController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $users = User::all();
+        return view('admin.role_permission.users.index', compact('users'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $entreprises = Entreprise::all();
+        $roles = Role::all();
+        $permissions = Permission::all();
+        return view('admin.role_permission.users.create', compact('entreprises', 'roles', 'permissions'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|unique:users',
+            'email' => 'required|email',
+            'id_roles' => 'required|exists:roles,id'
+        ],[
+            'username.required' => "Le nom d'utilisateur est un champs obligatoire",
+            'username.unique' => "Ce nom d'utilisateur est déjà attribué !",
+            'email.required' => "L'adresse mail est un champs obligatoire",
+            'email.email' => "Veuillez fournir une email correcte de la forme example@domain.xx",
+            'id_roles.required' => "Veuillez sélectionner le rôle de l'utilisateur",
+            'id_roles.exists' => "Le rôle que vous avez sélectionné n'existe pas",
+        ]);
+        $user = User::create([
+            'username' => $request->username,
+            'email'=> $request->email,
+            'password' => Hash::make('1234567890'),
+            // 'id_entreprise' => $entreprises[$i]
+        ]);
+
+        $user->assignRole(Role::find($request->id_roles)->name);
+        return back();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}

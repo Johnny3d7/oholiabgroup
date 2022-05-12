@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Stock;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
-class AchatController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,8 @@ class AchatController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::all();
+        return view('admin.role_permission.roles.index', compact('roles'));
     }
 
     /**
@@ -35,7 +37,12 @@ class AchatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->name && $request->name != ''){
+            $role = Role::create([
+                'name' => $request->name
+            ]);
+        }
+        return back();
     }
 
     /**

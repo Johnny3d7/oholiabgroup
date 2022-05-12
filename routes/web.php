@@ -76,23 +76,37 @@ Route::middleware('route-stack')->group(function(){
     //Gestion de stock routes
     require('web/modules/stock/main.php');
 
-    // role & permission routes
-    require('web/admin.php');
+    // Administration Module routes
+    require('web/admin/main.php');
+    
+    // Achats
+    require('web/modules/achat/main.php');
 });
 
 Route::get('back', function () {
+    return back();
+    // $array = $tab = session('routeStack');
+    // $route = array_pop($array);
+    // $route = array_pop($array);
+    // session(['routeStack' => $array]);
+    // dd(is_array($route), $route);
+    // return redirect()->route(is_array($route) ? $route['name'] : 'module.index', is_array($route) ? $route['params'] : null);
+
     $array = $tab = session('routeStack');
-    $route = array_pop($array);
-    $route = array_pop($array);
-    session(['routeStack' => $array]);
-    return redirect()->route(is_array($route) ? $route['name'] : 'module.index', is_array($route) ? $route['params'] : null);
+    $route = '';
+    if(is_array($array)){
+        $route = array_pop($array);
+        $route = array_pop($array);
+        session(['routeStack' => $array]);
+    }
+    return redirect()->route(is_array($route) ? $route['name'] : 'admin.index', is_array($route) ? $route['params'] : null);
+    
 })->name('backStack');
 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-require('web/modules/achat/main.php');
 require('web/modules/parc-auto/main.php');
 require('web/modules/parc-info/main.php');
 require('web/modules/ressourceh/main.php');

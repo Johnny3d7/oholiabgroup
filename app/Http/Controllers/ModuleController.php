@@ -47,6 +47,7 @@ class ModuleController extends Controller
 
         $user = Auth::user();
         if($user->hasRole('geststock')) return redirect()->route('stock.index');
+        if($user->hasRole('chgachat')) return redirect()->route('achats.index');
 
         return view('main.modules.index');
     }

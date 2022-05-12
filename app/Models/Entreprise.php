@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property varchar $email email
  * @property varchar $contact contact
  * @property varchar $addresse addresse
- * @property \Illuminate\Database\Eloquent\Collection $entrepot belongsToMany
+ * @property \Illuminate\Database\Eloquent\Collection $entrepot HasMany
  * 
  */
 class Entreprise extends BaseModel 
@@ -23,7 +23,7 @@ class Entreprise extends BaseModel
     /**
     * Mass assignable columns
     */
-    protected $fillable = ['addresse', 'uuid', 'name', 'ncc', 'email', 'contact', 'addresse'];
+    protected $fillable = ['addresse', 'uuid', 'name', 'ncc', 'email', 'contact', 'addresse', 'logo'];
 
     /**
     * Date time columns.
@@ -37,7 +37,7 @@ class Entreprise extends BaseModel
     */
     public function entrepots()
     {
-        return $this->belongsToMany(Entrepot::class,'entrepots');
+        return $this->HasMany(Entrepot::class,'id_entreprises');
     }
 
 

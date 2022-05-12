@@ -33,16 +33,6 @@ class ProductsTableSeeder extends Seeder
             'id_categories' => 2,
             'id_entreprises' => 3,
         ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 1,
-            'id_entrepots' => 1,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 1,
-            'id_entrepots' => 3,
-        ]);
 
         Product::create([
             'name' => "Eau minérale Harod - Pack de 9 x 570ml",
@@ -52,16 +42,6 @@ class ProductsTableSeeder extends Seeder
             'image' => 'storage/Products/Optimized-bo.png',
             'id_categories' => 2,
             'id_entreprises' => 3,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 2,
-            'id_entrepots' => 1,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 2,
-            'id_entrepots' => 3,
         ]);
 
         Product::create([
@@ -73,16 +53,6 @@ class ProductsTableSeeder extends Seeder
             'id_categories' => 2,
             'id_entreprises' => 3,
         ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 3,
-            'id_entrepots' => 1,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 3,
-            'id_entrepots' => 3,
-        ]);
         
         Product::create([
             'name' => "Poulet bio THALILA (3Kg)",
@@ -92,16 +62,6 @@ class ProductsTableSeeder extends Seeder
             'image' => 'storage/Products/Thalila_Boutique-300x300.png',
             'id_categories' => 1,
             'id_entreprises' => 2,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 4,
-            'id_entrepots' => 1,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 4,
-            'id_entrepots' => 2,
         ]);
 
         Product::create([
@@ -113,16 +73,6 @@ class ProductsTableSeeder extends Seeder
             'id_categories' => 1,
             'id_entreprises' => 2,
         ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 5,
-            'id_entrepots' => 1,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 5,
-            'id_entrepots' => 2,
-        ]);
 
         Product::create([
             'name' => "Poisson Tilapia 1Kg",
@@ -132,16 +82,6 @@ class ProductsTableSeeder extends Seeder
             'image' => 'storage/Products/Tilapia_Boutique-300x300.png',
             'id_categories' => 1,
             'id_entreprises' => 2,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 6,
-            'id_entrepots' => 1,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 6,
-            'id_entrepots' => 2,
         ]);
 
         Product::create([
@@ -153,35 +93,15 @@ class ProductsTableSeeder extends Seeder
             'id_categories' => 1,
             'id_entreprises' => 2,
         ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 7,
-            'id_entrepots' => 1,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 7,
-            'id_entrepots' => 2,
-        ]);
 
         Product::create([
             'name' => "Alevins de Silure",
             'type' => 'Périssable',
             'nature' => 'Unité',
             'unite' => 'unité',
-            // 'image' => 'storage/Products/Silure_Boutique-300x300.png',
+            'image' => 'storage/Products/Silure_Boutique-300x300.png',
             'id_categories' => 1,
             'id_entreprises' => 2,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 8,
-            'id_entrepots' => 1,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 8,
-            'id_entrepots' => 2,
         ]);
 
         Product::create([
@@ -189,19 +109,9 @@ class ProductsTableSeeder extends Seeder
             'type' => 'Périssable',
             'nature' => 'Unité',
             'unite' => 'unité',
-            // 'image' => 'storage/Products/Silure_Boutique-300x300.png',
+            'image' => 'storage/Products/Tilapia_Boutique-300x300.png',
             'id_categories' => 1,
             'id_entreprises' => 2,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 9,
-            'id_entrepots' => 1,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 9,
-            'id_entrepots' => 2,
         ]);
 
         Product::create([
@@ -209,19 +119,9 @@ class ProductsTableSeeder extends Seeder
             'type' => 'Périssable',
             'nature' => 'Unité',
             'unite' => 'unité',
-            // 'image' => 'storage/Products/Silure_Boutique-300x300.png',
+            'image' => 'storage/Products/Silure_Boutique-300x300.png',
             'id_categories' => 3,
             'id_entreprises' => 3,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 10,
-            'id_entrepots' => 1,
-        ]);
-        EntrepotsHasProduct::create([
-            'quantite' => 0,
-            'id_products' => 10,
-            'id_entrepots' => 3,
         ]);
         
         /*for ($i = 0; $i < 15; $i++) {

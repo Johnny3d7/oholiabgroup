@@ -21,6 +21,7 @@ class createEntreprisesTable extends Migration
 			$table->string('email',100)->nullable();
 			$table->string('contact',100)->nullable();
 			$table->string('addresse',100)->nullable();
+			$table->text('logo')->nullable();
 
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
