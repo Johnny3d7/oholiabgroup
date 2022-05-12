@@ -37,11 +37,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->name && $request->name != ''){
+        // $isset = Category::find($request->id_categories);
+        if($request->name && $request->name != '' && $isset && !$isset->category){
             $category = Category::create([
                 'name' => $request->name,
-                // 'id_categories' => 1
+                'id_categories' => $request->id_categories ?? null
             ]);
+
+            $notification = array(
+                "message" => "Catégorie ajoutée avec succès !",
+                "alert-type" => "success"
+            );
+    
+            return redirect()->back()->with($notification);
         }
         return back();
     }

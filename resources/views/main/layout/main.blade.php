@@ -235,6 +235,47 @@
             // $('.table_oholiab').
         });
     </script>
+    <script>
+        $(document).ready(function(){
+            $('.collapseAll').click(function(){
+                $('.collapse-table').each(function(){
+                    element = $(this);
+                    if(element.hasClass('show')){
+                        parent = $(element).parent();
+                        $(parent).find('.collapseBtn:first').click()
+                    }
+                })
+            });
+            $('.expandAll').click(function(){
+                $('.collapse-table').each(function(){
+                    element = $(this);
+                    if(!element.hasClass('show')){
+                        parent = $(element).parent();
+                        $(parent).find('.collapseBtn:first').click()
+                    }
+                })
+            });
+
+            $('.collapseBtn').click(function(){
+                console.log($(this).html())
+                if($(this).hasClass('collapsed')){
+                    $($(this).find('i:first')).removeClass('i-Arrow-Down-2').addClass('i-Arrow-Up-2')
+                    // $(this).html('<i class="i-Arrow-Up-2 t-font-boldest"></i>')
+                } else {
+                    $($(this).find('i:first')).removeClass('i-Arrow-Up-2').addClass('i-Arrow-Down-2')
+                    // $(this).html('<i class="i-Arrow-Down-2 t-font-boldest"></i>')
+                }
+            })
+
+            $('.hover2display').on('mouseover', function(){
+                $($(this).find('.displayHover')).removeClass('d-none');
+            })
+            
+            $('.hover2display').on('mouseout', function(){
+                $($(this).find('.displayHover')).addClass('d-none');
+            })
+        })
+    </script>
     @yield('javascripts')
 </body>
 

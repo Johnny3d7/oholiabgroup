@@ -169,7 +169,7 @@ Liste des produits
                         <div class="card-body">
                             <h5 class="card-title mb-2">{{ $product->name }}</h5>
                             <p class="card-text text-mute">{{ $product->category->name }} - {{ $product->nature }}</p>
-                            <span class="float-right"><img src="{{ asset($product->entreprise->logo) }}" alt="" style="height: 2.5rem;"></span>
+                            <span class="rounded" style="position: absolute; top:1rem; right: 0rem; background-color: rgba(218, 201, 201, 0.5)"><img class="m-2" src="{{ asset($product->entreprise->logo) }}" alt="" style="height: 4rem;"></span>
                             {{-- <a href="{{ route('stock.products.show', $product) }}" class="btn btn-primary ul-btn-raised--v2 m-1" type="button">
                                 <span class="ul-btn__icon"><i class="i-Eye"></i></span> Consulter
                             </a>

@@ -96,7 +96,7 @@ Permissions
 @endsection
 
 @section('javascripts')
-    <script>
+    {{-- <script>
         $(document).ready(function(){
             $('.collapseAll').click(function(){
                 $('.collapse-table').each(function(){
@@ -136,5 +136,5 @@ Permissions
                 $($(this).find('.displayHover')).addClass('d-none');
             })
         })
-    </script>
+    </script> --}}
 @endsection

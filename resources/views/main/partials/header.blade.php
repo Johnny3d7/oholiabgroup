@@ -71,7 +71,7 @@
             <div class="dropdown dropleft">
                 <div role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
                     <i class="i-Bell header-icon" id="notificationMenuButton"></i>
-                    @php $count = 7; @endphp
+                    @php $count = 0; @endphp
                     @if ($count > 0 )
                         <span class="button__badge">{{ $count < 100 ? $count : '9+'  }}</span>
                     @endif

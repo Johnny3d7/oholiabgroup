@@ -52,7 +52,7 @@ class Category extends BaseModel
     */
     public function categories()
     {
-        return $this->belongsToMany(Category::class,'categories');
+        return $this->hasMany(Category::class,'id_categories');
     }
     public function children()
     {
