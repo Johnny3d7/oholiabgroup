@@ -44,9 +44,9 @@ class Product extends BaseModel
 
         static::creating(function($item){
             $last = self::all()->last()->id ?? 0; // To add all deleted records
-            $num = $last<10 ? "000".($last+1) : 
-                    ($last<100 ? "00".($last+1) : 
-                        ($last<1000 ? "0".($last+1) : 
+            $num = $last<9 ? "000".($last+1) : 
+                    ($last<99 ? "00".($last+1) : 
+                        ($last<999 ? "0".($last+1) : 
                             ($last+1)));
             $item->reference = static::$prefix.$num;
         });
