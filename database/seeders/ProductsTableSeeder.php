@@ -45,7 +45,7 @@ class ProductsTableSeeder extends Seeder
         ]);
 
         Product::create([
-            'name' => "Eau minérale Harod - Carton gobelets de 24 x 330ml",
+            'name' => "Eau minérale Harod - Carton 24 x 330ml",
             'type' => 'Périssable',
             'nature' => 'Pack',
             'unite' => 'unité',
@@ -99,7 +99,7 @@ class ProductsTableSeeder extends Seeder
             'type' => 'Périssable',
             'nature' => 'Unité',
             'unite' => 'unité',
-            'image' => 'storage/Products/Silure_Boutique-300x300.png',
+            'image' => 'storage/Products/alevins_silure-300x300.jpg',
             'id_categories' => 1,
             'id_entreprises' => 2,
         ]);
@@ -109,7 +109,7 @@ class ProductsTableSeeder extends Seeder
             'type' => 'Périssable',
             'nature' => 'Unité',
             'unite' => 'unité',
-            'image' => 'storage/Products/Tilapia_Boutique-300x300.png',
+            'image' => 'storage/Products/alevins_tilapia-300x300.jpg',
             'id_categories' => 1,
             'id_entreprises' => 2,
         ]);
@@ -119,7 +119,7 @@ class ProductsTableSeeder extends Seeder
             'type' => 'Périssable',
             'nature' => 'Unité',
             'unite' => 'unité',
-            'image' => 'storage/Products/Silure_Boutique-300x300.png',
+            'image' => 'storage/Products/gants-medicaux-300x300-top.jpg',
             'id_categories' => 3,
             'id_entreprises' => 3,
         ]);

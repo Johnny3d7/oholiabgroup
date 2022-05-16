@@ -38,7 +38,30 @@ class BesoinController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            "id_entreprises" => "required|exists:entreprises,id",
+            "employe" => "required",
+            "date_emission" => "required"
+        ]);
+        
+        $date = explode('-',$request->date_emission);
+        // dd($request->all());
+        
+        //Voir si le format de la date est respecté
+        $error_msg = null;
+        if (!strtotime($date[2].'-'.$date[1].'-'.$date[0]))
+            $error_msg = "La date du mouvement est incorrecte. Veuillez réessayer svp!";
+        if (strtotime($date[2].'-'.$date[1].'-'.$date[0]) > strtotime("today"))
+            $error_msg = "La date du mouvement doit être inférieure ou égale à la date d'aujourd'hui. Veuillez réessayer svp!";
+
+        if($error_msg){
+            $notification = array(
+                "message" => $error_msg,
+                "alert-type" => "error"
+            );
+            return redirect()->back()->with($notification);
+        }
+
     }
 
     /**
