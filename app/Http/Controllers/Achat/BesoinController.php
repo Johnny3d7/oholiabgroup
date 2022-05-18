@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Achat;
 
 use App\Http\Controllers\Controller;
+use App\Models\Besoin;
 use App\Models\Entreprise;
+use App\Models\LigneBesoin;
 use Illuminate\Http\Request;
 
 class BesoinController extends Controller
@@ -15,7 +17,7 @@ class BesoinController extends Controller
      */
     public function index()
     {
-        $besoins = [];
+        $besoins = Besoin::all();
         return view('main.achats.besoins.index', compact('besoins'));
     }
 
@@ -44,24 +46,60 @@ class BesoinController extends Controller
             "date_emission" => "required"
         ]);
         
-        $date = explode('-',$request->date_emission);
-        // dd($request->all());
+        $date_emission = $request->date_emission;
+        $date_livraison = $request->date_livraison
+        ;
+        // $date = explode('-',$request->date_emission);
+        // dd($request->date_emission);
         
         //Voir si le format de la date est respecté
-        $error_msg = null;
-        if (!strtotime($date[2].'-'.$date[1].'-'.$date[0]))
-            $error_msg = "La date du mouvement est incorrecte. Veuillez réessayer svp!";
-        if (strtotime($date[2].'-'.$date[1].'-'.$date[0]) > strtotime("today"))
-            $error_msg = "La date du mouvement doit être inférieure ou égale à la date d'aujourd'hui. Veuillez réessayer svp!";
+        $error_msg = [];
 
-        if($error_msg){
+        if (!strtotime($date_emission)) // if (!strtotime($date[2].'-'.$date[1].'-'.$date[0]))
+            $error_msg[] = "La date d'émission est incorrecte. Veuillez réessayer svp!";
+        if (strtotime($date_emission) > strtotime("today")) // if (strtotime($date[2].'-'.$date[1].'-'.$date[0]) > strtotime("today"))
+            $error_msg[] = "La date d'émission doit être inférieure ou égale à la date d'aujourd'hui. Veuillez réessayer svp!";
+
+        if (!strtotime($date_livraison)) // if (!strtotime($date[2].'-'.$date[1].'-'.$date[0]))
+            $error_msg[] = "La date d'émission est incorrecte. Veuillez réessayer svp!";
+        if (strtotime($date_livraison) < strtotime($date_emission)) // if (strtotime($date[2].'-'.$date[1].'-'.$date[0]) > strtotime("today"))
+            $error_msg[] = "La date d'émission doit être inférieure ou égale à la date d'émission. Veuillez réessayer svp!";
+
+        if($error_msg && is_array($error_msg) && count($error_msg)>0){
             $notification = array(
-                "message" => $error_msg,
+                "message" => implode(";", $error_msg),
                 "alert-type" => "error"
             );
             return redirect()->back()->with($notification);
         }
 
+        $request->merge([
+            'statut' => "En attente",
+        ]);
+        $besoin = Besoin::create($request->all());
+        // $besoin = Besoin::first();
+
+        $key = 1; $exist = true;
+        do {
+            if(isset($request->{"article_$key"})) $key++;
+            else $exist = false;
+        } while($exist);
+        
+        for ($i=1; $i < $key; $i++) {
+            LigneBesoin::create([
+                'article' => $request->{"article_$i"},
+                'quantite' => $request->{"quantite_$i"},
+                'prix' => $request->{"prix_$i"},
+                'observations' => $request->{"observations_$i"},
+                'id_besoins' => $besoin->id
+            ]);
+        }
+
+        $notification = array(
+            "message" => "Le bon d'expression de besoin a bien été enregistré !",
+            "alert-type" => "success"
+        );
+        return redirect()->back()->with($notification);
     }
 
     /**

@@ -15,12 +15,12 @@ use Spatie\Permission\Models\Role;
 
 
 Route::prefix('/admin')->name('admin.')->group(function () {
-    Route::middleware(['role:admin'])->group(function() {
-        Route::get('/', [AdminController::class, 'index'])->name('index');
     
         Route::prefix('/icons')->name('icons.')->group(function () {
             Route::get('/', [AdminController::class, 'iconsIndex'])->name('index');
         });
+    Route::middleware(['role:admin'])->group(function() {
+        Route::get('/', [AdminController::class, 'index'])->name('index');
     
         require('users.php');
         

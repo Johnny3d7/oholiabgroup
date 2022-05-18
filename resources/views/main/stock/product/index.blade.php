@@ -156,7 +156,7 @@ Liste des produits
             </div>
         </div>
     @else
-        @forelse ($products->sortBy('name') as $product)
+        @forelse ($products->sortBy('id_entreprises') as $product)
             <div class="col-md-3 py-2">
                 <a href="{{ route('stock.products.show', $product) }}">
                     <div class="card">
@@ -167,7 +167,7 @@ Liste des produits
                         @endif
                         {{-- <img class="d-block w-100 rounded rounded" src="../../dist-assets/images/products/iphone-1.jpg" alt="First slide"> --}}
                         <div class="card-body">
-                            <h5 class="card-title mb-2">{{ $product->name }}</h5>
+                            <h5 class="card-title mb-2 text-truncate" title="{{ $product->name }}">{{ $product->name }}</h5>
                             <p class="card-text text-mute">{{ $product->category->name }} - {{ $product->nature }}</p>
                             <span class="rounded" style="position: absolute; top:1rem; right: 0rem; background-color: rgba(218, 201, 201, 0.5)"><img class="m-2" src="{{ asset($product->entreprise->logo) }}" alt="" style="height: 4rem;"></span>
                             {{-- <a href="{{ route('stock.products.show', $product) }}" class="btn btn-primary ul-btn-raised--v2 m-1" type="button">

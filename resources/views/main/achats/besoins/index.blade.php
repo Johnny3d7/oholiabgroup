@@ -1,3 +1,7 @@
+@php
+    use Carbon\Carbon;
+@endphp
+
 @extends('main.achats.partials.main')
 
 @section('title', 'Liste Fiches de besoins -')
@@ -18,7 +22,7 @@ Expressions Besoins
 @endsection
 
 @section('pageTitle')
-Liste des fiches de besoins
+Liste des bons d'expression de besoins
 @endsection
 
 @section('content')
@@ -58,10 +62,11 @@ Liste des fiches de besoins
                             <table class="display table table-striped table-bordered table_oholiab"  style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Référence</th>
-                                        <th>Libéllé</th>
+                                        <th>Date d'émission</th>
+                                        <th>Date de livraison</th>
+                                        <th>Nature</th>
                                         <th>Entreprise</th>
-                                        <th>Lieu</th>
+                                        <th>Statut</th>
                                         <th>Date de création</th>
                                         <th>Action</th>
                                     </tr>
@@ -69,25 +74,35 @@ Liste des fiches de besoins
                                 <tbody>
                                     @forelse ($besoins as $besoin)
                                         <tr>
-                                            <td>{{ $besoin->reference }}</td>
-                                            <td>{{ $besoin->name }}</td>
-                                            <td>{{ $besoin->entreprise ? $besoin->entreprise->name : ''  }}</td>
-                                            <td>{{ $besoin->lieu }}</td>
-                                            <td>{{ ucwords((new Carbon\Carbon($besoin->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
+                                            <td class="py-1">{{ ucwords((new Carbon($besoin->date_emission))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
+                                            <td>{{ ucwords((new Carbon($besoin->date_livraison))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
+                                            <td>{{ $besoin->nature }}</td>
                                             <td>
-                                                <button class="btn " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img src="{{ asset($besoin->entreprise->logo) }}" class="pt-1" alt="" style="height: 1.5rem;">
+                                                {{ $besoin->entreprise->name }}
+                                            </td>
+                                            <td>{{ $besoin->statut }}</td>
+                                            <td>{{ ucwords((new Carbon($besoin->created_at))->locale('fr')->isoFormat('DD/MM/YYYY à HH:ss')) }}</td>
+                                            <td>
+                                                <a class="text-success mr-2" href="#">
+                                                    <i class="nav-icon i-Pen-2 text-16 font-weight-bold"></i>
+                                                </a>
+                                                <a class="text-danger mr-2" href="#">
+                                                    <i class="nav-icon i-Close-Window text-16 font-weight-bold"></i>
+                                                </a>
+                                                {{-- <button class="btn " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <span class="_dot _inline-dot bg-primary"></span>
                                                     <span class="_dot _inline-dot bg-primary"></span>
                                                     <span class="_dot _inline-dot bg-primary"></span>
                                                 </button>
                                                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                    <a class="dropdown-item ul-widget__link--font" href="{{ route('achats.entrepots.show',$besoin) }}"><i class="i-Eye">
+                                                    <a class="dropdown-item ul-widget__link--font" href="{{ route('achats.besoins.show',$besoin) }}"><i class="i-Eye">
                                                         </i> Consulter
                                                     </a>
-                                                    <a class="dropdown-item ul-widget__link--font" href="{{ route('achats.entrepots.edit', $besoin) }}">
+                                                    <a class="dropdown-item ul-widget__link--font" href="{{ route('achats.besoins.edit', $besoin) }}">
                                                         <i class="i-Edit"> </i> Modifier
                                                     </a>
-                                                </div>
+                                                </div> --}}
                                             </td>
                                             {{-- <td><a href="{{ route('achats.products.show', $data) }}"><button class="btn btn-outline-warning btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Eye"></i></span></button></a><a href="{{ route('achats.products.edit', $data) }}"><button class="btn btn-outline-success btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Edit"></i></span></button></a><a href="{{ route('achats.products.destroy', $data) }}"><button class="btn btn-outline-danger btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Close"></i></span></button></a></td> --}}
                                         </tr>
@@ -99,10 +114,11 @@ Liste des fiches de besoins
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Référence</th>
-                                        <th>Libéllé</th>
+                                        <th>Date d'émission</th>
+                                        <th>Date de livraison</th>
+                                        <th>Nature</th>
                                         <th>Entreprise</th>
-                                        <th>Lieu</th>
+                                        <th>Statut</th>
                                         <th>Date de création</th>
                                         <th>Action</th>
                                     </tr>
