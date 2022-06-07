@@ -44,6 +44,12 @@ class Besoin extends BaseModel
         return $this->hasMany(LigneBesoin::class,'id_besoins');
     }
 
-
-
+    public function montant()
+    {
+        $montant = 0;
+        foreach ($this->lignes as $ligne) {
+            $montant += $ligne->montant();
+        }
+        return $montant;
+    }
 }

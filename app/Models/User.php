@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'id_employes'
     ];
 
     /**
@@ -45,5 +47,39 @@ class User extends Authenticatable
     public function entreprise()
     {
         return $this->belongsTo(Entreprise::class, 'id_entreprise');
+    }
+
+    public function image()
+    {
+        return 'images/faces/1.jpg'; // $this->image ?? 'images/faces/1.jpg';
+    }
+
+    public function role()
+    {
+        $role = ModelHasRole::whereModelType('App\Models\User')->whereModelId($this->id)->first();  // ->get();
+        return $role->role();
+    }
+
+    public function perms()
+    {
+        // dd($this->permissions);
+        $permissions = new Collection($this->permissions);
+        $role_permissions = new Collection();
+        foreach ($this->roles as $role) {
+            foreach ($role->permissions as $perm) {
+                $role_permissions->add($perm);
+            }
+        }
+        return $role_permissions->merge($permissions);
+    }
+
+    public function all_notifs()
+    {
+        return $this->hasMany(Notification::class,'id_users');
+    }
+
+    public function notifs()
+    {
+        return $this->all_notifs->where('opened', false);
     }
 }

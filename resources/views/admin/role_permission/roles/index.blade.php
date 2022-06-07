@@ -64,16 +64,22 @@ Roles
                         </div>
                     </div>
                     <div class="ul-widget__body">
-                        <div class="tab-content pr-1">
+                        <div class="tab-content pr-1 pt-1">
                             <div class="tab-pane active show" id="roles-users-{{ $role->name }}">
+                                <div class="row">
+                                    <div class="container">
+                                        <span class="h5">Tous les utilisateurs</span>
+                                        <a href="#" class="btn btn-outline-info float-right"><i class="i-Add-User"></i> Ajouter</a>
+                                    </div>
+                                </div>
                                 <div class="ul-widget1 pr-3" id="collapse-icon-{{ $role->name }}">
-                                    @for ($i = 0; $i < 6; $i++)
+                                    @foreach ($role->users as $user)
                                         <div class="ul-widget4__item ul-widget4__users">
                                             <div class="ul-widget4__img">
-                                                <img id="userDropdown" src="{{ asset('images/faces/2.jpg') }}" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img id="userDropdown" src="{{ asset('images/faces/1.jpg') }}" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             </div>
                                             <div class="ul-widget2__info ul-widget4__users-info">
-                                                <a class="ul-widget2__title" href="#">Anna Strong</a>
+                                                <a class="ul-widget2__title" href="#">{{ $user->username }}</a>
                                                 <span class="ul-widget2__username" href="#">Visual Designer,Google Inc</span>
                                             </div>
                                             <div class="ul-widget4__actions">
@@ -95,40 +101,48 @@ Roles
                                                 {{-- <button class="btn btn-outline-danger m-1" type="button">Follow</button> --}}
                                             </div>
                                         </div>
-                                    @endfor
-                                    
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="tab-pane" id="roles-permissions-{{ $role->name }}">
+                                <div class="row">
+                                    <div class="container">
+                                        <span class="h5">Toutes les permissions</span>
+                                        <a href="#" class="btn btn-outline-info float-right"><i class="i-Add"></i> Ajouter</a>
+                                    </div>
+                                </div>
                                 <div class="ul-widget1 pr-3">
-                                    <div class="ul-widget4__item ul-widget4__users">
-                                        <div class="ul-widget4__img"><img id="userDropdown" src="../../dist-assets/images/faces/2.jpg" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
-                                        <div class="ul-widget2__info ul-widget4__users-info"><a class="ul-widget2__title" href="#">Anna Strong</a><span class="ul-widget2__username" href="#">Visual Designer,Google Inc</span></div>
-                                        <div class="ul-widget4__actions">
-                                            <button class="btn btn-outline-danger m-1" type="button">Follow</button>
+                                    @forelse ($role->permissions as $permission)
+                                        <div class="ul-widget4__item ul-widget4__users">
+                                            <div class="ul-widget4__img rounded-circle border p-1">
+                                                <i class="i-Affiliate text-20"></i>
+                                            </div>
+                                            <div class="ul-widget2__info ul-widget4__users-info">
+                                                <a class="ul-widget2__title" href="#">{{ $permission->display_name }}</a>
+                                                <span class="ul-widget2__username" href="#">{{ $permission->table }}</span>
+                                            </div>
+                                            <div class="ul-widget4__actions">
+                                                <button class="btn bg-white _r_btn border-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    {{-- <span class="_dot _inline-dot bg-primary mr-1"></span><span class="_dot _inline-dot bg-primary mr-1"></span><span class="_dot _inline-dot bg-primary mr-1"></span> --}}
+
+                                                    <span class="_dot _r_block-dot bg-dark"></span>
+                                                    <span class="_dot _r_block-dot bg-dark"></span>
+                                                    <span class="_dot _r_block-dot bg-dark"></span>
+                                                </button>
+                                                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(895px, 144px, 0px);">
+                                                    <a class="dropdown-item ul-widget__link--font" href="#"><i class="i-Bar-Chart-4"> </i> Export</a>
+                                                    <a class="dropdown-item ul-widget__link--font" href="#"><i class="i-Data-Save"> </i> Save</a>
+                                                    <a class="dropdown-item ul-widget__link--font" href="#"><i class="i-Duplicate-Layer"></i> Import</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item ul-widget__link--font" href="#"><i class="i-Folder-Download"></i> Update</a>
+                                                    <a class="dropdown-item ul-widget__link--font" href="#"><i class="i-Gears-2"></i> Customize</a>
+                                                </div>
+                                                {{-- <button class="btn btn-outline-danger m-1" type="button">Follow</button> --}}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="ul-widget4__item ul-widget4__users">
-                                        <div class="ul-widget4__img"><img id="userDropdown" src="../../dist-assets/images/faces/1.jpg" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
-                                        <div class="ul-widget2__info ul-widget4__users-info"><a class="ul-widget2__title" href="#">Anna Strong</a><span class="ul-widget2__username" href="#">Visual Designer,Google Inc</span></div>
-                                        <div class="ul-widget4__actions">
-                                            <button class="btn btn-outline-success m-1" type="button">Follow</button>
-                                        </div>
-                                    </div>
-                                    <div class="ul-widget4__item ul-widget4__users">
-                                        <div class="ul-widget4__img"><img id="userDropdown" src="../../dist-assets/images/faces/3.jpg" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
-                                        <div class="ul-widget2__info ul-widget4__users-info"><a class="ul-widget2__title" href="#">Anna Strong</a><span class="ul-widget2__username" href="#">Visual Designer,Google Inc</span></div>
-                                        <div class="ul-widget4__actions">
-                                            <button class="btn btn-outline-warning m-1" type="button">Follow</button>
-                                        </div>
-                                    </div>
-                                    <div class="ul-widget4__item ul-widget4__users">
-                                        <div class="ul-widget4__img"><img id="userDropdown" src="../../dist-assets/images/faces/4.jpg" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
-                                        <div class="ul-widget2__info ul-widget4__users-info"><a class="ul-widget2__title" href="#">Anna Strong</a><span class="ul-widget2__username" href="#">Visual Designer,Google Inc</span></div>
-                                        <div class="ul-widget4__actions">
-                                            <button class="btn btn-outline-info m-1" type="button">Follow</button>
-                                        </div>
-                                    </div>
+                                    @empty
+                                    <h6 class="text-center pt-5">Aucune permission n'a été attribuée !</h6>
+                                    @endforelse
                                 </div>
                             </div>
                         </div>

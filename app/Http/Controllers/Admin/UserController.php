@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.role_permission.users.index', compact('users'));
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -33,7 +33,7 @@ class UserController extends Controller
         $entreprises = Entreprise::all();
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.role_permission.users.create', compact('entreprises', 'roles', 'permissions'));
+        return view('admin.users.create', compact('entreprises', 'roles', 'permissions'));
     }
 
     /**
@@ -73,9 +73,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        // dd($user->roles[0], $user->roles[0]->permissions, $user->permissions, $user->perms());
+        // dd($user->roles()->get(), $user->role, $user->role->permissions()->get(), $user->permissions(), $user->hasRole('superadmin'), $user->hasPermissionTo("Show Aministration"));
+        return view('admin.users.show', compact('user'));
     }
 
     /**

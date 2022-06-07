@@ -61,7 +61,7 @@
 
 <body class="text-left" style="background-image: url({{ url('images/back1.jpg') }}) !important; background-position: center center !important; ">
     <div class="app-admin-wrap layout-sidebar-vertical sidebar-full">
-
+        
         @include('main.partials.sidebar')
 
         {{-- <div class="switch-overlay"></div> --}}
@@ -78,6 +78,8 @@
                     </ul>
                 </div>
                 <div class="separator-breadcrumb border-top"></div>
+                {{-- <div class="spinner-bubble spinner-bubble-primary" style="z-index: 10000;"></div> --}}
+
                 @yield('content')
                 <!-- end of main-content -->
             </div>
@@ -273,6 +275,14 @@
             
             $('.hover2display').on('mouseout', function(){
                 $($(this).find('.displayHover')).addClass('d-none');
+            })
+
+            $('tr.tr-link, .notifLink').each(function(){
+                $(this).css({'cursor':'pointer'});
+                $(this).click(function(){
+                    link = $(this).data('link');
+                    if(link != '#') window.location.assign(link);
+                })
             })
         })
     </script>

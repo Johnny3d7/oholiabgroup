@@ -33,4 +33,9 @@ class LigneBesoin extends BaseModel
     {
         return $this->belongsTo(Besoin::class,'id_besoins');
     }
+
+    public function montant()
+    {
+        return $this->quantite * $this->prix;
+    }
 }

@@ -16,12 +16,15 @@ class createEmployesTable extends Migration
         Schema::create('employes', function (Blueprint $table) {
             $table->bigIncrements('id');
 			$table->string('uuid',100);
+			$table->string('civilite',5)->default('M');
 			$table->string('nom',100);
 			$table->string('prenoms',100);
 			$table->string('contact',100);
 			$table->string('email',100);
 			$table->date('birthdate')->nullable();
 			$table->date('hiredate')->nullable();
+
+            $table->integer("id_entreprises")->unsigned();
 
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

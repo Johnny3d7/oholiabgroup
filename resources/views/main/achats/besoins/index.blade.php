@@ -68,12 +68,12 @@ Liste des bons d'expression de besoins
                                         <th>Entreprise</th>
                                         <th>Statut</th>
                                         <th>Date de création</th>
-                                        <th>Action</th>
+                                        {{-- <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($besoins as $besoin)
-                                        <tr>
+                                        <tr class="tr-link" data-link="{{ route('achats.besoins.show', $besoin) }}">
                                             <td class="py-1">{{ ucwords((new Carbon($besoin->date_emission))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                             <td>{{ ucwords((new Carbon($besoin->date_livraison))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                             <td>{{ $besoin->nature }}</td>
@@ -83,14 +83,11 @@ Liste des bons d'expression de besoins
                                             </td>
                                             <td>{{ $besoin->statut }}</td>
                                             <td>{{ ucwords((new Carbon($besoin->created_at))->locale('fr')->isoFormat('DD/MM/YYYY à HH:ss')) }}</td>
-                                            <td>
-                                                <a class="text-success mr-2" href="#">
-                                                    <i class="nav-icon i-Pen-2 text-16 font-weight-bold"></i>
+                                            {{-- <td>
+                                                <a class="text-info mr-2" href="{{ route('achats.besoins.show', $besoin) }}">
+                                                    <i class="nav-icon i-Eye text-16 font-weight-bold"></i>
                                                 </a>
-                                                <a class="text-danger mr-2" href="#">
-                                                    <i class="nav-icon i-Close-Window text-16 font-weight-bold"></i>
-                                                </a>
-                                                {{-- <button class="btn " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <button class="btn " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <span class="_dot _inline-dot bg-primary"></span>
                                                     <span class="_dot _inline-dot bg-primary"></span>
                                                     <span class="_dot _inline-dot bg-primary"></span>
@@ -102,8 +99,8 @@ Liste des bons d'expression de besoins
                                                     <a class="dropdown-item ul-widget__link--font" href="{{ route('achats.besoins.edit', $besoin) }}">
                                                         <i class="i-Edit"> </i> Modifier
                                                     </a>
-                                                </div> --}}
-                                            </td>
+                                                </div>
+                                            </td> --}}
                                             {{-- <td><a href="{{ route('achats.products.show', $data) }}"><button class="btn btn-outline-warning btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Eye"></i></span></button></a><a href="{{ route('achats.products.edit', $data) }}"><button class="btn btn-outline-success btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Edit"></i></span></button></a><a href="{{ route('achats.products.destroy', $data) }}"><button class="btn btn-outline-danger btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Close"></i></span></button></a></td> --}}
                                         </tr>
                                     @empty
@@ -120,7 +117,7 @@ Liste des bons d'expression de besoins
                                         <th>Entreprise</th>
                                         <th>Statut</th>
                                         <th>Date de création</th>
-                                        <th>Action</th>
+                                        {{-- <th>Action</th> --}}
                                     </tr>
                                 </tfoot>
                             </table>

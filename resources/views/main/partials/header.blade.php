@@ -71,9 +71,9 @@
             <div class="dropdown dropleft">
                 <div role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
                     <i class="i-Bell header-icon" id="notificationMenuButton"></i>
-                    @php $count = 0; @endphp
+                    @php $notifications = \Auth::user()->notifs(); $count = count($notifications); @endphp
                     @if ($count > 0 )
-                        <span class="button__badge">{{ $count < 100 ? $count : '9+'  }}</span>
+                        <span class="button__badge">{{ $count < 10 ? $count : '9+'  }}</span>
                     @endif
                 </div>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="border-radius: 10px;">
@@ -81,7 +81,7 @@
                         <h5 class="text-primary text-uppercase font-weight-bold">{{ \Auth::user()->username }}</h5>
                         <h6><i>Profession - Company</i></h6>
                     </div> --}}
-                    <div class="py-3 pl-3 pr-1" style="width: 30rem; max-width: 70vw;">
+                    <div class="py-3 pl-3 pr-1" style="width: 25rem; max-width: 70vw;">
                         <div class="pr-1">
                             <div class="border-bottom pb-2 mb-3">
                                 <h4 style="vertical-align: bottom">
@@ -90,7 +90,41 @@
                                 </h4>
                                 
                             </div>
-                            <div class="ul-widget-app__browser-list pr-3" style="height: 25rem; overflow-y: auto;">
+
+                            <div class="ul-widget-app__recent-messages" style="height: 25rem; overflow-y: auto;">
+                                @forelse ($notifications as $notification)
+                                    <div class="ul-widget-app__row-comments border-bottom-gray-200 mb-0 notifLink" data-link="{{ $notification->link ?? '#' }}">
+                                        <div class="ul-widget-app__profile-pic mr-1">
+                                            {{-- <img class="profile-picture avatar-md mb-2 rounded-circle img-fluid" src="../../dist-assets/images/faces/1.jpg" alt="alt"> --}}
+                                            <i class="i-Bell1 text-white bg-{{ $notification->type() }} rounded-circle p-2 mr-3"></i>
+                                        </div>
+                                        <div class="ul-widget-app__comment">
+                                            <div class="ul-widget-app__profile-title">
+                                                <h6 class="heading">{{ $notification->title }}</h6>
+                                                <p class="mb-1">{{ $notification->body }}</p>
+                                            </div>
+                                            <div class="ul-widget-app__profile-status"><small class="text-mute">2 min ago</small></div>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="text-center text-16">Aucune Notification</div>
+                                @endforelse
+                            </div>
+
+                            {{-- <div class="ul-widget-app__browser-list pr-3" style="height: 25rem; overflow-y: auto;">
+                                @forelse ($notifications as $notification)
+                                    <div class="ul-widget-app__browser-list-1 mb-4">
+                                        <i class="i-Bell1 text-white bg-warning rounded-circle p-2 mr-3"></i>
+                                        <div class="">
+                                            <span class="text-15">{{ $notification->title }}</span> <br>
+                                            <span class="text-13">{{ $notification->body }}</span> <br>
+                                            <span class="text-mute">in a sec</span>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="text-center text-16">Aucune Notification</div>
+                                @endforelse
+                                <hr>
                                 @if ($count > 0)
                                     <div class="ul-widget-app__browser-list-1 mb-4"><i class="i-Bell1 text-white bg-warning rounded-circle p-2 mr-3"></i><span class="text-15">You have 9 pending Tasks</span><span class="text-mute">in a sec</span></div>
                                     <div class="ul-widget-app__browser-list-1 mb-4"><i class="i-Internet text-white green-500 rounded-circle p-2 mr-3"></i><span class="text-15">Traffic Overloaded</span><span class="text-mute">4 Hours ago</span></div>
@@ -105,7 +139,7 @@
                                 @else
                                     <div class="text-center text-16">Aucune Notification</div>
                                 @endif
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     

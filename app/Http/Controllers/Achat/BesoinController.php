@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Besoin;
 use App\Models\Entreprise;
 use App\Models\LigneBesoin;
+use App\Models\Notification;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class BesoinController extends Controller
 {
@@ -17,6 +19,7 @@ class BesoinController extends Controller
      */
     public function index()
     {
+        // dd(Role::whereName('Directrice Générale')->first()->users);
         $besoins = Besoin::all();
         return view('main.achats.besoins.index', compact('besoins'));
     }
@@ -94,6 +97,16 @@ class BesoinController extends Controller
                 'id_besoins' => $besoin->id
             ]);
         }
+        $entreprise = Entreprise::find($request->id_entreprises);
+        $users = Role::whereName('Directrice Générale')->first()->users;
+        foreach ($users as $user) {
+            Notification::create([
+                'id_users' => $user->id,
+                'title' => "Nouveau bon d'expression de besoin",
+                'body' => $request->nature . ' - ' . $entreprise->name,
+                'link' => route('achats.besoins.show', $besoin),
+            ]);
+        }
 
         $notification = array(
             "message" => "Le bon d'expression de besoin a bien été enregistré !",
@@ -108,9 +121,9 @@ class BesoinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Besoin $besoin)
     {
-        //
+        return view("main.achats.besoins.show", compact('besoin'));
     }
 
     /**

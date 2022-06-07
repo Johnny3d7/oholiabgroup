@@ -22,8 +22,24 @@ class RolePermissionSeeder extends Seeder
 
 
         $role = Role::create([
-            'name' => 'geststock',
+            'name' => 'Gestionnaire de Stocks',
         ]);
+        
+        $role = Role::create([
+            'name' => "Chargé d'Achats",
+        ]);
+
+        $role = Role::create([
+            'name' => 'Directrice Générale',
+        ]);
+
+        $permission = Permission::create([
+            'name' => 'Validate Besoin',
+            'guard_name' => 'web',
+            'display_name' => "Valider Bon d'expression de besoin"
+        ]);
+
+        $role->givePermissionTo($permission->name);
 
         $role = Role::create([
             'name' => 'admin',
