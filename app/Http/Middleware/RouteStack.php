@@ -18,6 +18,11 @@ class RouteStack
     public function handle(Request $request, Closure $next)
     {
         $home = 'module.index';
+        
+        $user = \Auth::user();
+        $user_role = $user->roles->first();
+        if($user_role) $home = $user_role->home()['name'];
+        
         $to_ignore = [
             'df'
         ];

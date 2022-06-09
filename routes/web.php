@@ -29,7 +29,7 @@ Route::get('/mail', 'App\Http\Controllers\Stock\ProductCategoryController@mail')
 Route::middleware(['guest'])->group(function(){
     Route::view('login', 'main.user.login')->name('login');
     Route::view('/register', '')->name('register');
-    Route::post('/checkuser', 'App\Http\Controllers\User\UserController@checkuser')->name('checkuser');
+    Route::post('/checkuser', [App\Http\Controllers\User\UserController::class, 'checkuser'])->name('checkuser');
 });
 
 Route::middleware('route-stack')->group(function(){

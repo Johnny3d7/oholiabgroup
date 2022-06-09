@@ -45,7 +45,7 @@ Roles
                         <div class="ul-widget__head-toolbar">
                             <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold ul-widget-nav-tabs-line" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active show" data-toggle="tab" href="#roles-users-{{ $role->name }}" role="tab" aria-selected="true">
+                                    <a class="nav-link active show" data-toggle="tab" href="#roles-users-{{ $role->id }}" role="tab" aria-selected="true">
                                         <i class="i-Male-21"></i>
                                         <span class="pl-1">
                                             Utilisateurs
@@ -53,7 +53,7 @@ Roles
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#roles-permissions-{{ $role->name }}" role="tab" aria-selected="false">
+                                    <a class="nav-link" data-toggle="tab" href="#roles-permissions-{{ $role->id }}" role="tab" aria-selected="false">
                                         <i class="i-Affiliate"></i>
                                         <span class="pl-1">
                                             Permissions
@@ -64,15 +64,16 @@ Roles
                         </div>
                     </div>
                     <div class="ul-widget__body">
+                        <h5 class="text-center pb-1"><i class="i-Home-4"></i> Home route : <a href="{{ route($role->home()['name']) }}">{{ $role->home()['display'] }}</a>  <a href="#" title="Modifier"><i class="i-Pen-4 text-success"></i></a></h5>
                         <div class="tab-content pr-1 pt-1">
-                            <div class="tab-pane active show" id="roles-users-{{ $role->name }}">
+                            <div class="tab-pane active show" id="roles-users-{{ $role->id }}">
                                 <div class="row">
                                     <div class="container">
                                         <span class="h5">Tous les utilisateurs</span>
                                         <a href="#" class="btn btn-outline-info float-right"><i class="i-Add-User"></i> Ajouter</a>
                                     </div>
                                 </div>
-                                <div class="ul-widget1 pr-3" id="collapse-icon-{{ $role->name }}">
+                                <div class="ul-widget1 pr-3" id="collapse-icon-{{ $role->id }}">
                                     @foreach ($role->users as $user)
                                         <div class="ul-widget4__item ul-widget4__users">
                                             <div class="ul-widget4__img">
@@ -104,7 +105,7 @@ Roles
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="tab-pane" id="roles-permissions-{{ $role->name }}">
+                            <div class="tab-pane" id="roles-permissions-{{ $role->id }}">
                                 <div class="row">
                                     <div class="container">
                                         <span class="h5">Toutes les permissions</span>
@@ -158,11 +159,11 @@ Roles
             <div class="card card-body ul-border__bottom">
                 <div class="text-center">
                     <h5 class="heading text-primary">{{ $role->name }}</h5>
-                    <a class="text-default collapseBtn" href="#collapse-icon-{{ $role->name }}" data-toggle="collapse" aria-expanded="false">
+                    <a class="text-default collapseBtn" href="#collapse-icon-{{ $role->id }}" data-toggle="collapse" aria-expanded="false">
                         <i class="i-Arrow-Up-2 t-font-boldest"></i>
                     </a>
                 </div>
-                <div class="collapse collapse-table show" id="collapse-icon-{{ $role->name }}" style="">
+                <div class="collapse collapse-table show" id="collapse-icon-{{ $role->id }}" style="">
                     <div class="mt-3">
                         <ul class="list-group">
                             @foreach ($role->permissions as $perm)
