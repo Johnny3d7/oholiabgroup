@@ -38,7 +38,7 @@ Produits
                     </a>
                 </div> --}}
                 <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">
-                    <a href="{{ route('admin.products.index')}}">
+                    <a href="{{ route('admin.categories.index')}}">
                         <div class="card">
                             <div class="card-body">
                                 <div class="ul-product-detail__border-box">
@@ -64,7 +64,7 @@ Produits
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">
-                    <a href="{{ route('admin.products.index')}}">
+                    <a href="{{ route('admin.natures.index')}}">
                         <div class="card">
                             <div class="card-body">
                                 <div class="ul-product-detail__border-box">
@@ -77,7 +77,7 @@ Produits
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">
-                    <a href="{{ route('admin.products.index')}}">
+                    <a href="{{ route('admin.unites.index')}}">
                         <div class="card">
                             <div class="card-body">
                                 <div class="ul-product-detail__border-box">
@@ -172,7 +172,7 @@ Produits
                                 </div>
                             @endif
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md">
                             <label class="ul-form__label" for="unite">Unité produit:</label>
                             <select id="unite" name="unite" class="form-control" required>
                                 <option value=""  selected>-- Sélectionner --</option>
@@ -192,13 +192,14 @@ Produits
                                 </div>
                             @endif
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-lg-5 col-md-6">
                             <label class="ul-form__label">Entreprise de production</label>
                             <div class="">
                                 @foreach ($entreprises->sortBy('name') as $entreprise)
-                                    <label class="radio radio-outline-primary ml-5" style="display: inline">
+                                    <label class="radio radio-outline-primary ml-3" style="display: inline">
                                         <input type="radio" name="id_entreprises" value="{{ $entreprise->id }}" @if (old('id_entreprises') == $entreprise->id) selected="checked" @endif>
-                                        <span><img src="{{ asset($entreprise->logo) }}" alt="" style="height: 4rem;"></span>
+                                        <span class="d-none d-md-inline"><img src="{{ asset($entreprise->logo) }}" alt="" style="height: 4rem;"></span>
+                                        <span class="d-inline d-md-none"><img src="{{ asset($entreprise->logo) }}" alt="" style="height: 2.5rem;"></span>
                                         <span class="checkmark"></span>
                                     </label>
                                 @endforeach

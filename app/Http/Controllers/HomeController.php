@@ -23,6 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = \Auth::user();
+        $user_role = $user->roles->first();
+        if($user_role){
+            return redirect()->route($user_role->home()['name']);
+        }
+        dd($user, $user_role);
         return view('home');
     }
 }

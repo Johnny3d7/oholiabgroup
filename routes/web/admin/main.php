@@ -34,7 +34,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         
         require('employes.php');
     
-        require('categories.php');
+        // require('categories.php');
         
     });
     require('products.php');

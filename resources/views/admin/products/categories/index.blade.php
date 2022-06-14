@@ -1,7 +1,7 @@
 @extends('admin.partials.main')
 
 @section('raccourcis')
-    @include('admin.categories._header')
+    @include('admin.products.categories._header')
 @endsection
 
 @section('stylesheets')
@@ -27,7 +27,7 @@ Catégories
     </div>
 </div>
 <div class="row mb-4">
-    @forelse ($categories as $categorie)
+    @forelse ($categories->sortBy('name') as $categorie)
         {{-- <div class="col-md-3 py-3">
             <div class="card card-body ul-border__bottom">
                 <div class="text-center">
@@ -67,8 +67,8 @@ Catégories
                             <div class="dropdown-menu dropleft" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(895px, 144px, 0px);">
                                 <a class="dropdown-item ul-widget__link--font" href="" data-toggle="modal" data-target="#add_subcategorie_{{ $categorie->uuid }}_modal" style="text-decoration: none !important;"><i class="i-Add"></i> Ajouter sous-categorie</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item ul-widget__link--font" href="#"><i class="i-Folder-Download"></i> Update</a>
-                                <a class="dropdown-item ul-widget__link--font" href="#"><i class="i-Gears-2"></i> Customize</a>
+                                <a class="dropdown-item ul-widget__link--font" href="javascript:void()" data-toggle="modal" data-target="#rename_categorie_{{ $categorie->uuid }}_modal"><i class="i-Pen-2"> </i> Renommer</a>
+                                <a class="dropdown-item ul-widget__link--font" href="javascript:void()" onclick="if(confirm('Voulez vous vraiment supprimer la catégorie {{ $categorie->name }}')) document.getElementById('deleteCategory{{ $categorie->uuid }}').submit()"><i class="i-Close"> </i> Supprimer</a>
                             </div>
                         </div>
                     </h5>
@@ -92,17 +92,19 @@ Catégories
                                             <span class="_dot _r_block-dot bg-secondary" style="height: 3px; width: 3px;"></span>
                                         </button>
                                         <div class="dropdown-menu dropleft" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(895px, 144px, 0px);">
-                                            <a class="dropdown-item ul-widget__link--font" href="#"><i class="i-Pen-2"> </i> Editer</a>
-                                            <a class="dropdown-item ul-widget__link--font" href="#"><i class="i-Cursor-Move-2 pr-1"></i> Déplacer</a>
-                                            <a class="dropdown-item ul-widget__link--font" href="#"><i class="i-Folder pr-1"></i> Dupliquer</a>
-                                            <a class="dropdown-item ul-widget__link--font" href="#"><i class="i-Close"> </i> Supprimer</a>
-                                            
+                                            <a class="dropdown-item ul-widget__link--font" href="javascript:void()" data-toggle="modal" data-target="#rename_categorie_{{ $subcategorie->uuid }}_modal"><i class="i-Pen-2"> </i> Renommer</a>
+                                            <a class="dropdown-item ul-widget__link--font" href="javascript:void()"><i class="i-Cursor-Move-2 pr-1"></i> Déplacer</a>
+                                            <a class="dropdown-item ul-widget__link--font" href="javascript:void()" onclick="if(confirm('Voulez vous vraiment supprimer la catégorie {{ $subcategorie->name }}')) document.getElementById('deleteCategory{{ $subcategorie->uuid }}').submit()"><i class="i-Close"> </i> Supprimer</a>
+                                            <form id="deleteCategory{{ $subcategorie->uuid }}" action="{{ route('admin.categories.destroy', $subcategorie) }}" method="post">
+                                                @csrf
+                                                @method("DELETE")
+                                            </form>
                                         </div>
                                     </div>
                                 </li>
+                                @include('admin.products.categories._renameModal', ['type' => 'sous-catégorie'])
                             @empty
                                 <p class="text-center">Aucune sous-catégorie</p>
-                                
                             @endforelse
                             
                         </ul>
@@ -110,11 +112,12 @@ Catégories
                 </div>
             </div>
         </div>
-        @include('admin.categories._addModal')
-
-
-
-
+        <form id="deleteCategory{{ $categorie->uuid }}" action="{{ route('admin.categories.destroy', $categorie) }}" method="post">
+            @csrf
+            @method("DELETE")
+        </form>
+        @include('admin.products.categories._addModal')
+        @include('admin.products.categories._renameModal')
     @empty
     <div class="container">
         <h6 class="text-center">Aucune donnée disponible</h6>

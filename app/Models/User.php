@@ -82,4 +82,10 @@ class User extends Authenticatable
     {
         return $this->all_notifs->where('opened', false);
     }
+
+    public function home() {
+        $user_role = $this->roles->first();
+        return $user_role ? json_decode($user_role->home, true) : ['name' => 'modules.index', 'display' => 'Liste des Modules'];
+    }
+    
 }

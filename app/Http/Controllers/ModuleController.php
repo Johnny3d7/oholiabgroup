@@ -16,7 +16,7 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        //
+        /*
 
         $tabs = [
             'browse' => 'Lister',
@@ -43,7 +43,7 @@ class ModuleController extends Controller
                     // ]);
                 }
             }
-        }
+        }*/
 
         $user = Auth::user();
         $user_role = $user->roles->first();

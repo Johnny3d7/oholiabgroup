@@ -12,9 +12,9 @@
         <ul class="mm-collapse" style="height: 0px;">
             <li class="item-name"><a href="{{ route('admin.products.index') }}"><i class="i-ID-2 mr-2 text-muted"></i><span class="text-muted">Liste</span></a></li>
             <li class="item-name"><a href="{{ route('admin.categories.index') }}"><i class="i-Folder-Settings mr-2 text-muted"></i><span class="text-muted">Catégories</span></a></li>
-            <li class="item-name"><a href=""><i class="i-Gear mr-2 text-muted"></i><span class="text-muted">Types</span></a></li>
-            <li class="item-name"><a href=""><i class="i-Gear-2 mr-2 text-muted"></i><span class="text-muted">Natures</span></a></li>
-            <li class="item-name"><a href=""><i class="i-Data-Settings mr-2 text-muted"></i><span class="text-muted">Unités</span></a></li>
+            <li class="item-name"><a href="{{ route('admin.types.index') }}"><i class="i-Gear mr-2 text-muted"></i><span class="text-muted">Types</span></a></li>
+            <li class="item-name"><a href="{{ route('admin.natures.index') }}"><i class="i-Gear-2 mr-2 text-muted"></i><span class="text-muted">Natures</span></a></li>
+            <li class="item-name"><a href="{{ route('admin.unites.index') }}"><i class="i-Data-Settings mr-2 text-muted"></i><span class="text-muted">Unités</span></a></li>
         </ul>
     </li>
     {{-- <li class="Ul_li--hover"><a href="{{ route('admin.products.index') }}"><i class="i-ID-2 text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Produits</span></a></li> --}}

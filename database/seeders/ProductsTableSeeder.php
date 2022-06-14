@@ -17,12 +17,14 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Mouvement::truncate();
         LigneMouvement::truncate();
         Product::truncate();
         EntrepotsHasProduct::truncate();
-        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');    
+        // \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+    
 
         Product::create([
             'name' => "Eau minérale Harod - Pack de 6 x 1L",

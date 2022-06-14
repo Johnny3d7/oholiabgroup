@@ -23,10 +23,8 @@ Utilisateurs
         <div class="card text-left">
             
             <div class="card-body">
-                <a href="http://localhost:3000/admin/produits/create">
-                    <button class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right">
-                        <span class="ladda-label">Ajouter un utilisateur</span>
-                    </button>
+                <a href="{{ route('admin.users.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right">
+                    <span class="ladda-label">Ajouter un utilisateur</span>
                 </a>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped table-bordered table_oholiab">
@@ -44,7 +42,6 @@ Utilisateurs
                         </thead>
                         <tbody>
                             @foreach ($users as $id => $user)    
-
                                 <tr>
                                     <th scope="row">{{ $id+1 }}</th>
                                     <td>{{ $user->username }}</td>

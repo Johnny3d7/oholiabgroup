@@ -17,10 +17,12 @@ class MouvementsTableSeeder extends Seeder
     public function run()
     {
         //
-        // \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // // \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         // Mouvement::truncate();
         // LigneMouvement::truncate();
-        // \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        // // \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
 
         $variations = array(
             array('date_mouvement' => '2021-09-01 00:00:00','type' => 'in','quantite' => '813','observation' => 'Stock usine disponible à 9h18','status' => '1','created_at' => '2021-09-10 15:30:17','updated_at' => '2021-09-10 15:30:17','id_products' => '3','id_entrepots' => '3'),

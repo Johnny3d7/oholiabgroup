@@ -11,6 +11,8 @@ body {
     background: #f5f6fa;
     padding: 15px 0;
     line-height: 22px;
+    overflow-x: auto;
+
 }
 
 *,
@@ -167,7 +169,8 @@ body {
 }
 
 .transfer-double {
-    width: 640px;
+    width: 100%; /* 640px; */
+    min-width: 640px;
     height: 390px;
     background-color: #fff;
     border: 1px solid #ddd;
@@ -190,7 +193,8 @@ body {
 
 .transfer-double-content-left {
     display: inline-block;
-    width: 258px;
+    width: calc(46% - 15px);/* 258px; */
+    min-width:258px;
     height: 320px;
     border: 1px solid #eee;
     border-radius: 2px;
@@ -201,13 +205,14 @@ body {
     display: inline-block;
     width: 35px;
     float: left;
-    margin: 20% 15px 0 15px;
+    margin: 15% 15px 0 15px;
     text-align: center;
 }
 
 .transfer-double-content-right {
     display: inline-block;
-    width: 258px;
+    width:  calc(46% - 15px);/* 258px; */
+    min-width: 258px;
     height: 320px;
     border: 1px solid #eee;
     border-radius: 2px;

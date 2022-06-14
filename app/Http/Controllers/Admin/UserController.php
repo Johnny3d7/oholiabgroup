@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employe;
 use App\Models\Entreprise;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,7 +34,8 @@ class UserController extends Controller
         $entreprises = Entreprise::all();
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.users.create', compact('entreprises', 'roles', 'permissions'));
+        $employes = Employe::all();
+        return view('admin.users.create', compact('entreprises', 'employes', 'roles', 'permissions'));
     }
 
     /**
