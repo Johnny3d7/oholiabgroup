@@ -23,6 +23,7 @@ class CreateBesoinsTable extends Migration
             $table->string("statut",100);
             $table->string("employe",100);
             $table->text("observations")->nullable();
+            $table->text("motif")->nullable();
 
             $table->unsignedBigInteger("id_entreprises")->nullable();
             $table->foreign('id_entreprises')->references('id')->on('entreprises')->onDelete('cascade');
@@ -41,6 +42,7 @@ class CreateBesoinsTable extends Migration
 			$table->string("article",100);
 			$table->string("quantite",100);
 			$table->string("prix",100);
+			$table->string("unite",100)->default('unité');
 			$table->text("observations")->nullable();
 
 			$table->unsignedBigInteger("id_besoins")->nullable();

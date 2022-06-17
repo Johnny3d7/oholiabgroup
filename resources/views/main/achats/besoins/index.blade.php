@@ -32,7 +32,7 @@ Liste des bons d'expression de besoins
         <div class="card text-left">
             <div class="card-body">
                 <ul class="nav nav-pills nav-justified justify-content-center" id="pills-tab-besoin" role="tablist">
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link active" id="pills-all-besoin-tab" data-toggle="pill" href="#pills-all-besoin" role="tab" aria-controls="pills-all-besoin" aria-selected="true">Toutes</a>
                     </li>
                     <li class="nav-item">
@@ -43,7 +43,14 @@ Liste des bons d'expression de besoins
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="pills-attente-besoin-tab" data-toggle="pill" href="#pills-attente-besoin" role="tab" aria-controls="pills-attente-besoin" aria-selected="false">En Attente</a>
-                    </li>
+                    </li> --}}
+                    
+                    @php $target = $target ?? 'tous'; @endphp
+                    @foreach (['tous', 'validé', 'refusé', 'en attente'] as $statut)
+                        <li class="nav-item">
+                            <a class="nav-link {{ $target == $statut ? 'active' : '' }}" id="pills-{{ $statut }}-besoin-tab" href="{{ route('achats.besoins.index', ['target' => $statut]) }}" aria-controls="pills-attente-besoin" aria-selected="false">{{ ucfirst($statut) }}</a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -55,9 +62,11 @@ Liste des bons d'expression de besoins
                 
                 <div class="tab-content" style="overflow-x: auto;">
                     <div class="tab-pane fade show active" id="pills-all-besoin" role="tabpanel" aria-labelledby="success-tab">
-                        <a href="{{ route('achats.besoins.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right">
-                            <span class="ladda-label">Ajouter un besoin</span>
-                        </a>
+                        @role("Chargé d'Achats")
+                            <a href="{{ route('achats.besoins.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right">
+                                <span class="ladda-label">Ajouter un besoin</span>
+                            </a>
+                        @endrole
                         <div class="table-responsive">
                             <table class="display table table-striped table-bordered table_oholiab"  style="width:100%">
                                 <thead>
@@ -81,7 +90,7 @@ Liste des bons d'expression de besoins
                                                 <img src="{{ asset($besoin->entreprise->logo) }}" class="pt-1" alt="" style="height: 1.5rem;">
                                                 {{ $besoin->entreprise->name }}
                                             </td>
-                                            <td>{{ $besoin->statut }}</td>
+                                            <td>{{ ucfirst($besoin->statut) }}</td>
                                             <td>{{ ucwords((new Carbon($besoin->created_at))->locale('fr')->isoFormat('DD/MM/YYYY à HH:ss')) }}</td>
                                             {{-- <td>
                                                 <a class="text-info mr-2" href="{{ route('achats.besoins.show', $besoin) }}">

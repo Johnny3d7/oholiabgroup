@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLigneBesoinsTable extends Migration
+class CreateParametresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,13 @@ class CreateLigneBesoinsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ligne_besoins', function (Blueprint $table) {
-            $table->id();
-
-            $table->string("uuid",100);
-			$table->string("article",100);
-			$table->string("quantite",100);
-			$table->string("prix",100);
-			$table->text("observations")->nullable();
-
-			$table->unsignedBigInteger("id_besoins")->nullable();
-            $table->foreign('id_besoins')->references('id')->on('besoins')->onDelete('cascade');
-
+        Schema::create('parametres', function (Blueprint $table) {
+            $table->bigIncrements('id');
+			$table->string('uuid',100);
+			$table->string('reference',100)->nullable();
+			$table->string('name',100);
+			$table->string('type',100);
+            
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
@@ -40,6 +35,6 @@ class CreateLigneBesoinsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ligne_besoins');
+        Schema::dropIfExists('parametres');
     }
 }

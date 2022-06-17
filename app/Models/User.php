@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
@@ -51,7 +52,7 @@ class User extends Authenticatable
 
     public function image()
     {
-        return 'images/faces/1.jpg'; // $this->image ?? 'images/faces/1.jpg';
+        return $this->image ?? 'images/faces/1.jpg';
     }
 
     public function role()
@@ -80,6 +81,10 @@ class User extends Authenticatable
 
     public function notifs()
     {
+        // dd(Request::url() ==, $this->all_notifs->where('opened', false));
+        foreach ($this->all_notifs->where('opened', false) as $notif) {
+            if(Request::url() == $notif->link) $notif->markAsRead();
+        }
         return $this->all_notifs->where('opened', false);
     }
 

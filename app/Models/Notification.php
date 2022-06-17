@@ -22,7 +22,7 @@ class Notification extends Model
     /**
     * Mass assignable columns
     */
-    protected $fillable = ['id_users', 'title', 'body', 'link', 'opened'];
+    protected $fillable = ['id_users', 'title', 'body', 'link', 'opened', 'type'];
 
     /**
     * Date time columns.
@@ -42,5 +42,10 @@ class Notification extends Model
     public function type()
     {
         return $this->type ?? 'secondary';
+    }
+
+    public function markAsRead()
+    {
+        $this->update(['opened' => true]);
     }
 }

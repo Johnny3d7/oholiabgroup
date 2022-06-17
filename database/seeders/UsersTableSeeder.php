@@ -32,7 +32,8 @@ class UsersTableSeeder extends Seeder
             'username' => "geststock",
             'email'=> "geststock@oholiab.com",
             'password' => Hash::make('1234567890'),
-            'id_employes' => $employe->id
+            'id_employes' => $employe->id,
+            'image' => 'images/faces/1.jpg'
         ]);
 
         $user->assignRole('Gestionnaire de Stocks');
@@ -50,7 +51,8 @@ class UsersTableSeeder extends Seeder
             'username' => "chgachat",
             'email'=> "chgachat@oholiab.com",
             'password' => Hash::make('1234567890'),
-            'id_employes' => $employe->id
+            'id_employes' => $employe->id,
+            'image' => 'images/faces/4.jpg'
         ]);
 
         $user->assignRole("Chargé d'Achats");
@@ -68,7 +70,8 @@ class UsersTableSeeder extends Seeder
             'username' => "dg",
             'email'=> "dg@oholiab.com",
             'password' => Hash::make('1234567890'),
-            'id_employes' => $employe->id
+            'id_employes' => $employe->id,
+            'image' => 'images/faces/17.jpg'
         ]);
 
         $user->assignRole('Directrice Générale');
@@ -78,6 +81,7 @@ class UsersTableSeeder extends Seeder
             'email'=> "admin@oholiab.com",
             'password' => Hash::make('1234567890'),
             // 'id_entreprise' => $entreprises[$i]
+            'image' => 'images/faces/9.jpg'
         ]);
 
         $user->assignRole('admin');
@@ -87,6 +91,7 @@ class UsersTableSeeder extends Seeder
             'email'=> "sadmin@oholiab.com",
             'password' => Hash::make('1234567890'),
             // 'id_entreprise' => $entreprises[$i]
+            'image' => 'images/faces/10.jpg'
         ]);
 
         $user->assignRole('superadmin');

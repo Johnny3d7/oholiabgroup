@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Parametre;
 use Illuminate\Http\Request;
 
 class TypeController extends Controller
@@ -16,8 +17,9 @@ class TypeController extends Controller
     public function index()
     {
         // dd(session('routeStack'));
-        $categories = Category::mothers();
-        return view('admin.products.categories.index', compact('categories'));
+        $parametres = Parametre::types();
+        $type = 'type';
+        return view('admin.products.parametres.index', compact('parametres', 'type'));
     }
 
     /**
@@ -38,15 +40,14 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        $isset = Category::find($request->id_categories);
-        if($request->name && $request->name != '' && $isset && !$isset->category){
-            $category = Category::create([
+        if($request->name && $request->name != ''){
+            $type = Parametre::create([
                 'name' => $request->name,
-                'id_categories' => $request->id_categories ?? null
+                'type' => 'type'
             ]);
 
             $notification = array(
-                "message" => "Catégorie ajoutée avec succès !",
+                "message" => "Type ajouté avec succès !",
                 "alert-type" => "success"
             );
     
@@ -84,9 +85,21 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Parametre $type)
     {
-        //
+        if($request->name && $request->name != ''){
+            $type->update([
+                'name' => $request->name,
+            ]);
+
+            $notification = array(
+                "message" => "Type renommé avec succès !",
+                "alert-type" => "success"
+            );
+    
+            return redirect()->back()->with($notification);
+        }
+        return back();
     }
 
     /**
@@ -95,8 +108,15 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Parametre $type)
     {
-        //
+        $type->delete();
+
+        $notification = array(
+            "message" => "Type supprimé avec succès !",
+            "alert-type" => "success"
+        );
+
+        return redirect()->back()->with($notification);
     }
 }

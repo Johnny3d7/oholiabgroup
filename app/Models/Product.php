@@ -84,6 +84,16 @@ class Product extends BaseModel
     {
         return $this->belongsTo(Category::class,'id_categories');
     }
+    
+    /**
+    * parametre
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+    public function parametre($string)
+    {
+        return $this->belongsTo(Parametre::class,$string)->first();
+    }
 
     /**
     * entreprise

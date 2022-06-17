@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Parametre;
 use Illuminate\Http\Request;
 
 class UniteController extends Controller
@@ -16,8 +16,9 @@ class UniteController extends Controller
     public function index()
     {
         // dd(session('routeStack'));
-        $categories = Category::mothers();
-        return view('admin.products.categories.index', compact('categories'));
+        $parametres = Parametre::unites();
+        $type = 'unite';
+        return view('admin.products.parametres.index', compact('parametres', 'type'));
     }
 
     /**
@@ -38,15 +39,14 @@ class UniteController extends Controller
      */
     public function store(Request $request)
     {
-        $isset = Category::find($request->id_categories);
-        if($request->name && $request->name != '' && $isset && !$isset->category){
-            $category = Category::create([
+        if($request->name && $request->name != ''){
+            $unite = Parametre::create([
                 'name' => $request->name,
-                'id_categories' => $request->id_categories ?? null
+                'type' => 'unite'
             ]);
 
             $notification = array(
-                "message" => "Catégorie ajoutée avec succès !",
+                "message" => "Unité ajoutée avec succès !",
                 "alert-type" => "success"
             );
     
@@ -84,9 +84,21 @@ class UniteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Parametre $unite)
     {
-        //
+        if($request->name && $request->name != ''){
+            $unite->update([
+                'name' => $request->name,
+            ]);
+
+            $notification = array(
+                "message" => "Unité renommée avec succès !",
+                "alert-type" => "success"
+            );
+    
+            return redirect()->back()->with($notification);
+        }
+        return back();
     }
 
     /**
@@ -95,8 +107,15 @@ class UniteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Parametre $unite)
     {
-        //
+        $unite->delete();
+
+        $notification = array(
+            "message" => "Type supprimé avec succès !",
+            "alert-type" => "success"
+        );
+
+        return redirect()->back()->with($notification);
     }
 }

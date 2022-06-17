@@ -29,17 +29,27 @@ Détails de bon d'expression de besoins
 <div class="row">
     <div class="col-md-2 pb-2">
         <div class="card h-100">
-            <div class="card-body text-center">
-                <h3 class="text-dark mb-5">Statut</h3>
-                {{-- <i class="i-Yes text-78 text-success"></i>
-                <i class="i-Close text-78 text-danger"></i> --}}
-                <i class="i-Loading-3 text-78 text-info"></i>
-                <h3 class="text-info mt-2">{{ $besoin->statut }}</h3>
+            <div class="card-body text-center px-2">
+                <h3 class="text-dark mb-3">Statut</h3>
+                @if ($besoin->statut == 'validé')
+                    <i class="i-Yes text-78 text-success mt-5"></i>
+                @else
+                    @if ($besoin->statut == 'refusé')
+                        {{-- <div class="alert alert-danger">{{ $besoin->motif }}</div> --}}
+                        <i class="i-Close text-78 text-danger"></i>
+                    @else
+                        <i class="i-Loading-3 text-78 text-info mt-5"></i>
+                    @endif
+                @endif
+                <h3 class="text-info mt-2">{{ ucfirst($besoin->statut) }}</h3>
+                @if ($besoin->statut == 'refusé')
+                    <div class="alert alert-danger h5">{{ $besoin->motif }}</div>
+                @endif
             </div>
         </div>
     </div>
     <div class="col-md-8 pb-2">
-        <div class="card">
+        <div class="card h-100">
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-4 text-center p-5 pt-0">
@@ -90,8 +100,37 @@ Détails de bon d'expression de besoins
         <div class="card h-100">
             <div class="card-body text-center">
                 <h3 class="text-dark mb-4">Actions</h3>
-                <a href="" class="btn btn-lg btn-success ripple btn-block text-16 mb-3"><i class="i-Yes text-30"></i><span class="d-block">Valider</span> </a>
-                <a href="" class="btn btn-lg btn-danger ripple btn-block text-16"><i class="i-Close text-30"></i><span class="d-block">Refuser</span> </a>
+                @role('Directrice Générale')
+                    @if (!in_array($besoin->statut, ['validé', 'refusé']))
+                        <button type="button" data-link="{{ route('achats.besoins.validation', ['besoin' => $besoin, 'statut' => 'valide']) }}" class="btn btn-lg btn-success ripple btn-block text-16 mb-3 btnValider">
+                            <i class="i-Yes text-30"></i>
+                            <span class="d-block">Valider</span> 
+                        </button>
+                        <button type="button" data-link="{{ route('achats.besoins.validation', ['besoin' => $besoin, 'statut' => 'invalide']) }}" class="btn btn-lg btn-danger ripple btn-block text-16 btnRefuser">
+                            <i class="i-Close text-30"></i>
+                            <span class="d-block">Refuser</span> 
+                        </button>
+                    @else
+                        <h6 class="text-center">Aucune action disponible !</h6>                        
+                    @endif
+                @endrole
+                
+                @role("Chargé d'Achats")
+                    @if (in_array($besoin->statut, ['en attente', 'refusé']))
+                        @if ($besoin->statut == 'en attente')
+                            <a href="{{ route('achats.besoins.edit', $besoin) }}" class="btn btn-md btn-success ripple btn-block text-16 mb-3">
+                                <i class="i-Pen-4 text-25"></i>
+                                <span class="d-block">Editer</span> 
+                            </a>
+                        @endif
+                        <button type="button" data-link="{{ route('achats.besoins.validation', ['besoin' => $besoin, 'statut' => 'invalide']) }}" class="btn btn-md btn-warning ripple btn-block text-16 mb-3">
+                            <i class="i-Close text-25"></i>
+                            <span class="d-block">Annuler</span> 
+                        </button>
+                    @else
+                        <h6 class="text-center">Aucune action disponible !</h6>
+                    @endif
+                @endrole
             </div>
         </div>
     </div>
@@ -104,13 +143,17 @@ Détails de bon d'expression de besoins
                 <div class="card-body">
                     <div class="user-profile mb-4">
                         <div class="ul-widget-card__user-info row">
+                            <a href="{{ route('achats.besoins.edit', $besoin) }}" class="btn btn-md btn-outline-success ripple text-16 mb-3" style="position: absolute; top:0.2rem; right: 0.2rem; z-index: 1000;">
+                                <i class="i-Pen-4 text-20"></i>
+                                {{-- <span class="d-block">Editer</span>  --}}
+                            </a>
                             <div class="col-md border-md-right">
                                 <div class="ul-product-detail--icon mb-2">
-                                    <a href="">
+                                    <a href="javascript:void(0);">
                                         <i class="i-Shopping-Bag text-primary text-25 font-weight-500" style="font-size: 50px;"></i>
                                     </a>
                                 </div>
-                                <a href="">
+                                <a href="javascript:void(0);">
                                     <p class="m-0 text-18 heading">{{ $ligne->article }}</p>
                                 </a>
                                 <p>{{ $ligne->observations }}</p>
@@ -125,7 +168,7 @@ Détails de bon d'expression de besoins
                                 <h3>
                                     <div class="text-muted h5">Quantité</div>
                                     <div>
-                                        {{ number_format($ligne->quantite, 0, ',', ' ') }}
+                                        {{ number_format($ligne->quantite, 0, ',', ' ') }} {{ $ligne->unite }}
                                     </div>
                                 </h3>
                             </div>
@@ -152,6 +195,99 @@ Détails de bon d'expression de besoins
 
 @section('javascripts')
 <script>
+    $(function(){
+        $(document).ready(function(){            
+            // Toast.fire({
+            //     icon: 'info',
+            //     title: 'Signed in successfully'
+            // })
 
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-lg btn-success mx-1',
+                    denyButton: 'btn btn-lg btn-danger mx-1',
+                    cancelButton: 'btn btn-lg btn-secondary mx-1',
+                },
+                buttonsStyling: false
+            });
+
+            $('.btnValider:first').click(function(){
+                $valid = $(this);
+                swalWithBootstrapButtons.fire({
+                    icon: 'question',
+                    title: 'Souhaitez-vous continuer',
+                    text: "Vous êtes sur le point de valider le bon d'expression de besoin",
+                    showCancelButton: true,
+                    confirmButtonText: 'Valider',
+                    cancelButtonText: `Annuler`
+
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if(result.isConfirmed){
+                        window.location = $valid.data('link');
+                        // HoldOn.open({
+                        //     theme:"sk-circle"
+                        // });
+                        // setTimeout(() => {
+                        //     HoldOn.close();
+                        //     Toast.fire({
+                        //         'icon': 'success',
+                        //         'title': 'Bon validé avec succès : ' + $valid.data('link')
+                        //     })
+                        // }, 1000);
+                    }
+                })
+            });
+    
+            async function motifRefus () {
+
+            }
+            
+            $('.btnRefuser:first').click(function(){
+                $invalid = $(this);
+                swalWithBootstrapButtons.fire({
+                    icon: 'question',
+                    title: 'Souhaitez-vous continuer',
+                    text: "Vous êtes sur le point de refuser le bon d'expression de besoin",
+                    showConfirmButton: false,
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    denyButtonText: 'Refuser',
+                    cancelButtonText: `Annuler`
+
+                }).then(async (result) => {
+                    if (result.isDenied) {
+                        const { value: text } = await swalWithBootstrapButtons.fire({
+                            title: 'Motif de refus',
+                            input: 'textarea',
+                            // inputLabel: 'Motif de Refus',
+                            inputPlaceholder: 'Veuillez saisir le motif de refus...',
+                            inputAttributes: {
+                                'aria-label': 'Veuillez saisir le motif de refus'
+                            },
+                            showCancelButton: true,
+                            confirmButtonText: 'Supprimer',
+                            cancelButtonText: 'Annuler',
+
+                        })
+
+                        if (text) {
+                            window.location = $invalid.data('link') + `&motif=${text}` ;
+                            // HoldOn.open({
+                            //     theme:"sk-circle"
+                            // });
+                            // setTimeout(() => {
+                            //     HoldOn.close();
+                            //     Toast.fire({
+                            //         'icon': 'success',
+                            //         'title': 'Bon refusé avec succès'
+                            //     })
+                            // }, 1000);
+                        }
+                    }
+                })
+            });
+        })
+    })
 </script>
 @endsection

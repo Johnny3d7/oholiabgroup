@@ -133,7 +133,7 @@ Ajout de bon d'expression de besoins
                     <div class="custom-separator"></div>
                     <h4>Articles concernés</h4>
                     <div class="articles">
-                        @for ($key = 1; $key < 2; $key++)
+                        @for ($key = 1; $key < 1; $key++)
                             @if($key!=1) <div class="custom-separator" data-keyrow="{{ $key }}"></div> @endif
                             <div class="row ArticleRow" data-keyrow="{{ $key }}">
                                 <div class="container text-center">
@@ -141,9 +141,9 @@ Ajout de bon d'expression de besoins
                                 </div>
                                 <div class="col-md-11">
                                     <div class="form-row">
-                                        <div class="col-md-4 form-group mb-3">
+                                        <div class="col-md-3 form-group mb-3 lblArticle">
                                             <label for="article_{{ $key }}">Libéllé Article</label>
-                                            <input class="form-control @error("article_$key") is-invalid @enderror" id="article_{{ $key }}" name="article_{{ $key }}" value="{{ old("article_$key") }}" type="text" placeholder="Ex: Matériels" />
+                                            <input class="form-control @error("article_$key") is-invalid @enderror" id="article_{{ $key }}" name="article_{{ $key }}" value="{{ old("article_$key") }}" type="text" placeholder="Ex: Matériels" required />
                                             <small class="ul-form__text form-text" id="">
                                                 Saisissez le libéllé de l'article svp!
                                             </small>
@@ -154,9 +154,9 @@ Ajout de bon d'expression de besoins
                                             @endif
                                         </div>
                                         
-                                        <div class="col-md-2 form-group mb-3">
+                                        <div class="col-md-2 form-group mb-3 puArticle">
                                             <label for="prix_{{ $key }}">Prix Unitaire</label>
-                                            <input type="number" min="50" step="50" class="form-control @error("prix_$key") is-invalid @enderror" id="prix_{{ $key }}" name="prix_{{ $key }}" value="{{ old("prix_$key") }}" type="text" placeholder="Ex: 3000" />
+                                            <input type="number" min="50" step="50" class="form-control pu_article @error("prix_$key") is-invalid @enderror" id="prix_{{ $key }}" name="prix_{{ $key }}" value="{{ old("prix_$key") }}" type="text" placeholder="Ex: 3000" required />
                                             <small class="ul-form__text form-text" id="">
                                                 Saisissez le prix unitaire de l'article svp!
                                             </small>
@@ -167,9 +167,9 @@ Ajout de bon d'expression de besoins
                                             @endif
                                         </div>
                                         
-                                        <div class="col-md-1 form-group mb-3">
+                                        <div class="col-md-1 form-group mb-3 qteArticle">
                                             <label for="quantite_{{ $key }}">Quantité</label>
-                                            <input type="number" min="1" step="1" class="form-control @error("quantite_$key") is-invalid @enderror" id="quantite_{{ $key }}" name="quantite_{{ $key }}" value="{{ old("quantite_$key") }}" type="text" placeholder="Ex: 1" />
+                                            <input type="number" min="1" step="1" class="form-control @error("quantite_$key") is-invalid @enderror" id="quantite_{{ $key }}" name="quantite_{{ $key }}" value="{{ old("quantite_$key") }}" type="text" placeholder="Ex: 1" required />
                                             <small class="ul-form__text form-text" id="">
                                                 Saisissez la quantité nécessaire svp!
                                             </small>
@@ -180,7 +180,20 @@ Ajout de bon d'expression de besoins
                                             @endif
                                         </div>
                                         
-                                        <div class="col-md-2 form-group mb-3">
+                                        <div class="col-md-1 form-group mb-3 uniArticle">
+                                            <label for="unite_{{ $key }}">Unité</label>
+                                            <input type="number" min="1" step="1" class="form-control @error("unite_$key") is-invalid @enderror" id="unite_{{ $key }}" name="unite_{{ $key }}" value="{{ old("unite_$key") }}" type="text" placeholder="Ex: unité" required />
+                                            <small class="ul-form__text form-text" id="">
+                                                Saisissez l'unté svp!
+                                            </small>
+                                            @if ($errors->has("unite_$key"))
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first("unite_$key") }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        
+                                        <div class="col-md-2 form-group mb-3 mntArticle">
                                             <label>Montant</label>
                                             <input class="form-control montant" value="{{ old("quantite_$key") }}" type="text" readonly disabled placeholder="0" />
                                             <small class="ul-form__text form-text" id="">
@@ -188,7 +201,7 @@ Ajout de bon d'expression de besoins
                                             </small>
                                         </div>
                                         
-                                        <div class="col form-group mb-3">
+                                        <div class="col form-group mb-3 obsArticle">
                                             <label for="observations_{{ $key }}">Observations</label>
                                             <textarea class="form-control @error("observations_$key") is-invalid @enderror" id="observations_{{ $key }}" name="observations_{{ $key }}" cols="30" rows="1"></textarea>
                                             {{-- <input class="form-control value="{{ old('observations') }}" type="text" placeholder="Ex: Matériels" /> --}}
@@ -263,7 +276,6 @@ Ajout de bon d'expression de besoins
 
             cpte = 2;
             $('.articles').children('.custom-separator').each(function(){
-                console.log($(this).attr('data-keyrow'));
                 $(this).attr('data-keyrow', cpte);
                 cpte++;
             });
@@ -281,9 +293,9 @@ Ajout de bon d'expression de besoins
                     </div>
                     <div class="col-md-11">
                         <div class="form-row">
-                            <div class="col-md-4 form-group mb-3 lblArticle">
+                            <div class="col-md-3 form-group mb-3 lblArticle">
                                 <label for="article_${key}">Libéllé Article</label>
-                                <input class="form-control" id="article_${key}" name="article_${key}" type="text" placeholder="Ex: Matériels" />
+                                <input class="form-control" id="article_${key}" name="article_${key}" type="text" placeholder="Ex: Matériels" required />
                                 <small class="ul-form__text form-text" id="">
                                     Saisissez le libéllé de l'article svp!
                                 </small>
@@ -291,7 +303,7 @@ Ajout de bon d'expression de besoins
                             
                             <div class="col-md-2 form-group mb-3 puArticle">
                                 <label for="prix_${key}">Prix Unitaire</label>
-                                <input type="number" min="50" step="50" class="form-control" id="prix_${key}" name="prix_${key}" type="text" placeholder="Ex: 3000" />
+                                <input type="number" min="50" step="50" class="form-control" id="prix_${key}" name="prix_${key}" type="text" placeholder="Ex: 3000" required />
                                 <small class="ul-form__text form-text" id="">
                                     Saisissez le prix unitaire de l'article svp!
                                 </small>
@@ -299,9 +311,17 @@ Ajout de bon d'expression de besoins
                             
                             <div class="col-md-1 form-group mb-3 qteArticle">
                                 <label for="quantite_${key}">Quantité</label>
-                                <input type="number" min="1" step="1" class="form-control" id="quantite_${key}" name="quantite_${key}" type="text" placeholder="Ex: 1" />
+                                <input type="number" min="1" step="1" class="form-control" id="quantite_${key}" name="quantite_${key}" type="text" placeholder="Ex: 1" required />
                                 <small class="ul-form__text form-text" id="">
                                     Saisissez la quantité nécessaire svp!
+                                </small>
+                            </div>
+                            
+                            <div class="col-md-1 form-group mb-3 uniArticle">
+                                <label for="unite_${key}">Unité</label>
+                                <input type="text" class="form-control" id="unite_${key}" name="unite_${key}" type="text" value="unité" placeholder="Ex: unité" required />
+                                <small class="ul-form__text form-text" id="">
+                                    Saisissez l'unité svp!
                                 </small>
                             </div>
                             
@@ -333,14 +353,32 @@ Ajout de bon d'expression de besoins
         }
 
         function RemoveArticleRow(key){
-            console.log("Removing function " + key)
             toDelete = $(`[data-keyrow=${key}]`)
-            if(key==1) $(`[data-keyrow=2]`).remove();
+            if(key==1) $(`.custom-separator[data-keyrow=2]`).remove();
             toDelete.each(function(){
-                $(this).remove()
-                refresh();
+                $(this).slideUp('slow', function(){
+                    $(this).remove()
+                    refresh();
+                })
             })
         }
+
+        $(document).ready(function(){
+            refresh();
+
+            $('.puArticle input:first').on('keyup change', function(){
+                qte = $($(this).parents('.ArticleRow')[0]).find('.qteArticle input:first');
+                mnt = $($(this).parents('.ArticleRow')[0]).find('.mntArticle input:first');
+                if(!qte.val()) qte.val(1)
+                mnt.val(($(this).val() * qte.val()).toLocaleString());
+            });
+            $('.qteArticle input:first').on('keyup change', function(){
+                pu = $($(this).parents('.ArticleRow')[0]).find('.puArticle input:first');
+                mnt = $($(this).parents('.ArticleRow')[0]).find('.mntArticle input:first');
+                if(!pu.val()) pu.val(0)
+                mnt.val(($(this).val() * pu.val()).toLocaleString());
+            });
+        })
 
 
         $('.spanLink').each(function(){
@@ -358,23 +396,17 @@ Ajout de bon d'expression de besoins
         })
 
         $('.btn-RemoveRow').click(function(){
-            console.log('Removing javascript row')
             key = $($(this).parents('.ArticleRow')[0]).data('keyrow');
             RemoveArticleRow(key);
-            // toDelete = $(`[data-keyrow=${key}]`)
-            // toDelete.each(function(){
-            //     // $(this).remove()
-            // })
         })
 
         $('.btn-AddRow').click(function(){
-            console.log('Adding javascript row');
             nbre = $('.articles').children('.row').length + 1;
 
-            $('.articles').append(AddArticleRow(nbre));
-
+            // $('.articles').append(AddArticleRow(nbre));
+            $(AddArticleRow(nbre)).appendTo('.articles').hide().slideDown(500);
             $(`.ArticleRow[data-keyrow=${nbre}]`).ready(function(){
-                spanLink = $(`.ArticleRow[data-keyrow=${nbre}]`).find('.spanLink');
+                spanLink = $(`.ArticleRow[data-keyrow=${nbre}]`).find('.spanLink:first');
                 spanLink.css({'cursor':'pointer'});
 
                 btn = $(`.ArticleRow[data-keyrow=${nbre}]`).find('.btn-RemoveRow');
@@ -383,10 +415,25 @@ Ajout de bon d'expression de besoins
                     RemoveArticleRow(key);
                 })
 
-                console.log(spanLink);
-                spanLink.click(function(){
-                    spanLink.parent().find('button:first').click()
+                $(spanLink).click(function(){
+                    $(this).parent().find('button:first').click()
                 })
+
+
+                // mnt = $(`.ArticleRow[data-keyrow=${nbre}]`).find('.mntArticle input:first');
+                $(`.ArticleRow[data-keyrow=${nbre}]`).find('.puArticle input:first').on('keyup change', function(){
+                    mnt = $(this).parents(`.ArticleRow:first`).find('.mntArticle input:first');
+                    qte = $(this).parents(`.ArticleRow:first`).find('.qteArticle input:first');
+                    if(!qte.val()) qte.val(1)
+                    mnt.val(($(this).val() * qte.val()).toLocaleString());
+                });
+                $(`.ArticleRow[data-keyrow=${nbre}]`).find('.qteArticle input:first').on('keyup change', function(){
+                    mnt = $(this).parents(`.ArticleRow:first`).find('.mntArticle input:first');
+                    pu = $(this).parents(`.ArticleRow:first`).find('.puArticle input:first');
+                    if(!pu.val()) pu.val(0)
+                    mnt.val(($(this).val() * pu.val()).toLocaleString());
+                });
+
             })
         })
        

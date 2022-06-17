@@ -1,23 +1,20 @@
-@php
-    $genre = $genre ?? 'M';
-@endphp
-<div class="modal fade" id="add_{{ $type }}_modal" tabindex="-1" role="dialog" aria-labelledby="add_{{ $type }}_modal" aria-hidden="true">
+<div class="modal fade" id="rename_{{ $type }}_{{ $parametre->uuid }}_modal" tabindex="-1" role="dialog" aria-labelledby="rename_{{ $type }}_{{ $parametre->uuid }}_modal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="">Ajouter un{{ ($genre == 'M' ? ' ' : 'e ').$type }}</h5>
+                <h5 class="modal-title" id="">Renommer {{ $type == 'type' ? 'le ' : ($type == 'unite' ? 'l\'' : 'la ') }}{{ $type }} {{{ $parametre->name }}}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ route("admin.".$type."s.store") }}">
+                <form method="post" action="{{ route('admin.'.$type.'s.update', $parametre) }}">
                     @csrf
-                    @method('POST')
-                    
+                    @method('PUT')
+
                     <div class="form-group ">
-                        <label class="col-form-label" for="name">Libéllé d{{ ($genre == 'M' ? 'u ' : ($genre == 'F' ? 'e la ' : 'e l\'')).$type }}:</label>
-                        <input class="form-control" id="name" type="text" name="name" required/>
+                        <label class="col-form-label" for="name">Libéllé (Display Name)</label>
+                        <input class="form-control" id="name" type="text" name="name" value="{{ $parametre->name }}" required/>
                     </div>
-                   
+                                      
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
                         <button class="btn btn-primary" type="submit">Valider</button>

@@ -48,11 +48,11 @@ Produits
                                     <td class="text-center"><img class="py-2" style="height:5rem;" src="{{ asset($product->image()) }}" alt="" /></td>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->category->name }}</td>
-                                    <td>{{ $product->nature }}</td>
-                                    <td>{{ $product->type }}</td>
+                                    <td>{{ $product->parametre('nature')->name }}</td>
+                                    <td>{{ $product->parametre('type')->name }}</td>
                                     <td>{{ ucwords((new Carbon\Carbon($product->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                     <td>
-                                        <a href="{{ route('stock.products.show', $product) }}">
+                                        <a href="{{ route('admin.products.show', $product) }}">
                                             <button class="btn btn-outline-warning btn-icon m-1" type="button">
                                                 <span class="ul-btn__icon"><i class="i-Eye"></i></span>
                                             </button>

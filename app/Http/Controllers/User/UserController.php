@@ -28,7 +28,7 @@ class UserController extends Controller
         }
         else{
             $old = ['username' => $request->username,'password' => $request->password];
-            if(User::whereUsername($request->username)->first()){
+            if(User::whereUsername($request->username)->first()){ // || User::whereEmail($request->username)->first()
                 $msg = ['password' => "Le mot de passe saisi est incorrect"];
             } else {
                 $msg = ['username' => "Le nom d'utilisateur saisi est incorrect"];

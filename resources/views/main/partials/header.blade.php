@@ -91,13 +91,15 @@
                         <div class="border-bottom pb-2 mb-3">
                             <h4 style="vertical-align: bottom">
                                 Notifications
-                                <a href="#" class="float-right pr-2 text-12"><u>Tout marquer comme lu</u></a>
+                                <a href="{{ $count > 0 ? route('markAllAsRead') : 'javascript:void(0);' }}" class="float-right pr-2 text-12">
+                                    <u>Tout marquer comme lu</u>
+                                </a>
                             </h4>
                             
                         </div>
 
                         <div class="ul-widget-app__recent-messages" style="height: 25rem; overflow-y: auto;">
-                            @forelse ($notifications as $notification)
+                            @forelse ($notifications->sortByDesc('created_at') as $notification)
                                 <div class="ul-widget-app__row-comments border-bottom-gray-200 mb-0 notifLink" data-link="{{ $notification->link ?? '#' }}">
                                     <div class="ul-widget-app__profile-pic mr-1">
                                         {{-- <img class="profile-picture avatar-md mb-2 rounded-circle img-fluid" src="../../dist-assets/images/faces/1.jpg" alt="alt"> --}}

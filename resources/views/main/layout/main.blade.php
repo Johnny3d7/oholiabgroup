@@ -22,19 +22,22 @@
     <link rel="stylesheet" href="{{ url('css/plugins/fontawesome-5.css') }}" />
     <link href="{{ url('css/plugins/metisMenu.min.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/ladda-themeless.min.css') }}" rel="stylesheet" />
-    <link href="{{ url('css/plugins/toastr.css') }}" rel="stylesheet" />
-    <link href="{{ url('css/plugins/sweetalert2.min.css') }}" rel="stylesheet" />
-    <link href="{{ url('css/plugins/select2.min.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/pickadate/classic.min.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/pickadate/classic.date.min.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/jquery.datatables.min.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/buttons.datatables.min.css') }}" rel="stylesheet" />
     <link href="{{ url('css/plugins/daterangepicker.css') }}" rel="stylesheet" />
-    <link href="{{ url('css/plugins/bootstrap-colorpicker.min.css') }}" rel="stylesheet" />
+    {{-- <link href="{{ url('css/plugins/toastr.css') }}" rel="stylesheet" /> --}}
+    {{-- <link href="{{ url('css/plugins/select2.min.css') }}" rel="stylesheet" /> --}}
+    {{-- <link href="{{ url('css/plugins/bootstrap-colorpicker.min.css') }}" rel="stylesheet" /> --}}
+    {{-- <link href="{{ url('css/plugins/sweetalert2.min.css') }}" rel="stylesheet" /> --}}
     <link href="{{ url('fonts/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
- 
+    
+    <link href="{{ asset('myplugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('myplugins/HoldOn/HoldOn.min.css') }}" rel="stylesheet" />
+
     <style>
         /* Make the badge float in the top right corner of the button */
         .button__badge {
@@ -102,7 +105,6 @@
     <script src="{{ url('js/plugins/feather.min.js') }}"></script>
     <script src="{{ url('js/plugins/metisMenu.min.js') }}"></script>
     <script src="{{ url('js/scripts/layout-sidebar-vertical.min.js') }}"></script>
-    <script src="{{ url('js/plugins/apexcharts.min.js') }}"></script>
     <script src="{{ url('js/scripts/card.metrics.script.min.js') }}"></script>
     <script src="{{ url('js/scripts/widgets-statistics.min.js') }}"></script>
     <script src="{{ url('js/plugins/echarts.min.js') }}"></script>
@@ -122,19 +124,25 @@
     <script src="{{ url('js/plugins/ladda.min.js') }}"></script>
     <script src="{{ url('js/scripts/ladda.script.min.js') }}"></script>
     <script src="{{ url('js/plugins/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
-    <script src="{{ url('js/plugins/toastr.min.js')}}"></script>
-    <script src="{{ url('js/scripts/toastr.script.min.js')}}"></script>
-    <script src="{{ url('js/plugins/sweetalert2.min.js')}}"></script>
-    <script src="{{ url('js/scripts/sweetalert.script.min.js')}}"></script>
     <script src="{{ url('js/plugins/moment-with-locales.min.js')}}"></script>
     <script src="{{ url('js/plugins/pickadate/legacy.min.js')}}"></script>
     <script src="{{ url('js/plugins/pickadate/picker.min.js')}}"></script>
     <script src="{{ url('js/plugins/pickadate/picker.date.min.js')}}"></script>
-    <script src="{{ url('js/plugins/bootstrap-colorpicker.min.js')}}"></script>
     <script src="{{ url('js/plugins/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ url('js/plugins/daterangepicker.js')}}"></script>
-    <script src="{{ url('js/plugins/form-picker-data.js')}}"></script>
     <script src="{{ url('js/scripts/form.validation.script.min.js')}}"></script>
+    <script src="{{ url('js/plugins/apexcharts.min.js') }}"></script>
+    {{-- <script src="{{ url('js/plugins/toastr.min.js')}}"></script> --}}
+    {{-- <script src="{{ url('js/scripts/toastr.script.min.js')}}"></script> --}}
+    {{-- <script src="{{ url('js/plugins/sweetalert2.min.js')}}"></script> --}}
+    {{-- <script src="{{ url('js/plugins/bootstrap-colorpicker.min.js')}}"></script> --}}
+    {{-- <script src="{{ url('js/scripts/sweetalert.script.min.js')}}"></script> --}}
+    {{-- <script src="{{ url('js/plugins/form-picker-data.js')}}"></script> --}}
+    
+    <script src="{{ asset('myplugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('myplugins/HoldOn/HoldOn.min.js') }}"></script>
+    <script src="{{ asset('myplugins/HoldOn/HoldOn.min.js') }}"></script>
+
     <script>
         $('#ul-contact-list').DataTable();
     </script>
@@ -143,43 +151,48 @@
     </script>
     <script src="{{ url('js/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+
         $(function() {
-        //Initialize Select2 Elements
-        $('.select2').select2({
-        tags: true
-        });
-        
-        $('.select2n').select2({
+            //Initialize Select2 Elements
+            $('.select2').select2({ tags: true });
             
-        });
-        
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-        theme: 'bootstrap4'
-        });
+            $('.select2n').select2({ });
+            
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({ theme: 'bootstrap4' });
         });
     </script>
     <script>
         @if(Session::has('message'))
-    var type = "{{ Session::get('alert-type', 'info') }}";
-    switch(type){
-        case 'info':
-            toastr.info("{{ Session::get('message') }}");
-            break;
-
-        case 'warning':
-            toastr.warning("{{ Session::get('message') }}");
-            break;
-
-        case 'success':
-            toastr.success("{{ Session::get('message') }}");
-            break;
-
-        case 'error':
-            toastr.error("{{ Session::get('message') }}");
-            break;
-    }
-  @endif
+            $(document).ready(function(){
+                // toastr.info("{{ Session::get('message') }}");
+                if("{{ Session::has('message') }}")
+                var type = "{{ Session::get('alert-type', 'info') }}";
+                switch(type){
+                    case 'info':
+                    case 'warning':
+                    case 'success':
+                    case 'error':
+                        Toast.fire({
+                            icon: type,
+                            title: "{{ Session::get('message') }}"
+                        })
+                    break;
+                }
+            })
+        @endif
     </script>
     <script>
         $(document).ready(function () {
@@ -234,11 +247,7 @@
                     ]
                 });
             })
-            // $('.table_oholiab').
-        });
-    </script>
-    <script>
-        $(document).ready(function(){
+
             $('.collapseAll').click(function(){
                 $('.collapse-table').each(function(){
                     element = $(this);

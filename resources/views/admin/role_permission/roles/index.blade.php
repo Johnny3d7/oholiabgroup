@@ -77,7 +77,7 @@ Roles
                                     @foreach ($role->users as $user)
                                         <div class="ul-widget4__item ul-widget4__users">
                                             <div class="ul-widget4__img">
-                                                <img id="userDropdown" src="{{ asset('images/faces/1.jpg') }}" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img id="userDropdown" src="{{ asset($user->image()) }}" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             </div>
                                             <div class="ul-widget2__info ul-widget4__users-info">
                                                 <a class="ul-widget2__title" href="#">{{ $user->username }}</a>

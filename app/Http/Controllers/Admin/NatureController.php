@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Parametre;
 use Illuminate\Http\Request;
 
 class NatureController extends Controller
@@ -16,8 +17,9 @@ class NatureController extends Controller
     public function index()
     {
         // dd(session('routeStack'));
-        $categories = Category::mothers();
-        return view('admin.products.categories.index', compact('categories'));
+        $parametres = Parametre::natures();
+        $type = 'nature';
+        return view('admin.products.parametres.index', compact('parametres', 'type'));
     }
 
     /**
@@ -38,15 +40,14 @@ class NatureController extends Controller
      */
     public function store(Request $request)
     {
-        $isset = Category::find($request->id_categories);
-        if($request->name && $request->name != '' && $isset && !$isset->category){
-            $category = Category::create([
+        if($request->name && $request->name != ''){
+            $nature = Parametre::create([
                 'name' => $request->name,
-                'id_categories' => $request->id_categories ?? null
+                'type' => 'nature'
             ]);
 
             $notification = array(
-                "message" => "Catégorie ajoutée avec succès !",
+                "message" => "Nature ajoutée avec succès !",
                 "alert-type" => "success"
             );
     
@@ -84,9 +85,21 @@ class NatureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Parametre $nature)
     {
-        //
+        if($request->name && $request->name != ''){
+            $nature->update([
+                'name' => $request->name,
+            ]);
+
+            $notification = array(
+                "message" => "Nature renommée avec succès !",
+                "alert-type" => "success"
+            );
+    
+            return redirect()->back()->with($notification);
+        }
+        return back();
     }
 
     /**
@@ -95,8 +108,15 @@ class NatureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Parametre $nature)
     {
-        //
+        $nature->delete();
+
+        $notification = array(
+            "message" => "Type supprimé avec succès !",
+            "alert-type" => "success"
+        );
+
+        return redirect()->back()->with($notification);
     }
 }

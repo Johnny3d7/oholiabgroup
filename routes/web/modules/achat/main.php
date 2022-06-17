@@ -18,4 +18,6 @@ Route::prefix('/achats')->name('achats.')->group(function () {
     Route::get('/', [AchatController::class, 'index'])->name('index');
     
     Route::resource('besoins', BesoinController::class);
+
+    Route::get('besoins/{besoin}/validation', [BesoinController::class, 'validation'])->name('besoins.validation');
 });

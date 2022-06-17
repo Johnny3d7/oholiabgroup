@@ -17,7 +17,7 @@ class Besoin extends BaseModel
     /**
     * Mass assignable columns
     */
-    protected $fillable = ['uuid', 'nature', 'date_emission', 'date_livraison', 'statut', 'employe', 'observations', 'id_entreprises'];
+    protected $fillable = ['uuid', 'nature', 'date_emission', 'date_livraison', 'statut', 'employe', 'observations', 'id_entreprises', 'motif'];
 
     /**
     * Date time columns.

@@ -17,11 +17,18 @@ class BesoinController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // dd(Role::whereName('Directrice Générale')->first()->users);
+        $target = $request->target ?? 'tous';
+
+        if(!in_array($target, ['tous', 'validé', 'refusé', 'en attente'])) $target = 'tous';
+        
         $besoins = Besoin::all();
-        return view('main.achats.besoins.index', compact('besoins'));
+        if($target != 'tous'){
+            $besoins = Besoin::whereStatut($target)->get();
+        }
+        return view('main.achats.besoins.index', compact('besoins', 'target'));
     }
 
     /**
@@ -70,14 +77,14 @@ class BesoinController extends Controller
 
         if($error_msg && is_array($error_msg) && count($error_msg)>0){
             $notification = array(
-                "message" => implode(";", $error_msg),
+                "message" => implode("; ", $error_msg),
                 "alert-type" => "error"
             );
             return redirect()->back()->with($notification);
         }
 
         $request->merge([
-            'statut' => "En attente",
+            'statut' => "en attente",
         ]);
         $besoin = Besoin::create($request->all());
         // $besoin = Besoin::first();
@@ -93,6 +100,7 @@ class BesoinController extends Controller
                 'article' => $request->{"article_$i"},
                 'quantite' => $request->{"quantite_$i"},
                 'prix' => $request->{"prix_$i"},
+                'unite' => $request->{"unite_$i"},
                 'observations' => $request->{"observations_$i"},
                 'id_besoins' => $besoin->id
             ]);
@@ -158,5 +166,49 @@ class BesoinController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Validation of the specified resource
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param Besoin $besoin
+     * @return \Illuminate\Http\Response
+     */
+    public function validation(Request $request, Besoin $besoin)
+    {
+        $validatedData = $request->validate(["statut" => "required"], ["statut.required" => "Erreur de validation liée au statut"]);
+
+        // dd($request->all());
+        
+        $statut = $request->statut == 'valide' ? "validé" : 'refusé';
+        $motif = $request->motif;
+        if($statut == 'refusé' && !$motif){
+            $notification = array(
+                "message" => "Merci de renseigner le motif de refus !",
+                "alert-type" => "error"
+            );
+            return redirect()->back()->with($notification);
+        }
+
+        $besoin->update(compact('statut', 'motif'));
+
+        $users = Role::whereName("Chargé d'Achats")->first()->users;
+        foreach ($users as $user) {
+            Notification::create([
+                'id_users' => $user->id,
+                'title' => "Bon d'expression de besoin $statut",
+                'body' => $besoin->nature . ' - ' . $besoin->entreprise->name,
+                'link' => route('achats.besoins.show', $besoin),
+                'type' => $statut == 'validé' ? 'success' : 'danger',
+            ]);
+        }
+
+        $notification = array(
+            "message" => "Le bon d'expression de besoin a été $statut avec succès !",
+            "alert-type" => "success"
+        );
+        return redirect()->back()->with($notification);
+        
     }
 }
