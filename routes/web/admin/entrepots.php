@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::resource('entrepots', EntrepotController::class);
 
 Route::prefix('/entrepots')->name('entrepots.')->group(function () {
-    Route::get('/', [EntrepotController::class, 'index'])->name('index');
-    Route::post('create', [EntrepotController::class, 'store'])->name('store');
+    // Route::get('/', [EntrepotController::class, 'index'])->name('index');
+    // Route::post('create', [EntrepotController::class, 'store'])->name('store');
 });
     

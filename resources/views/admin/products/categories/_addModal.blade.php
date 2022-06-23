@@ -6,7 +6,7 @@
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ route("admin.categories.store") }}">
+                <form method="post" action="{{ route("admin.products.categories.store") }}">
                     @csrf
                     @method('POST')
 

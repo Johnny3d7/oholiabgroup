@@ -13,18 +13,7 @@
     <div class="header-part-right">
         <!-- Full screen toggle-->
         <i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen=""></i>
-        <!-- View mode toggle-->
-        @if (Route::currentRouteName() == 'stock.products.index')    
-            @if (isset($view) && $view == "list")
-                <a class="text-secondary" href="{{ route('stock.products.index') }}">
-                    <i class="i-Posterous header-icon d-none d-sm-inline-block" data-toggle="tooltip" data-palacement="top" data-original-title="Thumbnails view"></i>
-                </a>
-            @else
-                <a class="text-secondary" href="{{ route('stock.products.index', ['view' => 'list']) }}">
-                    <i class="i-Check header-icon d-none d-sm-inline-block" data-toggle="tooltip" data-palacement="top" data-original-title="List view"></i>
-                </a>
-            @endif
-        @endif
+
         <!-- Grid menu Dropdown-->
         <div class="dropdown dropleft">
             <i class="i-Safe-Box text-muted header-icon" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
@@ -95,7 +84,7 @@
                                     <u>Tout marquer comme lu</u>
                                 </a>
                             </h4>
-                            
+
                         </div>
 
                         <div class="ul-widget-app__recent-messages" style="height: 25rem; overflow-y: auto;">
@@ -149,7 +138,7 @@
                         </div> --}}
                     </div>
                 </div>
-                
+
             </div>
         </div>
 

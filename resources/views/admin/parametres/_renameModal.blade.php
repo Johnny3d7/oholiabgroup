@@ -6,7 +6,7 @@
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ route('admin.'.$type.'s.update', $parametre) }}">
+                <form method="post" action="{{ route('admin.'.$model.$type.'s.update', $parametre) }}">
                     @csrf
                     @method('PUT')
 
@@ -14,7 +14,7 @@
                         <label class="col-form-label" for="name">Libéllé (Display Name)</label>
                         <input class="form-control" id="name" type="text" name="name" value="{{ $parametre->name }}" required/>
                     </div>
-                                      
+
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
                         <button class="btn btn-primary" type="submit">Valider</button>
@@ -23,4 +23,4 @@
             </div>
         </div>
     </div>
-</div>  
+</div>

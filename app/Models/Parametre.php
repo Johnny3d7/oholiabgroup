@@ -10,14 +10,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property varchar $reference reference
  * @property varchar $name name
  * @property varchar $type type
- * 
+ *
  */
 
 class Parametre extends BaseModel
 {
     use HasFactory;
 
-    
     /**
     * Database table name
     */
@@ -26,23 +25,29 @@ class Parametre extends BaseModel
     /**
     * Mass assignable columns
     */
-    protected $fillable = ['uuid', 'reference', 'name', 'type'];
+    protected $fillable = ['uuid', 'reference', 'name', 'type', 'table'];
 
     /**
     * Date time columns.
     */
     protected $dates=[];
 
-    public static function types(){
-        return static::whereType('type')->get();
+    /********* Products **********/
+    public static function p_types(){
+        return static::whereTable('products')->whereType('type')->get();
     }
 
-    public static function natures(){
-        return static::whereType('nature')->get();
+    public static function p_natures(){
+        return static::whereTable('products')->whereType('nature')->get();
     }
 
-    public static function unites(){
-        return static::whereType('unite')->get();
+    public static function p_unites(){
+        return static::whereTable('products')->whereType('unite')->get();
+    }
+
+    /********* Fournisseurs **********/
+    public static function f_types(){
+        return static::whereTable('fournisseurs')->whereType('type')->get();
     }
 
 }

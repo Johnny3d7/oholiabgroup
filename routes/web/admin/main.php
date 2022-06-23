@@ -14,28 +14,23 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('/admin')->name('admin.')->group(function () {
-    
+
     Route::prefix('/icons')->name('icons.')->group(function () {
         Route::get('/', [AdminController::class, 'iconsIndex'])->name('index');
     });
 
     Route::middleware(['permission:Show Administration'])->group(function() {
         Route::get('/', [AdminController::class, 'index'])->name('index');
-    
+
         require('users.php');
-        
         require('roles.php');
-        
         require('permissions.php');
-        
         require('entreprises.php');
-        
         require('entrepots.php');
-        
         require('employes.php');
-    
+        require('fournisseurs.php');
         // require('categories.php');
-        
+
     });
     require('products.php');
 });

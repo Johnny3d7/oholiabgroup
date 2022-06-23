@@ -17,17 +17,26 @@ class ParametresTableSeeder extends Seeder
         Parametre::truncate();
 
         $parametres = [
-            'unite' => ["Unité", "Kilogramme", "Litre"], 
-            'type' => ["Périssable", "Fragile"],
-            'nature' => ["Unité", "Pack", "Carton", "Lot"]
+            'products' => [
+                'unite' => ["Unité", "Kilogramme", "Litre"], 
+                'type' => ["Périssable", "Fragile"],
+                'nature' => ["Unité", "Pack", "Carton", "Lot"]
+            ],
+            'fournisseurs' => [
+                'type' => ["Favoris", "Occasionnel"],
+            ]
         ];
 
-        foreach ($parametres as $param => $values) {
-            foreach ($values as $value) {
-                Parametre::create([
-                    'name' => $value,
-                    'type' => $param
-                ]);
+
+        foreach ($parametres as $table => $vals) {
+            foreach ($vals as $type => $values) {
+                foreach ($values as $value) {
+                    Parametre::create([
+                        'name' => $value,
+                        'type' => $type,
+                        'table' => $table,
+                    ]);
+                }
             }
         }
 

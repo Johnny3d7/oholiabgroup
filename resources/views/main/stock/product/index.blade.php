@@ -34,63 +34,6 @@ Liste des produits
                         </button>
                     </a>
                     <div class="table-responsive">
-                        {{-- <table class="display table table-striped table-bordered table_oholiab"  style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Référence</th>
-                                    <th>Libéllé</th>
-                                    <th>Catégorie</th>
-                                    <th>Nature</th>
-                                    <th>Type</th>
-                                    <th>Date d'ajout</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($products as $product)
-                                    <tr>
-                                        <td>{{ $product->reference }}</td>
-                                        <td>{{ $product->name }}</td>
-                                        <td>{{ $product->category->name }}</td>
-                                        <td>{{ $product->nature }}</td>
-                                        <td>{{ $product->type }}</td>
-                                        <td>{{ ucwords((new Carbon\Carbon($product->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
-                                        <td>
-                                            <a href="{{ route('stock.products.show', $product) }}">
-                                                <button class="btn btn-outline-warning btn-icon m-1" type="button">
-                                                    <span class="ul-btn__icon"><i class="i-Eye"></i></span>
-                                                </button>
-                                            </a>
-                                            <a href="{{ route('stock.products.edit', $product) }}">
-                                                <button class="btn btn-outline-success btn-icon m-1" type="button">
-                                                    <span class="ul-btn__icon"><i class="i-Edit"></i></span>
-                                                </button>
-                                            </a>
-                                            <a href="{{ route('stock.products.destroy', $product) }}">
-                                                <button class="btn btn-outline-danger btn-icon m-1" type="button">
-                                                    <span class="ul-btn__icon"><i class="i-Close"></i></span>
-                                                </button>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    
-                                @endforelse
-                                
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Référence</th>
-                                    <th>Libéllé</th>
-                                    <th>Catégorie</th>
-                                    <th>Stock alerte</th>
-                                    <th>Unité (Mesure)</th>
-                                    <th>Date d'ajout</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
-                        </table> --}}
                         <table class="display table table-striped table-bordered table_oholiab" data-to-export="[0,2,3,4,5,6]" style="width:100%">
                             <thead>
                                 <tr>
@@ -101,12 +44,11 @@ Liste des produits
                                     <th>Nature</th>
                                     <th>Type</th>
                                     <th>Date d'ajout</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($products as $product)
-                                    <tr>
+                                    <tr class="tr-link" data-link="{{ route('stock.products.show', $product) }}">
                                         <td>{{ $product->reference }}</td>
                                         <td class="text-center"><img class="py-2" style="height:5rem;" src="{{ asset($product->image()) }}" alt="" /></td>
                                         <td>{{ $product->name }}</td>
@@ -114,23 +56,6 @@ Liste des produits
                                         <td>{{ $product->nature }}</td>
                                         <td>{{ $product->type }}</td>
                                         <td>{{ ucwords((new Carbon\Carbon($product->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
-                                        <td>
-                                            <a href="{{ route('stock.products.show', $product) }}">
-                                                <button class="btn btn-outline-warning btn-icon m-1" type="button">
-                                                    <span class="ul-btn__icon"><i class="i-Eye"></i></span>
-                                                </button>
-                                            </a>
-                                            <a href="{{ route('stock.products.edit', $product) }}">
-                                                <button class="btn btn-outline-success btn-icon m-1" type="button">
-                                                    <span class="ul-btn__icon"><i class="i-Edit"></i></span>
-                                                </button>
-                                            </a>
-                                            <a href="{{ route('stock.products.destroy', $product) }}">
-                                                <button class="btn btn-outline-danger btn-icon m-1" type="button">
-                                                    <span class="ul-btn__icon"><i class="i-Close"></i></span>
-                                                </button>
-                                            </a>
-                                        </td>
                                     </tr>
                                 @empty
                                     
@@ -147,7 +72,6 @@ Liste des produits
                                     <th>Stock alerte</th>
                                     <th>Unité (Mesure)</th>
                                     <th>Date d'ajout</th>
-                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -157,31 +81,20 @@ Liste des produits
         </div>
     @else
         @forelse ($products->sortBy('id_entreprises') as $product)
-            <div class="col-md-3 py-2">
+            <div class="col-lg-3 col-md-4 py-2">
                 <a href="{{ route('stock.products.show', $product) }}">
                     <div class="card">
-                        @if ($product->image)
-                            <img class="d-block w-100 rounded rounded" src="{{ asset($product->image) }}" alt="alt" />
-                        @else
-                            <img class="d-block w-100 rounded rounded" src="{{ url('images/product_picture.jpg') }}" alt="alt" />
-                        @endif
-                        {{-- <img class="d-block w-100 rounded rounded" src="../../dist-assets/images/products/iphone-1.jpg" alt="First slide"> --}}
+                        <img class="d-block w-100 rounded rounded" src="{{ asset($product->image()) }}" alt="alt" />
                         <div class="card-body">
                             <h5 class="card-title mb-2 text-truncate" title="{{ $product->name }}">{{ $product->name }}</h5>
                             <p class="card-text text-mute">{{ $product->category->name }} - {{ $product->nature }}</p>
-                            <span class="rounded" style="position: absolute; top:1rem; right: 0rem; background-color: rgba(218, 201, 201, 0.5)"><img class="m-2" src="{{ asset($product->entreprise->logo) }}" alt="" style="height: 4rem;"></span>
-                            {{-- <a href="{{ route('stock.products.show', $product) }}" class="btn btn-primary ul-btn-raised--v2 m-1" type="button">
-                                <span class="ul-btn__icon"><i class="i-Eye"></i></span> Consulter
-                            </a>
-                            <a href="{{ route('stock.products.edit', $product) }}" class="btn btn-outline-success ul-btn-raised--v2 m-1 float-right" type="button">
-                                <span class="ul-btn__icon"><i class="i-Edit"></i></span> Modifier
-                            </a> --}}
+                            <span class="rounded" style="position: absolute; top:1rem; right: 0rem; background-color: rgba(218, 201, 201, 0.5)"><img class="m-2" src="{{ asset($product->entreprise->logo) }}" alt="" style="height: 3rem;"></span>
                         </div>
                     </div>
                 </a>
             </div>
         @empty
-            Nothing yet ...
+            <h6 class="text-center">Aucun produit !</h6>
         @endforelse
         
     @endif

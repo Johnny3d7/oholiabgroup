@@ -1,5 +1,6 @@
 @php
     $genre = $genre ?? 'M';
+    $model = $model ?? '';
 @endphp
 <div class="modal fade" id="add_{{ $type }}_modal" tabindex="-1" role="dialog" aria-labelledby="add_{{ $type }}_modal" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -9,7 +10,7 @@
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ route("admin.".$type."s.store") }}">
+                <form method="post" action="{{-- route("admin.".$model.$type."s.store") --}}">
                     @csrf
                     @method('POST')
                     

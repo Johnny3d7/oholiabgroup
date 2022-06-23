@@ -31,17 +31,23 @@ Détails de bon d'expression de besoins
         <div class="card h-100">
             <div class="card-body text-center px-2">
                 <h3 class="text-dark mb-3">Statut</h3>
-                @if ($besoin->statut == 'validé')
+                @switch($besoin->statut)
+                    @case('validé')
                     <i class="i-Yes text-78 text-success mt-5"></i>
-                @else
-                    @if ($besoin->statut == 'refusé')
-                        {{-- <div class="alert alert-danger">{{ $besoin->motif }}</div> --}}
-                        <i class="i-Close text-78 text-danger"></i>
-                    @else
-                        <i class="i-Loading-3 text-78 text-info mt-5"></i>
-                    @endif
-                @endif
-                <h3 class="text-info mt-2">{{ ucfirst($besoin->statut) }}</h3>
+                    <h3 class="text-info mt-2 text-success">{{ ucfirst($besoin->statut) }}</h3>
+                        @break
+                    @case('refusé')
+                    <i class="i-Close text-78 text-danger"></i>
+                    <h3 class="text-info mt-2 text-danger">{{ ucfirst($besoin->statut) }}</h3>
+                        @break
+                    @case('annulé')
+                    <i class="i-Close text-78 text-warning"></i>
+                    <h3 class="text-info mt-2 text-warning">{{ ucfirst($besoin->statut) }}</h3>
+                    @break
+                    @default
+                    <i class="i-Loading-3 text-78 text-info mt-5"></i>
+                    <h3 class="text-info mt-2 text-info">{{ ucfirst($besoin->statut) }}</h3>
+                @endswitch
                 @if ($besoin->statut == 'refusé')
                     <div class="alert alert-danger h5">{{ $besoin->motif }}</div>
                 @endif
@@ -61,7 +67,7 @@ Détails de bon d'expression de besoins
                         <div class="ul-product-detail__brand-name mb-4">
                             <h2 class="heading">{{ $besoin->nature }}</h2>
                         </div>
-                    
+
                         <div class="ul-product-detail__features mt-4">
                             {{-- <h5 class="font-weight-700">Caractéristiques du besoin:</h5> --}}
                             <ul class="m-0 p-0">
@@ -90,7 +96,7 @@ Détails de bon d'expression de besoins
                                 </p>
                             </ul>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -101,32 +107,32 @@ Détails de bon d'expression de besoins
             <div class="card-body text-center">
                 <h3 class="text-dark mb-4">Actions</h3>
                 @role('Directrice Générale')
-                    @if (!in_array($besoin->statut, ['validé', 'refusé']))
+                    @if (!in_array($besoin->statut, ['validé', 'refusé', 'annulé']))
                         <button type="button" data-link="{{ route('achats.besoins.validation', ['besoin' => $besoin, 'statut' => 'valide']) }}" class="btn btn-lg btn-success ripple btn-block text-16 mb-3 btnValider">
                             <i class="i-Yes text-30"></i>
-                            <span class="d-block">Valider</span> 
+                            <span class="d-block">Valider</span>
                         </button>
                         <button type="button" data-link="{{ route('achats.besoins.validation', ['besoin' => $besoin, 'statut' => 'invalide']) }}" class="btn btn-lg btn-danger ripple btn-block text-16 btnRefuser">
                             <i class="i-Close text-30"></i>
-                            <span class="d-block">Refuser</span> 
+                            <span class="d-block">Refuser</span>
                         </button>
                     @else
-                        <h6 class="text-center">Aucune action disponible !</h6>                        
+                        <h6 class="text-center">Aucune action disponible !</h6>
                     @endif
                 @endrole
-                
+
                 @role("Chargé d'Achats")
-                    @if (in_array($besoin->statut, ['en attente', 'refusé']))
+                    @if (in_array($besoin->statut, ['en attente', 'refusé', 'annulé']))
+                        <a href="{{ route('achats.besoins.edit', $besoin) }}" class="btn btn-md btn-success ripple btn-block text-16 mb-3">
+                            <i class="i-Pen-4 text-30"></i>
+                            <span class="d-block">Editer</span>
+                        </a>
                         @if ($besoin->statut == 'en attente')
-                            <a href="{{ route('achats.besoins.edit', $besoin) }}" class="btn btn-md btn-success ripple btn-block text-16 mb-3">
-                                <i class="i-Pen-4 text-25"></i>
-                                <span class="d-block">Editer</span> 
-                            </a>
+                            <button type="button" data-link="{{ route('achats.besoins.validation', ['besoin' => $besoin, 'statut' => 'annulé']) }}" class="btn btn-md btn-warning ripple btn-block text-16 mb-3 btnAnnuler">
+                                <i class="i-Close text-30"></i>
+                                <span class="d-block">Annuler</span>
+                            </button>
                         @endif
-                        <button type="button" data-link="{{ route('achats.besoins.validation', ['besoin' => $besoin, 'statut' => 'invalide']) }}" class="btn btn-md btn-warning ripple btn-block text-16 mb-3">
-                            <i class="i-Close text-25"></i>
-                            <span class="d-block">Annuler</span> 
-                        </button>
                     @else
                         <h6 class="text-center">Aucune action disponible !</h6>
                     @endif
@@ -137,16 +143,20 @@ Détails de bon d'expression de besoins
 </div>
 
 <div class="row">
-    @foreach ($besoin->lignes as $ligne)
+    @foreach ($besoin->lignes->sortBy('article') as $ligne)
         <div class="col-md-4 mt-4">
             <div class="card">
                 <div class="card-body">
                     <div class="user-profile mb-4">
                         <div class="ul-widget-card__user-info row">
-                            <a href="{{ route('achats.besoins.edit', $besoin) }}" class="btn btn-md btn-outline-success ripple text-16 mb-3" style="position: absolute; top:0.2rem; right: 0.2rem; z-index: 1000;">
-                                <i class="i-Pen-4 text-20"></i>
-                                {{-- <span class="d-block">Editer</span>  --}}
-                            </a>
+                            @role("Chargé d'Achats")
+                                @if (in_array($besoin->statut, ['en attente' /*, 'refusé', 'annulé' */]))
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#edit_{{ $ligne->uuid }}_modal" class="btn btn-md btn-outline-success ripple text-16 mb-3" style="position: absolute; top:0.2rem; right: 0.2rem; z-index: 1000;">
+                                        <i class="i-Pen-4 text-20"></i>
+                                        {{-- <span class="d-block">Editer</span>  --}}
+                                    </a>
+                                @endif
+                            @endrole
                             <div class="col-md border-md-right">
                                 <div class="ul-product-detail--icon mb-2">
                                     <a href="javascript:void(0);">
@@ -188,6 +198,7 @@ Détails de bon d'expression de besoins
                 </div>
             </div>
         </div>
+        @include('main.achats.besoins._editLigne')
     @endforeach
 </div>
 
@@ -196,7 +207,7 @@ Détails de bon d'expression de besoins
 @section('javascripts')
 <script>
     $(function(){
-        $(document).ready(function(){            
+        $(document).ready(function(){
             // Toast.fire({
             //     icon: 'info',
             //     title: 'Signed in successfully'
@@ -238,11 +249,7 @@ Détails de bon d'expression de besoins
                     }
                 })
             });
-    
-            async function motifRefus () {
 
-            }
-            
             $('.btnRefuser:first').click(function(){
                 $invalid = $(this);
                 swalWithBootstrapButtons.fire({
@@ -253,7 +260,7 @@ Détails de bon d'expression de besoins
                     showDenyButton: true,
                     showCancelButton: true,
                     denyButtonText: 'Refuser',
-                    cancelButtonText: `Annuler`
+                    cancelButtonText: `Fermer`
 
                 }).then(async (result) => {
                     if (result.isDenied) {
@@ -284,6 +291,35 @@ Détails de bon d'expression de besoins
                             //     })
                             // }, 1000);
                         }
+                    }
+                })
+            });
+
+            $('.btnAnnuler:first').click(function(){
+                $cancel = $(this);
+                swalWithBootstrapButtons.fire({
+                    icon: 'question',
+                    title: 'Souhaitez-vous continuer',
+                    text: "Vous êtes sur le point d'annuler le bon d'expression de besoin",
+                    showConfirmButton: false,
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    denyButtonText: 'Continuer',
+                    cancelButtonText: `Fermer`
+
+                }).then(async (result) => {
+                    if (result.isDenied) {
+                        window.location = $cancel.data('link') ;
+                        // HoldOn.open({
+                        //     theme:"sk-circle"
+                        // });
+                        // setTimeout(() => {
+                        //     HoldOn.close();
+                        //     Toast.fire({
+                        //         'icon': 'success',
+                        //         'title': 'Bon refusé avec succès'
+                        //     })
+                        // }, 1000);
                     }
                 })
             });

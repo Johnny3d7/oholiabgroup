@@ -19,7 +19,8 @@ class CreateParametresTable extends Migration
 			$table->string('reference',100)->nullable();
 			$table->string('name',100);
 			$table->string('type',100);
-            
+			$table->string('table',100)->nullable();
+
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

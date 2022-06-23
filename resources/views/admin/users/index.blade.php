@@ -37,12 +37,11 @@ Utilisateurs
                                 <th scope="col">Rôle</th>
                                 <th scope="col">Employé</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($users as $id => $user)    
-                                <tr>
+                                <tr class="tr-link" data-link="{{ route('admin.users.show',$user) }}">
                                     <th scope="row">{{ $id+1 }}</th>
                                     <td>{{ $user->username }}</td>
                                     <td><img class="rounded-circle m-0 avatar-sm-table" src="{{ asset($user->image()) }}" alt="" style="height: 2rem; width: 2rem;"></td>
@@ -50,11 +49,6 @@ Utilisateurs
                                     <td>{{ $user->role->name }}</td>
                                     <td><i class="i-Eyeglasses-Smiley-2"></i></td>
                                     <td><span class="badge badge-success">Active</span></td>
-                                    <td>
-                                        <a href="{{ route('admin.users.show', $user) }}" class="btn btn-info" type="button"><i class="nav-icon i-Eye"></i></a>
-                                        <button class="btn btn-success" type="button"><i class="nav-icon i-Pen-2"></i></button>
-                                        <button class="btn btn-danger" type="button"><i class="nav-icon i-Close-Window"></i></button>
-                                    </td>
                                 </tr>
                             @endforeach                            
                         </tbody>

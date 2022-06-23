@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\NatureController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\TypeController;
-use App\Http\Controllers\Admin\UniteController;
+use App\Http\Controllers\Admin\Product\NatureController;
+use App\Http\Controllers\Admin\Product\ProductController;
+use App\Http\Controllers\Admin\Product\TypeController;
+use App\Http\Controllers\Admin\Product\UniteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,19 +17,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::resource('products', ProductController::class);
-Route::prefix('/produits')->name('products.')->group(function () {
+Route::prefix('/products')->name('products.')->group(function () {
     // Route::get('/', [ProductController::class, 'index'])->name('index');
     // Route::post('create', [ProductController::class, 'store'])->name('store');
-});
-
-Route::prefix('/produits')->group(function () {
     Route::resource('categories', CategoryController::class);
-    
+
     Route::resource('types', TypeController::class);
-    
+
     Route::resource('natures', NatureController::class);
-    
+
     Route::resource('unites', UniteController::class);
 });
-    
+Route::resource('products', ProductController::class);

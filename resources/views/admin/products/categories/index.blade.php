@@ -17,7 +17,7 @@ Catégories
 @endsection
 
 @section('content')
-@include('admin.partials.addModal', ['type' => 'categorie', 'genre' => 'F'])
+@include('admin.partials.addModal', ['type' => 'categorie', 'genre' => 'F', 'model' => 'products.'])
 <div class="row">
     <div class="col">
         <button class="btn btn-outline-primary float-right expandAll"><i class="i-Arrow-Down-2 t-font-boldest"></i> Expand all</button>
@@ -100,7 +100,7 @@ Catégories
 "><i class="i-Cursor-Move-2 pr-1"></i> Déplacer</a>
                                             <a class="dropdown-item ul-widget__link--font" href="javascript:void(0);
 " onclick="if(confirm('Voulez vous vraiment supprimer la catégorie {{ $subcategorie->name }}')) document.getElementById('deleteCategory{{ $subcategorie->uuid }}').submit()"><i class="i-Close"> </i> Supprimer</a>
-                                            <form id="deleteCategory{{ $subcategorie->uuid }}" action="{{ route('admin.categories.destroy', $subcategorie) }}" method="post">
+                                            <form id="deleteCategory{{ $subcategorie->uuid }}" action="{{ route('admin.products.categories.destroy', $subcategorie) }}" method="post">
                                                 @csrf
                                                 @method("DELETE")
                                             </form>
@@ -117,7 +117,7 @@ Catégories
                 </div>
             </div>
         </div>
-        <form id="deleteCategory{{ $categorie->uuid }}" action="{{ route('admin.categories.destroy', $categorie) }}" method="post">
+        <form id="deleteCategory{{ $categorie->uuid }}" action="{{ route('admin.products.categories.destroy', $categorie) }}" method="post">
             @csrf
             @method("DELETE")
         </form>

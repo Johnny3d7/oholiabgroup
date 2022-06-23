@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LigneBesoin extends BaseModel
 {
     use HasFactory;
-    
+
     /**
     * Database table name
     */
@@ -17,7 +17,7 @@ class LigneBesoin extends BaseModel
     /**
     * Mass assignable columns
     */
-    protected $fillable = ['uuid', 'article', 'quantite', 'prix', 'observations', 'id_besoins'];
+    protected $fillable = ['uuid', 'article', 'quantite', 'prix', 'unite', 'observations', 'id_besoins'];
 
     /**
     * Date time columns.

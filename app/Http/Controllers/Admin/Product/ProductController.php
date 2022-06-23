@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\EntrepotsHasProduct;
 use App\Models\Entreprise;
+use App\Models\Parametre;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -32,7 +33,10 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $entreprises = Entreprise::all();
-        return view('admin.products.create', compact('categories', 'entreprises'));
+        $unites = Parametre::p_unites();
+        $natures = Parametre::p_natures();
+        $types = Parametre::p_types();
+        return view('admin.products.create', compact('categories', 'natures', 'types', 'unites', 'entreprises'));
     }
 
     /**
@@ -61,6 +65,7 @@ class ProductController extends Controller
             "id_entreprises.required" => "L'entreprise de production du produit est un champ requis"
         ]);
 
+        dd($request->all());
         $product = Product::create([
             'name' => $request->name,
             'type' => $request->type,
@@ -77,7 +82,7 @@ class ProductController extends Controller
             $fileName = str_replace(' ', '_', $name) . '_' . time() . '.' . $image->extension();
             $path = $image->storeAs('Products', $fileName, 'public');
             $product->image = 'storage/' . $path;
-            $product->save();        
+            $product->save();
         }
 
         $notification = array(

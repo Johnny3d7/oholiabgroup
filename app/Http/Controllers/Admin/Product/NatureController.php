@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Parametre;
 use Illuminate\Http\Request;
 
-class TypeController extends Controller
+class NatureController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,10 @@ class TypeController extends Controller
     public function index()
     {
         // dd(session('routeStack'));
-        $parametres = Parametre::types();
-        $type = 'type';
-        return view('admin.products.parametres.index', compact('parametres', 'type'));
+        $parametres = Parametre::p_natures();
+        $type = 'nature';
+        $model = 'products.';
+        return view('admin.parametres.index', compact('parametres', 'type', 'model'));
     }
 
     /**
@@ -41,16 +42,16 @@ class TypeController extends Controller
     public function store(Request $request)
     {
         if($request->name && $request->name != ''){
-            $type = Parametre::create([
+            $nature = Parametre::create([
                 'name' => $request->name,
-                'type' => 'type'
+                'type' => 'nature'
             ]);
 
             $notification = array(
-                "message" => "Type ajouté avec succès !",
+                "message" => "Nature ajoutée avec succès !",
                 "alert-type" => "success"
             );
-    
+
             return redirect()->back()->with($notification);
         }
         return back();
@@ -85,18 +86,18 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Parametre $type)
+    public function update(Request $request, Parametre $nature)
     {
         if($request->name && $request->name != ''){
-            $type->update([
+            $nature->update([
                 'name' => $request->name,
             ]);
 
             $notification = array(
-                "message" => "Type renommé avec succès !",
+                "message" => "Nature renommée avec succès !",
                 "alert-type" => "success"
             );
-    
+
             return redirect()->back()->with($notification);
         }
         return back();
@@ -108,9 +109,9 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Parametre $type)
+    public function destroy(Parametre $nature)
     {
-        $type->delete();
+        $nature->delete();
 
         $notification = array(
             "message" => "Type supprimé avec succès !",

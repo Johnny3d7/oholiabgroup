@@ -39,8 +39,7 @@ class VariationController extends Controller
      */
     public function store(Request $request)
     {
-        //  
-        //dd($request->typemouv);
+        // dd($request->typemouv);
         $validatedData = $request->validate([
             "typemouv" => "required",
             "qte" => "required|integer",
@@ -107,6 +106,18 @@ class VariationController extends Controller
             ]);
         }
 
+        if ($request->typemouv == 'trans') {
+            $ehp = EntrepotsHasProduct::whereIdProducts($request->id_products)->whereIdEntrepots($request->id_entrepot_destination)->first();
+            $ehp->update([
+                'quantite' => $ehp->quantite + $ligne->quantite,
+            ]);
+
+            $ehp = EntrepotsHasProduct::whereIdProducts($request->id_products)->whereIdEntrepots($request->id_entrepot_source)->first();
+            $ehp->update([
+                'quantite' => $ehp->quantite - $ligne->quantite,
+            ]);
+        }
+
         $notification = array(
             "message" => "Mouvement ajouté avec succès!",
             "alert-type" => "success"
@@ -121,12 +132,11 @@ class VariationController extends Controller
     public function transfert(Request $request)
     {
         //  
-        //dd($request->typemouv);
         $validatedData = $request->validate([
             "qte" => "required|integer",
             "datemouv"=>"required",
-            "observation" => "required"
         ]);
+        dd($request->typemouv);
         $date = explode('-',$request->datemouv);
 
         //Voir si le format de la date est respecté

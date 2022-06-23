@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Parametre;
@@ -16,9 +16,10 @@ class UniteController extends Controller
     public function index()
     {
         // dd(session('routeStack'));
-        $parametres = Parametre::unites();
+        $parametres = Parametre::p_unites();
         $type = 'unite';
-        return view('admin.products.parametres.index', compact('parametres', 'type'));
+        $model = 'products.';
+        return view('admin.parametres.index', compact('parametres', 'type', 'model'));
     }
 
     /**
@@ -49,7 +50,7 @@ class UniteController extends Controller
                 "message" => "Unité ajoutée avec succès !",
                 "alert-type" => "success"
             );
-    
+
             return redirect()->back()->with($notification);
         }
         return back();
@@ -95,7 +96,7 @@ class UniteController extends Controller
                 "message" => "Unité renommée avec succès !",
                 "alert-type" => "success"
             );
-    
+
             return redirect()->back()->with($notification);
         }
         return back();

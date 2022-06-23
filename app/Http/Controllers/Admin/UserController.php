@@ -77,6 +77,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        dd($user);
         // dd($user->hasPermissionTo('show_module_page'));
         // dd($user->roles[0], $user->roles[0]->permissions, $user->permissions, $user->perms());
         // dd($user->roles()->get(), $user->role, $user->role->permissions()->get(), $user->permissions(), $user->hasRole('superadmin'), $user->hasPermissionTo("Show Aministration"));

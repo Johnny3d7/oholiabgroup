@@ -1,11 +1,12 @@
 @php
     $genre = $type == "type" ? 'M' : ($type == "unite" ? 'Fa' : 'F');
-    $icon = $type == "type" ? 'i-Gear' : ($type == "unite" ? 'i-Data-Settings' : ($type == "nature" ? 'i-Gear-2 ' : ''))
+    $icon = $type == "type" ? 'i-Gear' : ($type == "unite" ? 'i-Data-Settings' : ($type == "nature" ? 'i-Gear-2 ' : ''));
+    $model = $model ?? '';
 @endphp
 @extends('admin.partials.main')
 
 @section('raccourcis')
-    @include('admin.products.parametres._header')
+    @include('admin.parametres._header')
 @endsection
 
 @section('stylesheets')
@@ -21,7 +22,7 @@
 @endsection
 
 @section('content')
-@include('admin.partials.addModal', ['type' => $type, 'genre' => $genre])
+@include('admin.partials.addModal', ['type' => $type, 'genre' => $genre, 'model' => $model])
 <div class="row">
     <div class="col">
         <button class="btn btn-outline-primary float-right expandAll"><i class="i-Arrow-Down-2 t-font-boldest"></i> Expand all</button>
@@ -56,11 +57,11 @@
                 </div>
             </div>
         </div>
-        <form id="delete_{{ $type }}_{{ $parametre->uuid }}" action="{{ route('admin.'.$type.'s.destroy', $parametre) }}" method="post">
+        <form id="delete_{{ $type }}_{{ $parametre->uuid }}" action="{{ route('admin.'.$model.$type.'s.destroy', $parametre) }}" method="post">
             @csrf
             @method("DELETE")
         </form>
-        @include('admin.products.parametres._renameModal')
+        @include('admin.parametres._renameModal')
     @empty
     <div class="container">
         <h6 class="text-center">Aucune donnée disponible</h6>

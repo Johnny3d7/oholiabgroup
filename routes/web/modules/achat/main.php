@@ -16,7 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/achats')->name('achats.')->group(function () {
     Route::get('/', [AchatController::class, 'index'])->name('index');
-    
+
+    Route::prefix('besoins')->name('besoins.')->group(function(){
+        Route::put('lignes/{ligne}', [BesoinController::class, 'updateLigne'])->name('lignes.update');
+    });
+
     Route::resource('besoins', BesoinController::class);
 
     Route::get('besoins/{besoin}/validation', [BesoinController::class, 'validation'])->name('besoins.validation');

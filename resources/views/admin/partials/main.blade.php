@@ -32,8 +32,8 @@
 
     @yield('content')
 
-    @include('admin.partials.addModal', ['type' => 'role'])
-    @include('admin.partials.addModal', ['type' => 'permission'])
+    {{-- @include('admin.partials.addModal', ['type' => 'role'])
+    @include('admin.partials.addModal', ['type' => 'permission']) --}}
 @endsection
 
 @section('module_name')
