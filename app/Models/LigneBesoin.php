@@ -17,7 +17,7 @@ class LigneBesoin extends BaseModel
     /**
     * Mass assignable columns
     */
-    protected $fillable = ['uuid', 'article', 'quantite', 'prix', 'unite', 'observations', 'id_besoins'];
+    protected $fillable = ['uuid', 'article', 'quantite', 'prix', 'unite', 'observations', 'statut', 'motif', 'id_besoins'];
 
     /**
     * Date time columns.

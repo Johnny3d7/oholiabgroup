@@ -29,7 +29,8 @@ class BesoinController extends Controller
         if($target != 'tous'){
             $besoins = Besoin::whereStatut($target)->get();
         }
-        return view('main.achats.besoins.index', compact('besoins', 'target'));
+        $lignes = LigneBesoin::all();
+        return view('main.achats.besoins.index', compact('besoins', 'target', 'lignes'));
     }
 
     /**
@@ -287,6 +288,62 @@ class BesoinController extends Controller
         //
     }
 
+    public function validationLigne(Request $request)
+    {
+        $validatedData = $request->validate(["statut" => "required"], ["statut.required" => "Erreur de validation liée au statut"]);
+
+        $statut = $request->statut == 'valide' ? "validé" : ($request->statut == 'annulé' ? 'annulé' : 'refusé');
+
+        $motif = $request->motif;
+        if($statut == 'refusé' && !$motif){
+            $msg = "Merci de renseigner le motif de refus !";
+            $notification = array(
+                "message" => $msg,
+                "alert-type" => "error"
+            );
+            if($request->api) return response()->json(["msg"=>$msg], 400);
+            return redirect()->back()->with($notification);
+        }
+
+        $lignes = LigneBesoin::whereIn('id', $request->id_lignes)->get();
+        foreach ($lignes as  $ligne){
+            $ligne->update(compact('statut', 'motif'));
+
+            $bs = $ligne->besoin; $t = true;
+            foreach ($bs->lignes as $l) {
+                if($l->statut == 'en attente') $t = false;
+            }
+            if($t) $bs->update(['statut' => 'traité']);
+        }
+        /*
+        if($statut == 'annulé') {
+            $users = Role::whereName("Chargé d'Achats")->first()->users;
+        } else {
+            $users = Role::whereName("Directrice Générale")->first()->users;
+        }
+
+        $users = [User::find($besoin->created_by)]; // Only the creator of the object will receive the notification
+
+        foreach ($users as $user) {
+            Notification::create([
+                'id_users' => $user->id,
+                'title' => "Bon d'expression de besoin $statut",
+                'body' => $besoin->nature . ' - ' . $besoin->entreprise->name,
+                'link' => route('achats.besoins.show', $besoin),
+                'type' => $statut == 'validé' ? 'success' : 'danger',
+            ]);
+        }
+        */
+
+        $msg = "L'achat de l'article a été $statut avec succès !";
+        $notification = array(
+            "message" => $msg,
+            "alert-type" => "success"
+        );
+        if($request->api) return response()->json(compact('msg', 'statut', 'motif'), 200);
+        return redirect()->back()->with($notification);
+    }
+
     /**
      * Validation of the specified resource
      *
@@ -303,14 +360,19 @@ class BesoinController extends Controller
         $statut = $request->statut == 'valide' ? "validé" : ($request->statut == 'annulé' ? 'annulé' : 'refusé');
         $motif = $request->motif;
         if($statut == 'refusé' && !$motif){
+            $msg = "Merci de renseigner le motif de refus !";
             $notification = array(
-                "message" => "Merci de renseigner le motif de refus !",
+                "message" => $msg,
                 "alert-type" => "error"
             );
+            if($request->api) return response()->json(["error"=>$msg], 400);
             return redirect()->back()->with($notification);
         }
 
-        $besoin->update(compact('statut', 'motif'));
+        $lignes = $besoin->lignes();
+        foreach ($lignes as  $ligne){
+            $ligne->update(compact('statut', 'motif'));
+        }
 
         if($statut == 'annulé') {
             $users = Role::whereName("Chargé d'Achats")->first()->users;
@@ -330,11 +392,12 @@ class BesoinController extends Controller
             ]);
         }
 
+        $msg = "Le bon d'expression de besoin a été $statut avec succès !";
         $notification = array(
-            "message" => "Le bon d'expression de besoin a été $statut avec succès !",
+            "message" => $msg,
             "alert-type" => "success"
         );
+        if($request->api) return response()->json(["msg"=>$msg], 200);
         return redirect()->back()->with($notification);
-
     }
 }

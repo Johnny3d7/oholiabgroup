@@ -28,9 +28,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         require('entreprises.php');
         require('entrepots.php');
         require('employes.php');
-        require('fournisseurs.php');
         // require('categories.php');
 
     });
     require('products.php');
+    require('fournisseurs.php');
 });

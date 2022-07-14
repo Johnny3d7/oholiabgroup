@@ -65,7 +65,7 @@ class ProductController extends Controller
             "id_entreprises.required" => "L'entreprise de production du produit est un champ requis"
         ]);
 
-        dd($request->all());
+        // dd($request->all());
         $product = Product::create([
             'name' => $request->name,
             'type' => $request->type,

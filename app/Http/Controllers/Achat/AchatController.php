@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Achat;
 
 use App\Http\Controllers\Controller;
+use App\Models\Besoin;
+use App\Models\Fournisseur;
 use Illuminate\Http\Request;
+use stdClass;
 
 class AchatController extends Controller
 {
@@ -14,7 +17,16 @@ class AchatController extends Controller
      */
     public function index()
     {
-        return view('main.achats.index');
+        $nbre = new stdClass();
+
+        $array = ['validé' => 'valide', 'refusé' => 'refuse','annulé' => 'annule' , 'en attente' => 'attente'];
+        foreach ($array as $key => $value) {
+            $nbre->{$value} = Besoin::whereStatut($key)->count();
+        }
+
+        $nbre->fournisseur = Fournisseur::count();
+
+        return view('main.achats.index', compact('nbre'));
     }
 
     /**

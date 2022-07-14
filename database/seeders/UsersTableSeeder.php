@@ -33,17 +33,17 @@ class UsersTableSeeder extends Seeder
             'email'=> "geststock@oholiab.com",
             'password' => Hash::make('1234567890'),
             'id_employes' => $employe->id,
-            'image' => 'images/faces/1.jpg'
+            'image' => 'storage/Profiles/aka-innocent.png'
         ]);
 
         $user->assignRole('Gestionnaire de Stocks');
-        
+
         $employe = Employe::create([
             'civilite' => 'Mme',
-            'nom' => 'AKOTO',
+            'nom' => 'AKOTTO',
             'prenoms' => 'Zélé',
             'contact' => '',
-            'email' => 'z.akoto@oholiabgroup.com',
+            'email' => 'z.akotto@oholiabgroup.com',
             'id_entreprises' => 1,
         ]);
 
@@ -52,11 +52,11 @@ class UsersTableSeeder extends Seeder
             'email'=> "chgachat@oholiab.com",
             'password' => Hash::make('1234567890'),
             'id_employes' => $employe->id,
-            'image' => 'images/faces/4.jpg'
+            'image' => 'storage/Profiles/akotto.png'
         ]);
 
         $user->assignRole("Chargé d'Achats");
-        
+
         $employe = Employe::create([
             'civilite' => 'Mme',
             'nom' => 'AKA',
@@ -71,11 +71,11 @@ class UsersTableSeeder extends Seeder
             'email'=> "dg@oholiab.com",
             'password' => Hash::make('1234567890'),
             'id_employes' => $employe->id,
-            'image' => 'images/faces/17.jpg'
+            'image' => 'storage/Profiles/mme-aka.png'
         ]);
 
         $user->assignRole('Directrice Générale');
-        
+
         $user = User::create([
             'username' => "admin",
             'email'=> "admin@oholiab.com",
@@ -85,7 +85,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $user->assignRole('admin');
-        
+
         $user = User::create([
             'username' => "sadmin",
             'email'=> "sadmin@oholiab.com",

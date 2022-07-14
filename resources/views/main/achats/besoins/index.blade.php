@@ -44,7 +44,7 @@ Liste des bons d'expression de besoins
                     <li class="nav-item">
                         <a class="nav-link" id="pills-attente-besoin-tab" data-toggle="pill" href="#pills-attente-besoin" role="tab" aria-controls="pills-attente-besoin" aria-selected="false">En Attente</a>
                     </li> --}}
-                    
+
                     @php $target = $target ?? 'tous'; @endphp
                     @foreach (['tous', 'validé', 'refusé', 'en attente'] as $statut)
                         <li class="nav-item">
@@ -57,9 +57,9 @@ Liste des bons d'expression de besoins
     </div>
     <div class="col-md-12 mb-4">
         <div class="card text-left">
-            
+
             <div class="card-body">
-                
+
                 <div class="tab-content" style="overflow-x: auto;">
                     <div class="tab-pane fade show active" id="pills-all-besoin" role="tabpanel" aria-labelledby="success-tab">
                         @role("Chargé d'Achats")
@@ -113,10 +113,10 @@ Liste des bons d'expression de besoins
                                             {{-- <td><a href="{{ route('achats.products.show', $data) }}"><button class="btn btn-outline-warning btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Eye"></i></span></button></a><a href="{{ route('achats.products.edit', $data) }}"><button class="btn btn-outline-success btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Edit"></i></span></button></a><a href="{{ route('achats.products.destroy', $data) }}"><button class="btn btn-outline-danger btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Close"></i></span></button></a></td> --}}
                                         </tr>
                                     @empty
-                                        
+
                                     @endforelse
-                                    
-        
+
+
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -132,21 +132,11 @@ Liste des bons d'expression de besoins
                             </table>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-valides-besoin" role="tabpanel" aria-labelledby="warning-tab">
-                        <h6 class="text-center">Aucune fiche de besoin validée</h6>
-                    </div>
-                    <div class="tab-pane fade" id="pills-refuses-besoin" role="tabpanel" aria-labelledby="errors-tab">
-                        <h6 class="text-center">Aucune fiche de besoin rejetée</h6>
-                    </div>
-                    <div class="tab-pane fade" id="pills-attente-besoin" role="tabpanel" aria-labelledby="errors-tab">
-                        <h6 class="text-center">Aucune fiche de besoin en attente</h6>
-                    </div>
                 </div>
-                
             </div>
         </div>
     </div>
-</div>
+
 @endsection
 
 @section('javascripts')

@@ -13,11 +13,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property IdEntrepot $entrepot belongsTo
  * @property IdInventaire $inventaire belongsTo
  * @property IdProduct $product belongsTo
- * 
+ *
  */
-class LigneInventaire extends BaseModel 
+class LigneInventaire extends BaseModel
 {
-    
+
     /**
     * Database table name
     */

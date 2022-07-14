@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title') {{ $moduleTitle ?? '' }} | {{ $entrepriseTitle ?? 'Oholiab Group' }}</title>
     {{--<link rel="icon" href="{{ url('images/main_img/favicon/favicon-32x32.png') }}" type="image/x-icon">--}}
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
@@ -34,7 +35,7 @@
     {{-- <link href="{{ url('css/plugins/sweetalert2.min.css') }}" rel="stylesheet" /> --}}
     <link href="{{ url('fonts/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
+
     <link href="{{ asset('myplugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('myplugins/HoldOn/HoldOn.min.css') }}" rel="stylesheet" />
 
@@ -49,22 +50,22 @@
             width: 18px;
 
             text-align: center;
-            
+
             padding: 0 2px;
             font-size: 12px;
-            
+
             position: absolute; /* Position the badge within the relatively positioned button */
             top: 0;
             right: 2px;
         }
     </style>
     @yield('stylesheets')
-    
+
 </head>
 
 <body class="text-left" style="background-image: url({{ url('images/back1.jpg') }}) !important; background-position: center center !important; ">
     <div class="app-admin-wrap layout-sidebar-vertical sidebar-full">
-        
+
         @include('main.partials.sidebar')
 
         {{-- <div class="switch-overlay"></div> --}}
@@ -93,7 +94,7 @@
     </div>
     <!-- ============ Search UI Start ============= -->
     @include('main.partials.searchui')
-    
+
     <!-- ============ Search UI End ============= -->
     <script src="{{ url('js/plugins/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ url('js/plugins/bootstrap.bundle.min.js') }}"></script>
@@ -138,7 +139,7 @@
     {{-- <script src="{{ url('js/plugins/bootstrap-colorpicker.min.js')}}"></script> --}}
     {{-- <script src="{{ url('js/scripts/sweetalert.script.min.js')}}"></script> --}}
     {{-- <script src="{{ url('js/plugins/form-picker-data.js')}}"></script> --}}
-    
+
     <script src="{{ asset('myplugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('myplugins/HoldOn/HoldOn.min.js') }}"></script>
     <script src="{{ asset('myplugins/HoldOn/HoldOn.min.js') }}"></script>
@@ -167,9 +168,9 @@
         $(function() {
             //Initialize Select2 Elements
             $('.select2').select2({ tags: true });
-            
+
             $('.select2n').select2({ });
-            
+
             //Initialize Select2 Elements
             $('.select2bs4').select2({ theme: 'bootstrap4' });
         });
@@ -281,7 +282,7 @@
             $('.hover2display').on('mouseover', function(){
                 $($(this).find('.displayHover')).removeClass('d-none');
             })
-            
+
             $('.hover2display').on('mouseout', function(){
                 $($(this).find('.displayHover')).addClass('d-none');
             })

@@ -1,5 +1,5 @@
-{{-- @extends(\Auth::user()->hasRole('admin') ? '' : 'main.stock.partials.main') --}}
-@extends('admin.partials.main')
+{{-- @extends('admin.partials.main') --}}
+@extends(\Auth::user()->hasRole('admin') ? 'admin.partials.main' : 'main.achats.partials.main')
 
 @section('raccourcis')
     @include('admin.fournisseurs._header')
@@ -21,8 +21,22 @@ Fournisseurs
 @section('content')
 <div class="row">
     <div class="container-fluid">
+        @role('admin')
         <section class="ul-product-detail__box">
             <div class="row">
+                <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">
+                    <a href="{{ route('admin.fournisseurs.index')}}">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="ul-product-detail__border-box">
+                                    <div class="ul-product-detail--icon mb-2"><i class="i-Truck text-success text-25 font-weight-500"></i></div>
+                                    <h5 class="heading">Liste des fournisseurs</h5>
+                                    <p class="text-muted text-12">Liste complète de tous les fournisseur.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
                 <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">
                     <a href="{{ route('admin.fournisseurs.types.index')}}">
                         <div class="card">
@@ -38,6 +52,7 @@ Fournisseurs
                 </div>
             </div>
         </section>
+        @endrole
         <div class="card animate__animated animate__backInDown">
             <div class="card-header bg-transparent">
             <h3 class="card-title">Ajout d'un nouveau fournisseur</h3>
