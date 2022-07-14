@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property varchar $name_permissions name permissions
  * @property \Illuminate\Database\Eloquent\Collection $roleshass belongsToMany
  * @property \Illuminate\Database\Eloquent\Collection $usershass belongsToMany
- * 
+ *
  */
-class Permission extends Model 
+class Permission extends Model
 {
-    
+
     /**
     * Database table name
     */

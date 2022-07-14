@@ -117,7 +117,7 @@ Liste des modules
                 </div>
             </div>
         </div> --}}
-        @can('Show Aministration')
+        @can('Show Administration')
         <div class="col-lg-3 col-xl-3 mt-3">
             <div class="card"><img class="d-block w-100 rounded rounded" src="{{ url('images/module/role-permission.jpg') }}" alt="Administration" />
                 <div class="card-body">
@@ -130,6 +130,17 @@ Liste des modules
             </div>
         </div>
         @endcan
+        <div class="col-lg-3 col-xl-3 mt-3">
+            <div class="card"><img class="d-block w-100 rounded rounded" src="{{ url('images/module/role-permission.jpg') }}" alt="Administration" />
+                <div class="card-body">
+                    <h5 class="card-title mb-2">Logistique</h5>
+                    <p class="card-text text-mute">Module</p>
+                    <div class="mt-2">
+                        <a href="#"><button class="btn btn-primary btn-block m-1" type="button">Accéder</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </div>

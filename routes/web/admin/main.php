@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,27 +14,23 @@ use Spatie\Permission\Models\Role;
 
 
 Route::prefix('/admin')->name('admin.')->group(function () {
-    Route::middleware(['role:admin'])->group(function() {
+
+    Route::prefix('/icons')->name('icons.')->group(function () {
+        Route::get('/', [AdminController::class, 'iconsIndex'])->name('index');
+    });
+
+    Route::middleware(['permission:Show Administration'])->group(function() {
         Route::get('/', [AdminController::class, 'index'])->name('index');
-    
-        Route::prefix('/icons')->name('icons.')->group(function () {
-            Route::get('/', [AdminController::class, 'iconsIndex'])->name('index');
-        });
-    
+
         require('users.php');
-        
         require('roles.php');
-        
         require('permissions.php');
-        
         require('entreprises.php');
-        
         require('entrepots.php');
-        
         require('employes.php');
-    
-        require('categories.php');
-        
+        // require('categories.php');
+
     });
     require('products.php');
+    require('fournisseurs.php');
 });

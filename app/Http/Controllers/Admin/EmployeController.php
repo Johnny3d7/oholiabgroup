@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employe;
+use App\Models\Entreprise;
+use App\Models\Permission;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class EmployeController extends Controller
 {
@@ -14,7 +18,8 @@ class EmployeController extends Controller
      */
     public function index()
     {
-        //
+        $employes = Employe::all();
+        return view('admin.employes.index', compact('employes'));
     }
 
     /**
@@ -24,7 +29,10 @@ class EmployeController extends Controller
      */
     public function create()
     {
-        //
+        $entreprises = Entreprise::all();
+        $roles = Role::all();
+        $permissions = Permission::all();
+        return view('admin.employes.create', compact('roles', 'permissions', 'entreprises'));
     }
 
     /**

@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property varchar $contact contact
  * @property varchar $addresse addresse
  * @property \Illuminate\Database\Eloquent\Collection $entrepot HasMany
- * 
+ *
  */
-class Entreprise extends BaseModel 
+class Entreprise extends BaseModel
 {
-    
+
     /**
     * Database table name
     */

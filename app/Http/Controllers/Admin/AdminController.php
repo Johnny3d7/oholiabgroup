@@ -22,6 +22,7 @@ class AdminController extends Controller
      */
     public function index()
     {
+        // dd(session('routeStack'));
         return view('admin.index');
     }
 

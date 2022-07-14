@@ -16,28 +16,31 @@ class EntreprisesTableSeeder extends Seeder
     public function run()
     {
         //
-        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Entreprise::truncate();
         Entrepot::truncate();
-        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        // \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
 
 
         $faker = (new \Faker\Factory())::create();
 
         $entreprises= [
-            'Oholiab Group',
-            'Akébié SARL',
-            'OBP INC.'
+            'Oholiab Group' => 'images/logo.png',
+            'Akébié SARL' => 'images/logoakebie1.png',
+            'OBP INC.' => 'images/faviconobp.png'
         ];
 
-        for ($i = 0; $i < 3; $i++) {
+        foreach ($entreprises as $name => $logo) {
             $entreprise = Entreprise::create([
-                'name' => $entreprises[$i],
+                'name' => $name,
                 'ncc' => 'XXXX-XXXX',
+                'logo' => $logo,
             ]);
 
             $entrepot = Entrepot::create([
-                'name' => "Principal ".$entreprises[$i],
+                'name' => "Principal ".$name,
                 'id_entreprises' => $entreprise->id,
             ]);
         }

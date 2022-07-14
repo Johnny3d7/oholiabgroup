@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property varchar $statut statut
  * @property text $observations observations
  * @property \Illuminate\Database\Eloquent\Collection $ligne belongsToMany
- * 
+ *
  */
-class Inventaire extends BaseModel 
+class Inventaire extends BaseModel
 {
-    
+
     /**
     * Database table name
     */

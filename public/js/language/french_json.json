@@ -8,7 +8,7 @@
         "first": "Premier",
         "last": "Dernier",
         "previous": "Précédent",
-        "next": "Suiv"
+        "next": "Suivant"
     },
     "aria": {
         "sortAscending": ": activer pour trier la colonne par ordre croissant",

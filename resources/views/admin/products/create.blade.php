@@ -38,7 +38,7 @@ Produits
                     </a>
                 </div> --}}
                 <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">
-                    <a href="{{ route('admin.products.index')}}">
+                    <a href="{{ route('admin.products.categories.index')}}">
                         <div class="card">
                             <div class="card-body">
                                 <div class="ul-product-detail__border-box">
@@ -51,7 +51,7 @@ Produits
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">
-                    <a href="{{ route('admin.products.index')}}">
+                    <a href="{{ route('admin.products.types.index')}}">
                         <div class="card">
                             <div class="card-body">
                                 <div class="ul-product-detail__border-box">
@@ -64,7 +64,7 @@ Produits
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">
-                    <a href="{{ route('admin.products.index')}}">
+                    <a href="{{ route('admin.products.natures.index')}}">
                         <div class="card">
                             <div class="card-body">
                                 <div class="ul-product-detail__border-box">
@@ -77,7 +77,7 @@ Produits
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">
-                    <a href="{{ route('admin.products.index')}}">
+                    <a href="{{ route('admin.products.unites.index')}}">
                         <div class="card">
                             <div class="card-body">
                                 <div class="ul-product-detail__border-box">
@@ -100,7 +100,7 @@ Produits
             <form method="post" action="{{ route('admin.products.store')}}" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
-                <div class="card-body">    
+                <div class="card-body">
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label class="ul-form__label" for="name">Nom produit:</label>
@@ -121,7 +121,7 @@ Produits
                                 @forelse ($categories as $category)
                                     <option value="{{ $category->id }}" @if (old('id_categories') == $category->id) selected="selected" @endif>{{ $category->name }}</option>
                                 @empty
-                                    
+
                                 @endforelse
                             </select><small class="ul-form__text form-text" id="">
                                 Choisissez la catégorie du produit svp!
@@ -136,11 +136,10 @@ Produits
                             <label class="ul-form__label" for="type">Type produit:</label>
                             <select id="type" name="type" class="form-control" required>
                                 <option value=""  selected>-- Sélectionner --</option>
-                                @php $types = ["Périssable", "Fragile"] ;@endphp
                                 @forelse ($types as $type)
-                                    <option value="{{ $type }}" @if (old('type') == $type) selected="selected" @endif>{{ $type }}</option>
+                                    <option value="{{ $type->id }}" @if (old('type') == $type->name) selected="selected" @endif>{{ $type->name }}</option>
                                 @empty
-                                    
+
                                 @endforelse
                             </select>
                             <small class="ul-form__text form-text" id="">
@@ -155,12 +154,11 @@ Produits
                         <div class="form-group col-md-4">
                             <label class="ul-form__label" for="nature">Nature produit:</label>
                             <select id="nature" name="nature" class="form-control" required>
-                                <option value=""  selected>-- Sélectionner --</option>
-                                @php $natures = ["Unité", "Pack", "Carton", "Lot"] ;@endphp
+                                <option value="" selected>-- Sélectionner --</option>
                                 @forelse ($natures as $nature)
-                                    <option value="{{ $nature }}" @if (old('nature') == $nature) selected="selected" @endif>{{ $nature }}</option>
+                                    <option value="{{ $nature->id }}" @if (old('nature') == $nature->name) selected="selected" @endif>{{ $nature->name }}</option>
                                 @empty
-                                    
+
                                 @endforelse
                             </select>
                             <small class="ul-form__text form-text" id="">
@@ -172,15 +170,14 @@ Produits
                                 </div>
                             @endif
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md">
                             <label class="ul-form__label" for="unite">Unité produit:</label>
                             <select id="unite" name="unite" class="form-control" required>
-                                <option value=""  selected>-- Sélectionner --</option>
-                                @php $unites = ["Unité", "Kilogramme", "Litre"] ;@endphp
+                                <option value="" selected>-- Sélectionner --</option>
                                 @forelse ($unites as $unite)
-                                    <option value="{{ $unite }}" @if (old('unite') == $unite) selected="selected" @endif>{{ $unite }}</option>
+                                    <option value="{{ $unite->id }}" @if (old('unite') == $unite->name) selected="selected" @endif>{{ $unite->name }}</option>
                                 @empty
-                                    
+
                                 @endforelse
                             </select>
                             <small class="ul-form__text form-text" id="">
@@ -192,13 +189,14 @@ Produits
                                 </div>
                             @endif
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-lg-5 col-md-6">
                             <label class="ul-form__label">Entreprise de production</label>
                             <div class="">
                                 @foreach ($entreprises->sortBy('name') as $entreprise)
-                                    <label class="radio radio-outline-primary ml-5" style="display: inline">
+                                    <label class="radio radio-outline-primary ml-3" style="display: inline">
                                         <input type="radio" name="id_entreprises" value="{{ $entreprise->id }}" @if (old('id_entreprises') == $entreprise->id) selected="checked" @endif>
-                                        <span><img src="{{ asset($entreprise->logo) }}" alt="" style="height: 4rem;"></span>
+                                        <span class="d-none d-md-inline"><img src="{{ asset($entreprise->logo) }}" alt="" style="height: 4rem;"></span>
+                                        <span class="d-inline d-md-none"><img src="{{ asset($entreprise->logo) }}" alt="" style="height: 2.5rem;"></span>
                                         <span class="checkmark"></span>
                                     </label>
                                 @endforeach
@@ -209,16 +207,16 @@ Produits
                                 </div>
                             @endif
                         </div>
-                        
+
                     </div>
                     <div class="custom-separator"></div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label class="col-form-label" for="image">Image (.png | .jpg | .jpeg): </label>               
+                            <label class="col-form-label" for="image">Image (.png | .jpg | .jpeg): </label>
                             <input type="file" name="image" class="dropify-fr" data-bs-height="180" accept=".png, .jpg, .jpeg" />
                         </div>
                         <div class="form-group col-md-8">
-                            <label class="col-form-label" for="description">Description: </label>               
+                            <label class="col-form-label" for="description">Description: </label>
                             <textarea class="form-control" name="description" id="description" cols="30" rows="9" placeholder="Veuillez donner une description du produit (Ce champs est facultatif)">@if (old('description')) {{ old('description') }} @endif</textarea>
                         </div>
                     </div>
@@ -236,7 +234,7 @@ Produits
             </form>
             <!--  end::form 3-->
         </div>
-       
+
     </div>
 </div>
 @endsection
@@ -270,7 +268,7 @@ Produits
         });
     </script>
     <!-- End Dropify -->
-    
+
 <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0/dist/cdn/placesAutocompleteDataset.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0/dist/cdn/placesInstantsearchWidget.min.js"></script>

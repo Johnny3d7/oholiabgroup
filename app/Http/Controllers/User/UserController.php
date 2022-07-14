@@ -22,11 +22,13 @@ class UserController extends Controller
 
         $creds = $request->only('username','password');
         if (Auth::guard('web')->attempt($creds)) {
-            return redirect()->route('module.index');
+            $user = \Auth::user();
+            $user_role = $user->roles->first();
+            return redirect()->route($user_role ? $user_role->home()['name'] : 'module.index');
         }
         else{
             $old = ['username' => $request->username,'password' => $request->password];
-            if(User::whereUsername($request->username)->first()){
+            if(User::whereUsername($request->username)->first()){ // || User::whereEmail($request->username)->first()
                 $msg = ['password' => "Le mot de passe saisi est incorrect"];
             } else {
                 $msg = ['username' => "Le nom d'utilisateur saisi est incorrect"];

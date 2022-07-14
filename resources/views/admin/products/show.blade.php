@@ -152,22 +152,27 @@ Détails du produit
                                         <span class="text-15"><strong>Référence :</strong> {{ $product->reference }} </span>
                                         <span class="text-mute" style="display: none">2 April </span>
                                     </div>
-                                    <div class="ul-widget-app__browser-list-1 mb-2">
+                                    {{-- <div class="ul-widget-app__browser-list-1 mb-2">
                                         <i class="i-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
                                         <span class="text-15"><strong>Stock alerte (seuil) :</strong> {{ $product->stockalert }}</span>
                                         <span class="text-mute" style="display: none">2 April </span>
-                                    </div>
+                                    </div> --}}
                                     <div class="ul-widget-app__browser-list-1 mb-2 ">
                                         <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
-                                        <span class="text-15"><strong>Type :</strong> {{ $product->type }}</span>
+                                        <span class="text-15"><strong>Type :</strong> {{ $product->parametre('type')->name }}</span>
                                         <span class="text-mute" style="display: none">2 April </span>
                                     </div>
                                     <div class="ul-widget-app__browser-list-1 mb-2 ">
                                         <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
-                                        <span class="text-15"><strong>Nature :</strong> {{ $product->nature }}</span>
+                                        <span class="text-15"><strong>Nature :</strong> {{ $product->parametre('nature')->name }}</span>
                                         <span class="text-mute" style="display: none">2 April </span>
                                     </div>
-                                    @if ($product->poids && $product->unite_poids )
+                                    <div class="ul-widget-app__browser-list-1 mb-2 ">
+                                        <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
+                                        <span class="text-15"><strong>Unité :</strong> {{ $product->parametre('unite')->name }}</span>
+                                        <span class="text-mute" style="display: none">2 April </span>
+                                    </div>
+                                    {{-- @if ($product->poids && $product->unite_poids )
                                         <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Poids :</strong> {{ $product->poids }} {{ $product->unite_poids }}</span><span class="text-mute" style="display: none">2 April </span></div>
                                     @endif
                                     @if ($product->unite_mesure && $product->longueur)
@@ -181,7 +186,7 @@ Détails du produit
                                     @endif
                                     @if ($product->status)
                                         <div class="ul-widget-app__browser-list-1 mb-2 "><i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i><span class="text-15"><strong>Statut :</strong> {{ $product->status == 1 ? 'Actif': 'Inactif' }}</span><span class="text-mute" style="display: none">2 April </span></div>
-                                    @endif
+                                    @endif --}}
                                 
                                 </ul>
                             </div>

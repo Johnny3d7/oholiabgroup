@@ -15,8 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        // dd(session('routeStack'));
         $categories = Category::mothers();
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.products.categories.index', compact('categories'));
     }
 
     /**
@@ -37,12 +38,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // $isset = Category::find($request->id_categories);
-        if($request->name && $request->name != '' && $isset && !$isset->category){
-            $category = Category::create([
-                'name' => $request->name,
-                'id_categories' => $request->id_categories ?? null
-            ]);
+        if($request->name && $request->name != ''){
+            $isset = Category::find($request->id_categories);
+            if(!$isset || ($isset && !$isset->category)){
+                $category = Category::create([
+                    'name' => $request->name,
+                    'id_categories' => $request->id_categories ?? null
+                ]);
+            }
 
             $notification = array(
                 "message" => "Catégorie ajoutée avec succès !",
@@ -83,9 +86,21 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        if($request->name && $request->name != ''){
+            $category->update([
+                'name' => $request->name,
+            ]);
+
+            $notification = array(
+                "message" => "Catégorie renommée avec succès !",
+                "alert-type" => "success"
+            );
+    
+            return redirect()->back()->with($notification);
+        }
+        return back();
     }
 
     /**
@@ -94,8 +109,18 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        foreach ($category->categories as $child) {
+            $child->delete();
+        }
+        $category->delete();
+
+        $notification = array(
+            "message" => "Catégorie supprimée avec succès !",
+            "alert-type" => "success"
+        );
+
+        return redirect()->back()->with($notification);
     }
 }

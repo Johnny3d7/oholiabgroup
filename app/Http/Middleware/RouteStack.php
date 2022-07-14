@@ -17,50 +17,38 @@ class RouteStack
      */
     public function handle(Request $request, Closure $next)
     {
+        /* Configuraton variables declaration */
         $home = 'module.index';
-        $to_ignore = [
-            'df'
-        ];
+        $max_lenght = 20; // -1 for unlimited
 
+        /* User profile home */
+        $user = \Auth::user();
+        $user_role = $user->roles->first();
+        if($user_role) $home = $user_role->home()['name'];
+        /* End User profile home */
+
+        /* Only GET method and not ignored routes are supported */
+        $to_ignore = [];
+        
         if($request->method() == "GET" && !in_array(Route::currentRouteName(), $to_ignore)){
-            $array = $tab = session('routeStack');
-            if(Route::currentRouteName() == $home){
-                session(['routeStack' => []]);
-            } else {
-                try {
-                    if(count($array) == 0 || $array[count($array)-1]["name"] != Route::currentRouteName()){
-                        array_push($tab, [
-                            'name' => Route::currentRouteName(),
-                            'params' => Route::getCurrentRoute()->parameters()
-                        ]);
-                        // dd($array, session('routeStack'));
-                    }
-                    session(['routeStack' => $tab]);
-                } catch (\Throwable $th) {
-                    return redirect()->route($home);
+            $array = session('routeStack', []);
+
+            if($max_lenght <> -1 && count($array) >= $max_lenght) array_shift($array);
+
+            try {
+                if(count($array) == 0 || $array[count($array)-1]["name"] != Route::currentRouteName()){
+                    array_push($array, [
+                        'name' => Route::currentRouteName(),
+                        'params' => Route::getCurrentRoute()->parameters()
+                    ]);
                 }
+            } catch (\Throwable $th) {
+                var_dump($th);
+                return redirect()->route($home);
             }
-        } else { var_dump('Not valid'); }
 
-        // var_dump(session('routeStack'));
-
-        // $home = 'module.index';
-        // $array = session('routeStack');
-        // if(Route::currentRouteName() == $home){
-        //     session(['routeStack' => []]);
-        // } else {
-        //     try {
-        //         if(count($array) == 0 || $array[array_unshift($array)-1]["name"] != Route::currentRouteName()){
-        //             array_push($array, [
-        //                 'name' => Route::currentRouteName(),
-        //                 'params' => Route::getCurrentRoute()->parameters()
-        //             ]);
-        //             session(['routeStack' => $array]);
-        //         }
-        //     } catch (\Throwable $th) {
-        //         return redirect()->route($home);
-        //     }
-        // }
+            session(['routeStack' => $array]);
+        }
         return $next($request);
     }
 }

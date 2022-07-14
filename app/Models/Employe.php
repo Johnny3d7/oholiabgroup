@@ -24,7 +24,7 @@ class Employe extends BaseModel
     /**
     * Mass assignable columns
     */
-    protected $fillable = ['uuid', 'nom', 'prenoms', 'contact', 'email', 'birthdate', 'hiredate'];
+    protected $fillable = ['uuid', 'nom', 'prenoms', 'contact', 'email', 'birthdate', 'hiredate', 'id_entreprises'];
 
     /**
     * Date time columns.
@@ -32,13 +32,13 @@ class Employe extends BaseModel
     protected $dates = ['birthdate', 'hiredate'];
 
     /**
-    * entrepotshasses
+    * user
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
     */
-    public function entrepotshasses()
+    public function user()
     {
-        return $this->belongsToMany(Entrepotshass::class,'entrepots_has_employes');
+        return $this->hasOne(User::class,'id_employes');
     }
 
 

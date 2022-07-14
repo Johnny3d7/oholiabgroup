@@ -62,6 +62,9 @@ class DatabaseSeeder extends Seeder
         
         $this->call(CategoriesTableSeeder::class);
         $this->command->info('Category table seeded!');
+
+        $this->call(ParametresTableSeeder::class);
+        $this->command->info('Parametre table seeded!');
         
         $this->call(ProductsTableSeeder::class);
         $this->command->info('Product and entrepots_has_products table seeded!');

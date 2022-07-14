@@ -26,11 +26,11 @@
         @elseif($a == 3)
         <img class="pl-3" src="{{ url('images/faviconobp.png') }}"  alt="alt" />
         @endif --}}
-        
+
         <!--  <span class=" item-name text-20 text-primary font-weight-700">GULL</span> -->
         <div class="sidebar-compact-switch ml-auto"><span></span></div>
     </div>
-    
+
     <!--  user -->
     <div class="scroll-nav ps ps--active-y" data-perfect-scrollbar="data-perfect-scrollbar" data-suppress-scroll-x="true">
         <div class="side-nav">

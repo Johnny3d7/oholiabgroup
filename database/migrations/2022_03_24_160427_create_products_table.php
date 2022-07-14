@@ -21,10 +21,14 @@ class createProductsTable extends Migration
 			$table->string('reference_achat',100)->nullable();
 			$table->text('description')->nullable();
 			$table->text('image')->nullable();
-			$table->string('type',100);
-			$table->string('nature',100);
-			$table->string('unite',100);
-            
+
+			$table->unsignedBigInteger('type')->nullable();
+            $table->foreign('type')->references('id')->on('parametres')->onDelete('cascade');
+			$table->unsignedBigInteger('nature')->nullable();
+            $table->foreign('nature')->references('id')->on('parametres')->onDelete('cascade');
+			$table->unsignedBigInteger('unite')->nullable();
+            $table->foreign('unite')->references('id')->on('parametres')->onDelete('cascade');
+
 			$table->unsignedBigInteger('id_categories')->nullable();
             $table->foreign('id_categories')->references('id')->on('categories')->onDelete('cascade');
 			$table->unsignedBigInteger('id_entreprises')->nullable();

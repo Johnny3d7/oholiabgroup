@@ -45,11 +45,10 @@ class BaseModel extends Model
 
         static::deleting(
             function ($model) {
-                $model->update(
-                    [
-                        'deleted_by' => Auth::id(),
-                    ]
-                );
+                $model->deleted_by = Auth::id(); $model->save();
+                // $model->update([
+                //     'deleted_by' => Auth::id(),
+                // ]);
             }
         );
 

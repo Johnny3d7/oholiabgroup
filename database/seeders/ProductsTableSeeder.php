@@ -17,18 +17,20 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Mouvement::truncate();
         LigneMouvement::truncate();
         Product::truncate();
         EntrepotsHasProduct::truncate();
-        \DB::statement('SET FOREIGN_KEY_CHECKS=1;');    
+        // \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+    
 
         Product::create([
             'name' => "Eau minérale Harod - Pack de 6 x 1L",
-            'type' => 'Fragile',
-            'nature' => 'Pack',
-            'unite' => 'unité',
+            'type' => 2, // 'Fragile',
+            'nature' => 2, // 'Pack',
+            'unite' => 1, // 'unité',
             'image' => 'storage/Products/Optimized-bo.png',
             'id_categories' => 2,
             'id_entreprises' => 3,
@@ -36,9 +38,9 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Eau minérale Harod - Pack de 9 x 570ml",
-            'type' => 'Fragile',
-            'nature' => 'Pack',
-            'unite' => 'unité',
+            'type' => 2, // 'Fragile',
+            'nature' => 2, // 'Pack',
+            'unite' => 1, // 'unité',
             'image' => 'storage/Products/Optimized-bo.png',
             'id_categories' => 2,
             'id_entreprises' => 3,
@@ -46,9 +48,9 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Eau minérale Harod - Carton 24 x 330ml",
-            'type' => 'Périssable',
-            'nature' => 'Pack',
-            'unite' => 'unité',
+            'type' => 1, // 'Périssable',
+            'nature' => 2, // 'Pack',
+            'unite' => 1, // 'unité',
             'image' => 'storage/Products/Optimized-gobelet-250-ml.jpg',
             'id_categories' => 2,
             'id_entreprises' => 3,
@@ -56,9 +58,9 @@ class ProductsTableSeeder extends Seeder
         
         Product::create([
             'name' => "Poulet bio THALILA (3Kg)",
-            'type' => 'Périssable',
-            'nature' => 'Unité',
-            'unite' => 'unité',
+            'type' => 1, // 'Périssable',
+            'nature' => 1, // 'Unité',
+            'unite' => 1, // 'unité',
             'image' => 'storage/Products/Thalila_Boutique-300x300.png',
             'id_categories' => 1,
             'id_entreprises' => 2,
@@ -66,9 +68,9 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Poulet de chair (1,5 - 2Kg)",
-            'type' => 'Périssable',
-            'nature' => 'Unité',
-            'unite' => 'unité',
+            'type' => 1, // 'Périssable',
+            'nature' => 1, // 'Unité',
+            'unite' => 1, // 'unité',
             'image' => 'storage/Products/Poulet-de-chair_Boutique-300x300.png',
             'id_categories' => 1,
             'id_entreprises' => 2,
@@ -76,9 +78,9 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Poisson Tilapia 1Kg",
-            'type' => 'Périssable',
-            'nature' => 'Unité',
-            'unite' => 'unité',
+            'type' => 1, // 'Périssable',
+            'nature' => 1, // 'Unité',
+            'unite' => 1, // 'unité',
             'image' => 'storage/Products/Tilapia_Boutique-300x300.png',
             'id_categories' => 1,
             'id_entreprises' => 2,
@@ -86,9 +88,9 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Poisson Silure 1Kg",
-            'type' => 'Périssable',
-            'nature' => 'Unité',
-            'unite' => 'unité',
+            'type' => 1, // 'Périssable',
+            'nature' => 1, // 'Unité',
+            'unite' => 1, // 'unité',
             'image' => 'storage/Products/Silure_Boutique-300x300.png',
             'id_categories' => 1,
             'id_entreprises' => 2,
@@ -96,9 +98,9 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Alevins de Silure",
-            'type' => 'Périssable',
-            'nature' => 'Unité',
-            'unite' => 'unité',
+            'type' => 1, // 'Périssable',
+            'nature' => 1, // 'Unité',
+            'unite' => 1, // 'unité',
             'image' => 'storage/Products/alevins_silure-300x300.jpg',
             'id_categories' => 1,
             'id_entreprises' => 2,
@@ -106,9 +108,9 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Alevins de Tilapia",
-            'type' => 'Périssable',
-            'nature' => 'Unité',
-            'unite' => 'unité',
+            'type' => 1, // 'Périssable',
+            'nature' => 1, // 'Unité',
+            'unite' => 1, // 'unité',
             'image' => 'storage/Products/alevins_tilapia-300x300.jpg',
             'id_categories' => 1,
             'id_entreprises' => 2,
@@ -116,9 +118,9 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Gants médicaux (propres)",
-            'type' => 'Périssable',
-            'nature' => 'Unité',
-            'unite' => 'unité',
+            'type' => 1, // 'Périssable',
+            'nature' => 1, // 'Unité',
+            'unite' => 1, // 'unité',
             'image' => 'storage/Products/gants-medicaux-300x300-top.jpg',
             'id_categories' => 3,
             'id_entreprises' => 3,

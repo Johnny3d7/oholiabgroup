@@ -16,7 +16,7 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        //
+        /*
 
         $tabs = [
             'browse' => 'Lister',
@@ -36,18 +36,20 @@ class ModuleController extends Controller
         {
             foreach ($tabs as $key=>$value) {
                 if(!Permission::whereName($table->{$name}.'_'.$key)->first()){
-                    Permission::create([
-                        'name' => $table->{$name}.'_'.$key,
-                        'display_name' => $value.' '.$table->{$name},
-                        'table' => $table->{$name},
-                    ]);
+                    // Permission::create([
+                    //     'name' => $table->{$name}.'_'.$key,
+                    //     'display_name' => $value.' '.$table->{$name},
+                    //     'table' => $table->{$name},
+                    // ]);
                 }
             }
-        }
+        }*/
 
         $user = Auth::user();
-        if($user->hasRole('geststock')) return redirect()->route('stock.index');
-        if($user->hasRole('chgachat')) return redirect()->route('achats.index');
+        $user_role = $user->roles->first();
+        if($user_role && !$user->hasPermissionTo('show_module_page')) return redirect()->route($user_role->home()['name']);
+        // if($user->hasRole('geststock')) return redirect()->route('stock.index');
+        // if($user->hasRole('chgachat')) return redirect()->route('achats.index');
 
         return view('main.modules.index');
     }

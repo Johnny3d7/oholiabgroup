@@ -23,6 +23,9 @@ Route::prefix('/stock')->name('stock.')->group(function () {
     // Routes Produits
     require('produits.php');
 
+    // Routes Produits
+    require('inventaires.php');
+
     //Route Entrepôts
     require('entrepot.php');
 

@@ -13,9 +13,11 @@
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ route('stock.variations.transfert') }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('stock.variations.store') }}" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
+
+                    <input type="hidden" name="typemouv" value="trans">
                     
                     <div class="form-group ">
                         <label class="col-form-label" for="id_entrepot">Entrepôt source:</label>
@@ -47,10 +49,10 @@
                     <div class="form-group ">
                         <label class="col-form-label" for="id_product">Produit:</label>
                         @if ($product)
-                            <input type="hidden" name="product" value="{{ $product->id }}">
+                            <input type="hidden" name="id_products" value="{{ $product->id }}">
                             <input type="text" class="form-control" value="{{ $product->name }}" readonly disabled>
                         @else
-                            <select name="product" class="form-control" id="id_product" required>
+                            <select name="product" class="form-control" id="id_products" required>
                                 {{-- @forelse (Entreprise::where('status', 1)->orderBy('nom', 'asc')->get() as $data) --}}
                                 @forelse (App\Models\Product::all() as $data)
                                     <option value="{{ $data->id }}">{{ $data->lib }}</option>

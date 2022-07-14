@@ -29,10 +29,18 @@ Route::get('/mail', 'App\Http\Controllers\Stock\ProductCategoryController@mail')
 Route::middleware(['guest'])->group(function(){
     Route::view('login', 'main.user.login')->name('login');
     Route::view('/register', '')->name('register');
-    Route::post('/checkuser', 'App\Http\Controllers\User\UserController@checkuser')->name('checkuser');
+    Route::post('/checkuser', [App\Http\Controllers\User\UserController::class, 'checkuser'])->name('checkuser');
 });
 
-Route::middleware('route-stack')->group(function(){
+Route::middleware(['auth','route-stack'])->group(function(){
+    Route::get('read-all-notifications', function () {
+        $notifications = \Auth::user()->notifs();
+        foreach ($notifications as $notification) {
+            $notification->markAsRead();
+        }
+        return back();
+    })->name('markAllAsRead');
+
     //Liste des modules
     require('web/modules/main.php');
 
@@ -84,23 +92,13 @@ Route::middleware('route-stack')->group(function(){
 });
 
 Route::get('back', function () {
-    return back();
-    // $array = $tab = session('routeStack');
-    // $route = array_pop($array);
-    // $route = array_pop($array);
-    // session(['routeStack' => $array]);
-    // dd(is_array($route), $route);
-    // return redirect()->route(is_array($route) ? $route['name'] : 'module.index', is_array($route) ? $route['params'] : null);
+    $array = session('routeStack');
+    $route = array_pop($array); $route = array_pop($array);
+    /* Double pop because the current have to be deleted (but the previous would be pushed onto the current) */
 
-    $array = $tab = session('routeStack');
-    $route = '';
-    if(is_array($array)){
-        $route = array_pop($array);
-        $route = array_pop($array);
-        session(['routeStack' => $array]);
-    }
-    return redirect()->route(is_array($route) ? $route['name'] : 'admin.index', is_array($route) ? $route['params'] : null);
-    
+    session(['routeStack' => $array]);
+
+    return redirect()->route(is_array($route) ? $route['name'] : 'module.index', is_array($route) ? $route['params'] : null);
 })->name('backStack');
 
 Auth::routes();
@@ -112,6 +110,7 @@ require('web/modules/parc-info/main.php');
 require('web/modules/ressourceh/main.php');
 
 Route::fallback(function(){
+    return back();
     return redirect()->route('backStack');
 });
 

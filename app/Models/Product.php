@@ -18,11 +18,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Database\Eloquent\Collection $entrepotshass belongsToMany
  * @property \Illuminate\Database\Eloquent\Collection $ligneinventaire belongsToMany
  * @property \Illuminate\Database\Eloquent\Collection $lignemouvement belongsToMany
- * 
+ *
  */
-class Product extends BaseModel 
+class Product extends BaseModel
 {
-    
+
     /**
     * Database table name
     */
@@ -44,9 +44,9 @@ class Product extends BaseModel
 
         static::creating(function($item){
             $last = self::all()->last()->id ?? 0; // To add all deleted records
-            $num = $last<9 ? "000".($last+1) : 
-                    ($last<99 ? "00".($last+1) : 
-                        ($last<999 ? "0".($last+1) : 
+            $num = $last<9 ? "000".($last+1) :
+                    ($last<99 ? "00".($last+1) :
+                        ($last<999 ? "0".($last+1) :
                             ($last+1)));
             $item->reference = static::$prefix.$num;
         });
@@ -83,6 +83,16 @@ class Product extends BaseModel
     public function category()
     {
         return $this->belongsTo(Category::class,'id_categories');
+    }
+
+    /**
+    * parametre
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+    public function parametre($string)
+    {
+        return $this->belongsTo(Parametre::class,$string)->first();
     }
 
     /**
