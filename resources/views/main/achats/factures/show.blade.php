@@ -100,7 +100,7 @@ Détails de facture
         <div class="card h-100">
             <div class="card-body text-center">
                 <h3 class="text-dark mb-4">Actions</h3>
-                @role('Directrice Générale')
+                @role(config('constants.roles.dg'))
                     @if (in_array($facture->statut, ['validé', 'refusé', 'annulé']))
                         <button type="button" data-link="{{ route('achats.besoins.validation', ['besoin' => $facture, 'statut' => 'valide']) }}" class="btn btn-lg btn-success ripple btn-block text-16 mb-3 btnValider">
                             <i class="i-Yes text-30"></i>
@@ -115,7 +115,7 @@ Détails de facture
                     @endif
                 @endrole
 
-                @role("Chargé d'Achats")
+                @role(config('constants.roles.chgachat'))
                     @if (in_array($facture->statut, ['en attente', 'refusé', 'annulé']))
                         <a href="{{ route('achats.besoins.edit', $facture) }}" class="btn btn-md btn-success ripple btn-block text-16 mb-3">
                             <i class="i-Pen-4 text-30"></i>
@@ -141,6 +141,56 @@ Détails de facture
             </div>
         </div>
     </div>
+</div>
+
+<div class="row" id="articleGrid">
+    @foreach ($facture->lignes->sortBy('article') as $ligne_facture)
+        @php
+            $ligne = $ligne_facture->ligne;
+        @endphp
+        <div class="col-md-6 col-lg-4 mt-4">
+            <div class="card">
+                <span class="rounded" style="position: absolute; top:0.2rem; left: 0.2rem; background-color: rgba(218, 201, 201, 0.5)"><img class="m-2" src="{{ asset($ligne->besoin->entreprise->logo) }}" alt="" style="height: 2.5rem;"></span>
+                <div id="articleRow-{{ $ligne->id }}" class="card-body articleRow">
+
+                    <div class="user-profile mb-4">
+                        <div class="ul-widget-card__user-info row">
+                            <div class="col-md border-md-right">
+                                <div class="ul-product-detail--icon mb-2">
+                                    <a href="javascript:void(0);">
+                                        <i class="i-Shopping-Bag text-primary text-25 font-weight-500" style="font-size: 50px;"></i>
+                                    </a>
+                                </div>
+                                <a href="javascript:void(0);">
+                                    <p class="m-0 text-18 heading">{{ $ligne->article }}</p>
+                                </a>
+                                <p>{{ $ligne->observations }}</p>
+                            </div>
+                            <div class="col-md pt-3">
+                                <h3>
+                                    <div class="text-muted h5">Prix Unitaire</div>
+                                    <div>
+                                        {{ number_format($ligne->prix, 0, ',', ' ') }} F CFA
+                                    </div>
+                                </h3>
+                                <h3>
+                                    <div class="text-muted h5">Quantité</div>
+                                    <div>
+                                        {{ number_format($ligne->quantite, 0, ',', ' ') }} {{ $ligne->unite }}
+                                    </div>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-top px-md-2 text-center">
+                        <h5>
+                            Montant : {{ number_format($ligne->montant(), 0, ',', ' ') }} F CFA
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 </div>
 
 @if ($facture->file)

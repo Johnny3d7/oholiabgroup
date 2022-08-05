@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Achat;
 
 use App\Http\Controllers\Controller;
 use App\Models\Besoin;
+use App\Models\Facture;
 use App\Models\Fournisseur;
+use App\Models\LigneBesoin;
 use App\Models\LigneFacture;
 use Illuminate\Http\Request;
 use stdClass;
@@ -27,9 +29,11 @@ class LigneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $ligne = $request->ligne ? LigneBesoin::whereUuid($request->ligne)->first() : null;
+        $factures = Facture::all();
+        return view('main.achats.lignes.create', compact('ligne', 'factures'));
     }
 
     /**
@@ -40,7 +44,31 @@ class LigneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $key = 1; $exist = true;
+        do {
+            if(isset($request->{"id_ligne_besoins_$key"})) $key++;
+            else $exist = false;
+        } while($exist);
+
+        for ($i=1; $i < $key; $i++) {
+            $ligne = LigneBesoin::find($request->{"id_ligne_besoins_$i"});
+            $facture = Facture::find($request->{"id_factures_$i"});
+            if($ligne && $facture){
+                LigneFacture::create([
+                    'id_ligne_besoins' => $ligne->id,
+                    'id_factures' => $facture->id,
+                    'observations' => $request->{"observations_$i"},
+                ]);
+
+                $ligne->update(['statut' => 'acheté']);
+            }
+        }
+
+        $notification = array(
+            "message" => "Enregistrement effectué avec succès !",
+            "alert-type" => "success"
+        );
+        return back()->with($notification);
     }
 
     /**

@@ -45,9 +45,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function entreprise()
+    public function isEmploye()
     {
-        return $this->belongsTo(Entreprise::class, 'id_entreprise');
+        return $this->employe != null;
+    }
+
+    public function employe()
+    {
+        return $this->belongsTo(Employe::class, 'id_employes');
     }
 
     public function image()
@@ -92,5 +97,5 @@ class User extends Authenticatable
         $user_role = $this->roles->first();
         return $user_role ? json_decode($user_role->home, true) : ['name' => 'modules.index', 'display' => 'Liste des Modules'];
     }
-    
+
 }

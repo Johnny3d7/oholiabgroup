@@ -1,5 +1,5 @@
 {{-- @extends('admin.partials.main') --}}
-@extends(\Auth::user()->hasRole('admin') ? 'admin.partials.main' : 'main.achats.partials.main')
+@extends(\Auth::user()->hasRole(config('constants.roles.admin')) ? 'admin.partials.main' : 'main.achats.partials.main')
 
 @section('raccourcis')
     @include('admin.fournisseurs._header')

@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->text('image')->nullable();
-            
+
             // $table->integer('id_employes')->unsigned();
             // $table->foreign('id_employes')->references('id')->on('employes')->onDelete('cascade');
 
@@ -39,5 +39,10 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+
+        Schema::table('users', function (Blueprint $table) {
+            // $table->dropConstrainedForeignId('id_employes');
+            // $table->dropColumn('id_employes');
+        });
     }
 }

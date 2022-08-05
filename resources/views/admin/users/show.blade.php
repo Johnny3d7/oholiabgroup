@@ -1,44 +1,179 @@
-@extends('admin.partials.main')
+@extends(isset($profile) && $profile == true ? 'admin.partials.main_profile' : 'admin.partials.main')
 
 @section('raccourcis')
-    @include('admin.users._header')
+    {{-- @if(!isset($profile) || (isset($profile) && !$profile)) --}}
+    @if(!isset($profile) || !$profile)
+        @include('admin.users._header')
+    @endif
+    {{-- @include(isset($profile) && $profile == true ? 'admin.partials._header' : 'admin.users._header') --}}
 @endsection
 
 @section('stylesheets')
 <link rel="stylesheet" type="text/css" href="{{ asset('myplugins/Dual-Listbox-Transfer/icon_font/css/icon_font.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('myplugins/Dual-Listbox-Transfer/css/jquery.transfer.css?v=0.0.3') }}" />
+<link rel="stylesheet" href="{{ asset('myplugins/dropify/css/dropify.css') }}" />
 @endsection
 
 @section('menuTitle')
-Utilisateurs
+{{ isset($profile) && $profile == true ? 'Mon compte' : 'Utilisateurs' }}
 @endsection
 
 @section('pageTitle')
-Utilisateurs
+{{ isset($profile) && $profile == true ? 'Mon compte' : 'Utilisateurs' }}
 @endsection
 
 @section('content')
 <div class="row">
     <div class="container-fluid">
         <div class="card user-profile o-hidden mb-4">
-            <div class="header-cover" style="background-image: url('../../dist-assets/images/photo-wide-4.jpg')"></div>
-            <div class="user-info"><img class="profile-picture avatar-lg mb-2" src="{{ asset('images/faces/1.jpg') }}" alt="" />
-                <p class="m-0 text-24">{{ $user->username }}</p>
-                <p class="text-muted m-0">{{ $user->role->name }}</p>
+            <div class="header-cover" style="background-image: url({{ asset('images/photo-wide-6.jpg') }}); background-position:center;"></div>
+            <div class="user-info"><img class="profile-picture avatar-lg mb-2" src="{{ asset($user->image()) }}" alt="" />
+                <p class="m-0 pb-2 text-24">{{ ucfirst($user->username) }} {{ $user->isEmploye() ? '('.$user->employe->civilite.' '.$user->employe->nom.' '.$user->employe->prenoms.')' : ''  }}</p>
+                <p class="text-muted m-0">{{ $user->role->name }} {{ $user->isEmploye() ? 'à '. $user->employe->entreprise->name : '' }}</p>
             </div>
             <div class="card-body">
                 <ul class="nav nav-tabs profile-nav mb-4" id="profileTab" role="tablist">
                     <li class="nav-item"><a class="nav-link active" id="role-tab" data-toggle="tab" href="#role" role="tab" aria-controls="role" aria-selected="true">Rôle & permissions</a></li>
-                    <li class="nav-item"><a class="nav-link" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="false">Timeline</a></li>
+                    <li class="nav-item"><a class="nav-link" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="false">Compte Utilisateur</a></li>
+                    @if($user->isEmploye())
+                        <li class="nav-item"><a class="nav-link" id="employe-tab" data-toggle="tab" href="#employe" role="tab" aria-controls="employe" aria-selected="false">Espace Employé</a></li>
+                    @endif
+                    {{-- <li class="nav-item"><a class="nav-link" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="false">Timeline</a></li>
                     <li class="nav-item"><a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">About</a></li>
                     <li class="nav-item"><a class="nav-link" id="friends-tab" data-toggle="tab" href="#friends" role="tab" aria-controls="friends" aria-selected="false">Friends</a></li>
-                    <li class="nav-item"><a class="nav-link" id="photos-tab" data-toggle="tab" href="#photos" role="tab" aria-controls="photos" aria-selected="false">Photos</a></li>
+                    <li class="nav-item"><a class="nav-link" id="photos-tab" data-toggle="tab" href="#photos" role="tab" aria-controls="photos" aria-selected="false">Photos</a></li> --}}
                 </ul>
                 <div class="tab-content" id="profileTabContent">
                     <div class="tab-pane fade active show" id="role" role="tabpanel" aria-labelledby="role-tab">
                         <div id="transfer" class="transfer-demo"></div>
                     </div>
-                    <div class="tab-pane fade" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
+                    <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
+                        <div class="row">
+                            <div class="col-md-8">
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="container-fluid">
+                                        <div class="card mb-4">
+                                            <form action="{{ isset($profile) && $profile == true ? route('profile.update') : route('admin.users.update', $user) }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="card">
+                                                    <div class="card-header bg-transparent">
+                                                        <h3 class="card-title">Modification d'informations</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="form-group row">
+                                                            <label class="action-bar-horizontal-label col-lg-4 col-form-label" for="image">Photo de profil:</label>
+                                                            <div class="col-lg-6 offset-lg-1">
+                                                                <input type="file" name="image" class="dropify-fr" data-bs-height="180" accept=".png, .jpg, .jpeg" data-default-file="{{ asset($user->image()) }}" />
+                                                            </div>
+                                                            <div class="col-lg-8 offset-lg-4 mb-4">
+                                                                <small class="ul-form__text form-text" id="imageHelpBlock">Veuillez glisser-deposer une image ou cliquer pour selectionner (.png | .jpg | .jpeg)</small>
+                                                            </div>
+
+                                                            <label class="action-bar-horizontal-label col-lg-4 col-form-label" for="username">Nom d'utilisateur:</label>
+                                                            <div class="col-lg-8 mb-4">
+                                                                <input class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" id="username" name="username" type="text" value="{{ old('username') ?? $user->username }}" placeholder="Saisissez votre nouveau nom d'utilisateur" required>
+                                                                <small class="ul-form__text form-text" id="usernameHelpBlock">Veuillez saisir votre nouveau nom d'utilisateur</small>
+                                                                @if ($errors->has('username'))
+                                                                    <ul class="alert-danger p-2 rounded list-unstyled">
+                                                                        @foreach ($errors->get('username') as $error)
+                                                                            <li class="h6">{{ $error }}</li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <div class="mc-footer">
+                                                            <div class="row text-right">
+                                                                <div class="container text-center">
+                                                                    <button class="btn btn-primary m-1" type="submit">Mettre à jour</button>
+                                                                    {{-- <button class="btn btn-outline-secondary m-1" type="reset">Reinitialiser</button> --}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid">
+                                        <div class="card mb-4">
+                                            <form action="{{ isset($profile) && $profile == true ? route('profile.password') : route('admin.users.password', $user) }}" method="POST">
+                                                @csrf
+                                                <div class="card">
+                                                    <div class="card-header bg-transparent">
+                                                        <h3 class="card-title">Modification du mot de passe</h3>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="form-group row">
+                                                            @if (Auth::user()->id == $user->id)
+                                                                <label class="action-bar-horizontal-label col-lg-4 col-form-label" for="oldPassword">Ancien mot de passe:</label>
+                                                                <div class="col-lg-8 mb-4">
+                                                                    <input class="form-control {{ $errors->has('old_password') ? 'is-invalid' : '' }}" id="oldPassword" name="old_password" type="password" placeholder="Saisissez votre ancien mot de passe" required>
+                                                                    <small class="ul-form__text form-text" id="oldPasswordHelpBlock">Veuillez saisir votre ancien mot de passe</small>
+                                                                    @if ($errors->has('old_password'))
+                                                                        <ul class="alert-danger p-2 rounded list-unstyled">
+                                                                            @foreach ($errors->get('old_password') as $error)
+                                                                                <li class="h6">{{ $error }}</li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    @endif
+                                                                </div>
+                                                            @endif
+
+                                                            <label class="action-bar-horizontal-label col-lg-4 col-form-label" for="password">Nouveau mot de passe:</label>
+                                                            <div class="col-lg-8 mb-4">
+                                                                <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" type="password" placeholder="Saisissez votre nouveau mot de passe" required>
+                                                                <small class="ul-form__text form-text" id="passwordHelpBlock">Veuillez saisir votre nouveau mot de passe</small>
+                                                            </div>
+
+                                                            <label class="action-bar-horizontal-label col-lg-4 col-form-label" for="passwordConfirmation">Confirmation mot de passe:</label>
+                                                            <div class="col-lg-8">
+                                                                <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="passwordConfirmation" name="password_confirmation" type="password" placeholder="Confirmez votre nouveau mot de passe" required>
+                                                                <small class="ul-form__text form-text" id="passwordConfirmationHelpBlock">Veuillez confirmer votre nouveau mot de passe</small>
+                                                                @if ($errors->has('password'))
+                                                                    <ul class="alert-danger p-2 rounded list-unstyled">
+                                                                        @foreach ($errors->get('password') as $error)
+                                                                            <li class="h6">{{ $error }}</li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <div class="mc-footer">
+                                                            <div class="row text-right">
+                                                                <div class="container text-center">
+                                                                    <button class="btn btn-primary m-1" type="submit">Modifier</button>
+                                                                    {{-- <button class="btn btn-outline-secondary m-1" type="reset">Reinitialiser</button> --}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if($user->isEmploye())
+                        <div class="tab-pane fade" id="employe" role="tabpanel" aria-labelledby="employe-tab">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h4>Espace Employé</h4>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    {{-- <div class="tab-pane fade" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
                         <ul class="timeline clearfix">
                             <li class="timeline-line"></li>
                             <li class="timeline-item">
@@ -59,7 +194,7 @@ Utilisateurs
                                 </div>
                             </li>
                             <li class="timeline-item">
-                                <div class="timeline-badge"><img class="badge-img" src="../../dist-assets/images/faces/1.jpg" alt="" /></div>
+                                <div class="timeline-badge"><img class="badge-img" src="{{ asset('images/faces/1.jpg') }}" alt="" /></div>
                                 <div class="timeline-card card">
                                     <div class="card-body">
                                         <div class="mb-1"><strong class="mr-1">Timothy Carlson</strong> updated his sattus
@@ -204,7 +339,7 @@ Utilisateurs
                             <div class="col-md-3">
                                 <div class="card card-profile-1 mb-4">
                                     <div class="card-body text-center">
-                                        <div class="avatar box-shadow-2 mb-3"><img src="../../dist-assets/images/faces/16.jpg" alt="" /></div>
+                                        <div class="avatar box-shadow-2 mb-3"><img src="{{ asset('images/faces/16.jpg') }}" alt="" /></div>
                                         <h5 class="m-0">Jassica Hike</h5>
                                         <p class="mt-0">UI/UX Designer</p>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae cumque.</p>
@@ -216,7 +351,7 @@ Utilisateurs
                             <div class="col-md-3">
                                 <div class="card card-profile-1 mb-4">
                                     <div class="card-body text-center">
-                                        <div class="avatar box-shadow-2 mb-3"><img src="../../dist-assets/images/faces/2.jpg" alt="" /></div>
+                                        <div class="avatar box-shadow-2 mb-3"><img src="{{ asset('images/faces/2.jpg') }}" alt="" /></div>
                                         <h5 class="m-0">Frank Powell</h5>
                                         <p class="mt-0">UI/UX Designer</p>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae cumque.</p>
@@ -228,7 +363,7 @@ Utilisateurs
                             <div class="col-md-3">
                                 <div class="card card-profile-1 mb-4">
                                     <div class="card-body text-center">
-                                        <div class="avatar box-shadow-2 mb-3"><img src="../../dist-assets/images/faces/3.jpg" alt="" /></div>
+                                        <div class="avatar box-shadow-2 mb-3"><img src="{{ asset('images/faces/3.jpg') }}" alt="" /></div>
                                         <h5 class="m-0">Arthur Mendoza</h5>
                                         <p class="mt-0">UI/UX Designer</p>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae cumque.</p>
@@ -240,7 +375,7 @@ Utilisateurs
                             <div class="col-md-3">
                                 <div class="card card-profile-1 mb-4">
                                     <div class="card-body text-center">
-                                        <div class="avatar box-shadow-2 mb-3"><img src="../../dist-assets/images/faces/4.jpg" alt="" /></div>
+                                        <div class="avatar box-shadow-2 mb-3"><img src="{{ asset('images/faces/4.jpg') }}" alt="" /></div>
                                         <h5 class="m-0">Jacqueline Day</h5>
                                         <p class="mt-0">UI/UX Designer</p>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae cumque.</p>
@@ -254,49 +389,49 @@ Utilisateurs
                     <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="photos-tab">
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="../../dist-assets/images/products/headphone-1.jpg" alt="" />
+                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="{{ asset('images/products/headphone-1.jpg') }}" alt="" />
                                     <div class="card-img-overlay">
                                         <div class="p-1 text-left card-footer font-weight-light d-flex"><span class="mr-3 d-flex align-items-center"><i class="i-Speach-Bubble-6 mr-1"></i>12</span><span class="d-flex align-items-center"><i class="i-Calendar-4 mr-2"></i>03.12.2018</span></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="../../dist-assets/images/products/headphone-2.jpg" alt="" />
+                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="{{ asset('images/products/headphone-2.jpg') }}" alt="" />
                                     <div class="card-img-overlay">
                                         <div class="p-1 text-left card-footer font-weight-light d-flex"><span class="mr-3 d-flex align-items-center"><i class="i-Speach-Bubble-6 mr-1"></i>12</span><span class="d-flex align-items-center"><i class="i-Calendar-4 mr-2"></i>03.12.2018</span></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="../../dist-assets/images/products/headphone-3.jpg" alt="" />
+                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="{{ asset('images/products/headphone-3.jpg') }}" alt="" />
                                     <div class="card-img-overlay">
                                         <div class="p-1 text-left card-footer font-weight-light d-flex"><span class="mr-3 d-flex align-items-center"><i class="i-Speach-Bubble-6 mr-1"></i>12</span><span class="d-flex align-items-center"><i class="i-Calendar-4 mr-2"></i>03.12.2018</span></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="../../dist-assets/images/products/iphone-1.jpg" alt="" />
+                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="{{ asset('images/products/iphone-1.jpg') }}" alt="" />
                                     <div class="card-img-overlay">
                                         <div class="p-1 text-left card-footer font-weight-light d-flex"><span class="mr-3 d-flex align-items-center"><i class="i-Speach-Bubble-6 mr-1"></i>12</span><span class="d-flex align-items-center"><i class="i-Calendar-4 mr-2"></i>03.12.2018</span></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="../../dist-assets/images/products/iphone-2.jpg" alt="" />
+                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="{{ asset('images/products/iphone-2.jpg') }}" alt="" />
                                     <div class="card-img-overlay">
                                         <div class="p-1 text-left card-footer font-weight-light d-flex"><span class="mr-3 d-flex align-items-center"><i class="i-Speach-Bubble-6 mr-1"></i>12</span><span class="d-flex align-items-center"><i class="i-Calendar-4 mr-2"></i>03.12.2018</span></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="../../dist-assets/images/products/watch-1.jpg" alt="" />
+                                <div class="card text-white o-hidden mb-3"><img class="card-img" src="{{ asset('images/products/watch-1.jpg') }}" alt="" />
                                     <div class="card-img-overlay">
                                         <div class="p-1 text-left card-footer font-weight-light d-flex"><span class="mr-3 d-flex align-items-center"><i class="i-Speach-Bubble-6 mr-1"></i> 12</span><span class="d-flex align-items-center"><i class="i-Calendar-4 mr-2"></i>03.12.2018</span></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -306,7 +441,21 @@ Utilisateurs
 
 @section('javascripts')
 <script type="text/javascript" src="{{ asset('myplugins/Dual-Listbox-Transfer/js/jquery.transfer.js?v=0.0.6') }}"></script>
+<script src="{{ asset('myplugins/dropify/js/dropify.js') }}"></script>
+<script>
+    // Basic
+    $('.dropify').dropify();
 
+    // Translated
+    $('.dropify-fr').dropify({
+        messages: {
+            default: '', // 'Glissez-déposez un fichier ici ou cliquez',
+            replace: '', // 'Glissez-déposez un fichier ou cliquez pour remplacer',
+            remove:  'Supprimer <i class="i-Remove"></i>',
+            error:   'Désolé, le fichier trop volumineux'
+        }
+    });
+</script>
 
 <script>
     var groupDataArray1 = [

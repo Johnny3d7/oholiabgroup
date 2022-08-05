@@ -1,5 +1,5 @@
 {{-- @extends('admin.partials.main') --}}
-@extends(\Auth::user()->hasRole('admin') ? 'admin.partials.main' : 'main.achats.partials.main')
+@extends(Auth::user()->hasRole(config('constants.roles.admin')) ? 'admin.partials.main' : 'main.achats.partials.main')
 
 @section('raccourcis')
     @include('admin.fournisseurs._header')
@@ -21,7 +21,7 @@ Fournisseurs
 @section('content')
 <div class="row">
     <div class="container-fluid">
-        @role('admin')
+        @role(config('constants.roles.admin'))
         <section class="ul-product-detail__box">
             <div class="row">
                 <div class="col-lg-3 col-md-3 mt-1 mb-4 text-center">

@@ -20,7 +20,7 @@ class BesoinController extends Controller
      */
     public function index(Request $request)
     {
-        // dd(Role::whereName('Directrice Générale')->first()->users);
+        // dd(Role::whereName(config('constants.roles.dg'))->first()->users);
         $target = $request->target ?? 'tous';
 
         if(!in_array($target, ['tous', 'validé', 'refusé', 'en attente'])) $target = 'tous';
@@ -106,7 +106,7 @@ class BesoinController extends Controller
             ]);
         }
         $entreprise = Entreprise::find($request->id_entreprises);
-        $users = Role::whereName('Directrice Générale')->first()->users;
+        $users = Role::whereName(config('constants.roles.dg'))->first()->users;
         foreach ($users as $user) {
             Notification::create([
                 'id_users' => $user->id,
@@ -229,7 +229,7 @@ class BesoinController extends Controller
         }
 
         $entreprise = Entreprise::find($request->id_entreprises);
-        $users = Role::whereName('Directrice Générale')->first()->users;
+        $users = Role::whereName(config('constants.roles.dg'))->first()->users;
         foreach ($users as $user) {
             Notification::create([
                 'id_users' => $user->id,
@@ -314,26 +314,26 @@ class BesoinController extends Controller
                 if($l->statut == 'en attente') $t = false;
             }
             if($t) $bs->update(['statut' => 'traité']);
-        }
-        /*
-        if($statut == 'annulé') {
-            $users = Role::whereName("Chargé d'Achats")->first()->users;
-        } else {
-            $users = Role::whereName("Directrice Générale")->first()->users;
-        }
 
-        $users = [User::find($besoin->created_by)]; // Only the creator of the object will receive the notification
+            $besoin = $ligne->besoin;
+            if($statut == 'annulé') {
+                $users = Role::whereName(config('constants.roles.chgachat'))->first()->users;
+            } else {
+                $users = Role::whereName(config('constants.roles.dg'))->first()->users;
+            }
 
-        foreach ($users as $user) {
-            Notification::create([
-                'id_users' => $user->id,
-                'title' => "Bon d'expression de besoin $statut",
-                'body' => $besoin->nature . ' - ' . $besoin->entreprise->name,
-                'link' => route('achats.besoins.show', $besoin),
-                'type' => $statut == 'validé' ? 'success' : 'danger',
-            ]);
+            $users = [User::find($besoin->created_by)]; // Only the creator of the object will receive the notification
+
+            foreach ($users as $user) {
+                Notification::create([
+                    'id_users' => $user->id,
+                    'title' => "Une ligne de bon d'expression de besoin $statut",
+                    'body' => $besoin->nature . ' - ' . $besoin->entreprise->name,
+                    'link' => route('achats.besoins.show', $besoin),
+                    'type' => $statut == 'validé' ? 'success' : 'danger',
+                ]);
+            }
         }
-        */
 
         $msg = "L'achat de l'article a été $statut avec succès !";
         $notification = array(
@@ -375,9 +375,9 @@ class BesoinController extends Controller
         }
 
         if($statut == 'annulé') {
-            $users = Role::whereName("Chargé d'Achats")->first()->users;
+            $users = Role::whereName(config('constants.roles.chgachat'))->first()->users;
         } else {
-            $users = Role::whereName("Directrice Générale")->first()->users;
+            $users = Role::whereName(config('constants.roles.dg'))->first()->users;
         }
 
         $users = [User::find($besoin->created_by)]; // Only the creator of the object will receive the notification

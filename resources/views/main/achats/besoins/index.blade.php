@@ -62,7 +62,7 @@ Liste des bons d'expression de besoins
 
                 <div class="tab-content" style="overflow-x: auto;">
                     <div class="tab-pane fade show active" id="pills-all-besoin" role="tabpanel" aria-labelledby="success-tab">
-                        @role("Chargé d'Achats")
+                        @role(config('constants.roles.chgachat'))
                             <a href="{{ route('achats.besoins.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right">
                                 <span class="ladda-label">Ajouter un besoin</span>
                             </a>

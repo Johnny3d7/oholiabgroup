@@ -20,7 +20,7 @@ class Inventaire extends BaseModel
     /**
     * Mass assignable columns
     */
-    protected $fillable = ['observations', 'date_inventaires', 'statut', 'observations'];
+    protected $fillable = ['name', 'date_inventaire', 'statut', 'observations', 'id_entreprises', 'id_entrepots', 'vs_inventoriste', 'vs_comptable', 'vs_chef_comptable'];
 
     /**
     * Date time columns.
@@ -34,7 +34,17 @@ class Inventaire extends BaseModel
     */
     public function lignes()
     {
-        return $this->belongsToMany(Ligne::class,'ligne_inventaires');
+        return $this->hasMany(LigneInventaire::class,'id_inventaires');
+    }
+
+    /**
+    * entrepot
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+    public function entrepot()
+    {
+        return $this->belongsTo(Entrepot::class,'id_entrepots');
     }
 
 

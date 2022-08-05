@@ -45,185 +45,76 @@ Ajout de bon d'expression de besoins
             <div class="card-header bg-transparent">
                 <h3 class="card-title">Ajout d'un bon d'expression de besoins</h3>
             </div>
-            <form method="post" action="{{ route('achats.besoins.store')}}">
+            <form method="post" action="{{ route('achats.ligne_factures.store')}}">
                 @csrf
                 @method('POST')
                 <div class="card-body">
-                    <div class="form-row">
-                        <div class="form-group col-md-6 col-lg-4">
-                            <label class="ul-form__label">Entreprise concernée</label>
-                            <div class="">
-                                @foreach ($entreprises->sortBy('name') as $entreprise)
-                                    <label class="radio radio-outline-primary ml-5" style="display: inline">
-                                        <input type="radio" name="id_entreprises" value="{{ $entreprise->id }}" @if (old('id_entreprises') == $entreprise->id) selected="checked" @endif required>
-                                        <span><img src="{{ asset($entreprise->logo) }}" alt="" style="height: 4rem;"></span>
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
-                            </div>
-                            @if ($errors->has('id_entreprises'))
-                                <div class="alert-danger p-2 rounded">
-                                    {{ $errors->first('id_entreprises') }}
-                                </div>
-                            @endif
-                        </div>
-                        <div class="col-md-4 form-group mb-3">
-                            <label for="employe">Employé</label>
-                            <input class="form-control @error('employe') is-invalid @enderror" id="employe" name="employe" value="{{ old('employe') }}" type="text" placeholder="Entrez le nom complet de l'employé" required />
-                            <small class="ul-form__text form-text" id="">
-                                Saisissez le nom complet du demandeur svp!
-                            </small>
-                            @if ($errors->has('employe'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('employe') }}
-                                </div>
-                            @endif
-                        </div>
-                        <div class="form-group col-md-2 mb-3">
-                            <label for="date_emission">Date d'émission</label>
-                            <input class="form-control" id="date_emission" type="date" name="date_emission" data-inputmask='"mask": "99-99-9999"' data-mask required/>
-                            <small class="ul-form__text form-text" id="">
-                                Saisissez la date d'émission du bon svp!
-                            </small>
-                            @if ($errors->has('date_emission'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('date_emission') }}
-                                </div>
-                            @endif
-                        </div>
-                        <div class="form-group col-md-2 mb-3">
-                            <label for="date_livraison">Date de livraison</label>
-                            <input class="form-control" id="date_livraison" type="date" name="date_livraison" data-inputmask='"mask": "99-99-9999"' data-mask required/>
-                            <small class="ul-form__text form-text" id="">
-                                Saisissez le niveau d'urgence du bon svp!
-                            </small>
-                            @if ($errors->has('date_livraison'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('date_livraison') }}
-                                </div>
-                            @endif
-                        </div>
-                        <div class="col-md-4 form-group mb-3">
-                            <label for="nature">Nature du besoin</label>
-                            <input class="form-control @error('nature') is-invalid @enderror" id="nature" name="nature" value="{{ old('nature') }}" type="text" placeholder="Ex: Matériels" />
-                            <small class="ul-form__text form-text" id="">
-                                Saisissez la nature du besoin svp!
-                            </small>
-                            @if ($errors->has('nature'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('nature') }}
-                                </div>
-                            @endif
-                        </div>
-                        <div class="col form-group mb-3">
-                            <label for="observations">Observations</label>
-                            <textarea class="form-control @error('observations') is-invalid @enderror" id="observations" name="observations" cols="30" rows="1"></textarea>
-                            {{-- <input class="form-control value="{{ old('observations') }}" type="text" placeholder="Ex: Matériels" /> --}}
-                            <small class="ul-form__text form-text" id="">
-                                Saisissez les observations du bon d'expression des besoins svp!
-                            </small>
-                            @if ($errors->has('observations'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('observations') }}
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="custom-separator"></div>
                     <h4>Articles concernés</h4>
                     <div class="articles">
-                        @for ($key = 1; $key < 1; $key++)
-                            @if($key!=1) <div class="custom-separator" data-keyrow="{{ $key }}"></div> @endif
-                            <div class="row ArticleRow" data-keyrow="{{ $key }}">
-                                <div class="container text-center">
-                                    <h5 class="title">Article <span>{{ $key }}</span></h5>
-                                </div>
-                                <div class="col-md-11">
-                                    <div class="form-row">
-                                        <div class="col-md-3 form-group mb-3 lblArticle">
-                                            <label for="article_{{ $key }}">Libéllé Article</label>
-                                            <input class="form-control @error("article_$key") is-invalid @enderror" id="article_{{ $key }}" name="article_{{ $key }}" value="{{ old("article_$key") }}" type="text" placeholder="Ex: Matériels" required />
-                                            <small class="ul-form__text form-text" id="">
-                                                Saisissez le libéllé de l'article svp!
-                                            </small>
-                                            @if ($errors->has("article_$key"))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first("article_$key") }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        
-                                        <div class="col-md-2 form-group mb-3 puArticle">
-                                            <label for="prix_{{ $key }}">Prix Unitaire</label>
-                                            <input type="number" min="50" step="50" class="form-control pu_article @error("prix_$key") is-invalid @enderror" id="prix_{{ $key }}" name="prix_{{ $key }}" value="{{ old("prix_$key") }}" type="text" placeholder="Ex: 3000" required />
-                                            <small class="ul-form__text form-text" id="">
-                                                Saisissez le prix unitaire de l'article svp!
-                                            </small>
-                                            @if ($errors->has("prix_$key"))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first("prix_$key") }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        
-                                        <div class="col-md-1 form-group mb-3 qteArticle">
-                                            <label for="quantite_{{ $key }}">Quantité</label>
-                                            <input type="number" min="1" step="1" class="form-control @error("quantite_$key") is-invalid @enderror" id="quantite_{{ $key }}" name="quantite_{{ $key }}" value="{{ old("quantite_$key") }}" type="text" placeholder="Ex: 1" required />
-                                            <small class="ul-form__text form-text" id="">
-                                                Saisissez la quantité nécessaire svp!
-                                            </small>
-                                            @if ($errors->has("quantite_$key"))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first("quantite_$key") }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        
-                                        <div class="col-md-1 form-group mb-3 uniArticle">
-                                            <label for="unite_{{ $key }}">Unité</label>
-                                            <input type="number" min="1" step="1" class="form-control @error("unite_$key") is-invalid @enderror" id="unite_{{ $key }}" name="unite_{{ $key }}" value="{{ old("unite_$key") }}" type="text" placeholder="Ex: unité" required />
-                                            <small class="ul-form__text form-text" id="">
-                                                Saisissez l'unté svp!
-                                            </small>
-                                            @if ($errors->has("unite_$key"))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first("unite_$key") }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        
-                                        <div class="col-md-2 form-group mb-3 mntArticle">
-                                            <label>Montant</label>
-                                            <input class="form-control montant" value="{{ old("quantite_$key") }}" type="text" readonly disabled placeholder="0" />
-                                            <small class="ul-form__text form-text" id="">
-                                                Montant de l'article (Prix * Quantité)!
-                                            </small>
-                                        </div>
-                                        
-                                        <div class="col form-group mb-3 obsArticle">
-                                            <label for="observations_{{ $key }}">Observations</label>
-                                            <textarea class="form-control @error("observations_$key") is-invalid @enderror" id="observations_{{ $key }}" name="observations_{{ $key }}" cols="30" rows="1"></textarea>
-                                            {{-- <input class="form-control value="{{ old('observations') }}" type="text" placeholder="Ex: Matériels" /> --}}
-                                            <small class="ul-form__text form-text" id="">
-                                                Saisissez la observations du besoin svp!
-                                            </small>
-                                            @if ($errors->has("observations_$key"))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first("observations_$key") }}
-                                                </div>
-                                            @endif
+                        @if ($ligne)
+                            @for ($key = 1; $key < 2; $key++)
+                                @if($key!=1) <div class="custom-separator" data-keyrow="{{ $key }}"></div> @endif
+                                <div class="row ArticleRow" data-keyrow="{{ $key }}">
+                                    <div class="container text-center">
+                                        <h5 class="title">Article <span>{{ $key }}</span></h5>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <div class="form-row">
+                                            <input type="hidden" name="id_ligne_besoins_{{ $key }}" value="{{ $ligne->id }}">
+                                            <div class="col-md-3 form-group mb-3 lblArticle">
+                                                <label for="article_{{ $key }}">Libéllé Article</label>
+                                                <input class="form-control @error("article_$key") is-invalid @enderror" id="article_{{ $key }}" value="{{ $ligne->article ?? old("article_$key") }}" type="text" placeholder="Ex: Matériels" required readonly disabled />
+                                                <small class="ul-form__text form-text" id="">
+                                                    Saisissez le libéllé de l'article svp!
+                                                </small>
+                                                @if ($errors->has("article_$key"))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first("article_$key") }}
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            <div class="col-md-2 form-group mb-3">
+                                                <label for="id_factures_{{ $key }}">Facture:</label>
+                                                <select id="id_factures_{{ $key }}" name="id_factures_{{ $key }}" class="form-control select2" data-placeholder="Sélectionner une facture" required>
+                                                    <option value="" selected>Sélectionner une facture</option>
+                                                    @foreach ($factures as $facture)
+                                                        <option value="{{ $facture->id }}" @if (old("id_factures_$key") == $facture->id) selected="selected" @endif>{{ $facture->reference }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <small class="ul-form__text form-text" id="">
+                                                    Choisissez la reference de la facture svp!
+                                                </small>
+                                                @if ($errors->has("id_factures_$key"))
+                                                    <div class="alert-danger p-2 rounded">
+                                                        {{ $errors->first("id_factures_$key") }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="col form-group mb-3 obsArticle">
+                                                <label for="observations_{{ $key }}">Observations</label>
+                                                <textarea class="form-control @error("observations_$key") is-invalid @enderror" id="observations_{{ $key }}" name="observations_{{ $key }}" cols="30" rows="1"></textarea>
+                                                {{-- <input class="form-control value="{{ old('observations') }}" type="text" placeholder="Ex: Matériels" /> --}}
+                                                <small class="ul-form__text form-text" id="">
+                                                    Saisissez la observations du besoin svp!
+                                                </small>
+                                                @if ($errors->has("observations_$key"))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first("observations_$key") }}
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-1 text-center">
+                                        <button class="btn btn-icon btn-outline-danger border-0 rounded-circle btn-RemoveRow" type="button" style="height: 2.5rem; width: 2.5rem;">
+                                            <span class="ul-btn__icon"><i class="i-Remove text-30"></i></span>
+                                        </button>
+                                        <span class="text-danger spanLink d-block">Retirer</span>
+                                    </div>
                                 </div>
-                                <div class="col-md-1 text-center">
-                                    <button class="btn btn-icon btn-outline-danger border-0 rounded-circle btn-RemoveRow" type="button" style="height: 2.5rem; width: 2.5rem;">
-                                        <span class="ul-btn__icon"><i class="i-Remove text-30"></i></span>
-                                    </button>
-                                    <span class="text-danger spanLink d-block">Retirer</span>
-                                </div>
-                            </div>
-                        @endfor
+                            @endfor
+                        @endif
                     </div>
                     <div class="text-center">
                         <button class="btn btn-icon btn-outline-info border-0 rounded-circle btn-AddRow" type="button" style="height: 2.5rem; width: 2.5rem;">
@@ -300,7 +191,7 @@ Ajout de bon d'expression de besoins
                                     Saisissez le libéllé de l'article svp!
                                 </small>
                             </div>
-                            
+
                             <div class="col-md-2 form-group mb-3 puArticle">
                                 <label for="prix_${key}">Prix Unitaire</label>
                                 <input type="number" min="50" step="50" class="form-control" id="prix_${key}" name="prix_${key}" type="text" placeholder="Ex: 3000" required />
@@ -308,7 +199,7 @@ Ajout de bon d'expression de besoins
                                     Saisissez le prix unitaire de l'article svp!
                                 </small>
                             </div>
-                            
+
                             <div class="col-md-1 form-group mb-3 qteArticle">
                                 <label for="quantite_${key}">Quantité</label>
                                 <input type="number" min="1" step="1" class="form-control" id="quantite_${key}" name="quantite_${key}" type="text" placeholder="Ex: 1" required />
@@ -316,7 +207,7 @@ Ajout de bon d'expression de besoins
                                     Saisissez la quantité nécessaire svp!
                                 </small>
                             </div>
-                            
+
                             <div class="col-md-1 form-group mb-3 uniArticle">
                                 <label for="unite_${key}">Unité</label>
                                 <input type="text" class="form-control" id="unite_${key}" name="unite_${key}" type="text" value="unité" placeholder="Ex: unité" required />
@@ -324,7 +215,7 @@ Ajout de bon d'expression de besoins
                                     Saisissez l'unité svp!
                                 </small>
                             </div>
-                            
+
                             <div class="col-md-2 form-group mb-3 mntArticle">
                                 <label>Montant</label>
                                 <input class="form-control montant" type="text" readonly disabled placeholder="0" />
@@ -332,7 +223,7 @@ Ajout de bon d'expression de besoins
                                     Montant de l'article (Prix * Quantité)!
                                 </small>
                             </div>
-                            
+
                             <div class="col form-group mb-3 obsArticle">
                                 <label for="observations_${key}">Observations</label>
                                 <textarea class="form-control" id="observations_${key}" name="observations_${key}" cols="30" rows="1"></textarea>
@@ -436,7 +327,7 @@ Ajout de bon d'expression de besoins
 
             })
         })
-       
+
     })
 </script>
 @endsection

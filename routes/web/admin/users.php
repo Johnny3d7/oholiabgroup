@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('users', UserController::class);
 Route::prefix('/users')->name('users.')->group(function () {
+    Route::post('password/{user}', [UserController::class, 'updatePassword'])->name('password');
     // Route::get('/', [UserController::class, 'index'])->name('index');
     // Route::get('create', [UserController::class, 'usersCreate'])->name('create');
-    // Route::post('store', [UserController::class, 'store'])->name('store');
     // Route::get('show/{user}', [UserController::class, 'show'])->name('show');
 });

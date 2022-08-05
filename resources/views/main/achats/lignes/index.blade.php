@@ -34,7 +34,7 @@ Liste des achats effectués
 
                 <div class="tab-content" style="overflow-x: auto;">
                     <div class="tab-pane fade show active" id="pills-all-besoin" role="tabpanel" aria-labelledby="success-tab">
-                        @role("Chargé d'Achats")
+                        @role(config('constants.roles.chgachat'))
                             <a href="{{ route('achats.ligne_factures.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right">
                                 <span class="ladda-label">Ajouter un achat</span>
                             </a>
@@ -52,13 +52,13 @@ Liste des achats effectués
                                 </thead>
                                 <tbody>
                                     @forelse ($lignes as $ligne)
-                                        <tr class="tr-link" data-link="{{ route('achats.besoins.show', $ligne->besoin) }}">
+                                        <tr class="tr-link" data-link="{{ route('achats.ligne_factures.show', $ligne->facture) }}">
                                             <td class="py-1">{{ ucwords((new Carbon($ligne->facture->date_emission))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                             <td>{{ $ligne->facture->reference }}</td>
-                                            <td>{{ $ligne->ligne_besoin->nature }}</td>
+                                            <td>{{ $ligne->ligne->article }}</td>
                                             <td>
-                                                <img src="{{ asset($ligne->ligne_besoin->besoin->entreprise->logo) }}" class="pt-1" alt="" style="height: 1.5rem;">
-                                                {{ $ligne->ligne_besoin->besoin->entreprise->name }}
+                                                <img src="{{ asset($ligne->ligne->besoin->entreprise->logo) }}" class="pt-1" alt="" style="height: 1.5rem;">
+                                                {{ $ligne->ligne->besoin->entreprise->name }}
                                             </td>
                                             <td>{{ ucwords((new Carbon($ligne->created_at))->locale('fr')->isoFormat('DD/MM/YYYY à HH:ss')) }}</td>
                                         </tr>

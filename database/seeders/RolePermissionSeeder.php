@@ -21,15 +21,13 @@ class RolePermissionSeeder extends Seeder
         Permission::truncate();
         // \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-
-
         $role = Role::create([
-            'name' => 'Gestionnaire de Stocks',
+            'name' => config('constants.roles.geststock'),
             'home' => json_encode(['name' => 'stock.products.index', 'path' => 'stock/products', 'display' => 'Liste des produits'])
         ]);
-        
+
         $role = Role::create([
-            'name' => "Chargé d'Achats",
+            'name' => config('constants.roles.chgachat'),
             'home' => json_encode(['name' => 'achats.besoins.index', 'path' => 'achats/besoins', 'display' => 'Liste des bons de besoin'])
         ]);
 
@@ -40,8 +38,8 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         $role = Role::create([
-            'name' => 'Directrice Générale',
-            'home' => json_encode(['name' => 'module.index', 'path' => 'modules', 'display' => 'Liste des modules'])
+            'name' => config('constants.roles.dg'),
+            'home' => json_encode(['name' => 'modules.index', 'path' => 'modules', 'display' => 'Liste des modules'])
         ]);
 
         $permission = Permission::create([
@@ -54,7 +52,7 @@ class RolePermissionSeeder extends Seeder
         $role->givePermissionTo($permissionModule->name);
 
         $role = Role::create([
-            'name' => 'admin',
+            'name' => config('constants.roles.admin'),
             'home' => json_encode(['name' => 'admin.index', 'path' => 'admin', 'display' => 'Tableau de bord Administratif'])
         ]);
 
@@ -68,7 +66,7 @@ class RolePermissionSeeder extends Seeder
         $role->givePermissionTo($permissionModule->name);
 
         $role = Role::create([
-            'name' => 'superadmin',
+            'name' => config('constants.roles.superadmin'),
             'home' => json_encode(['name' => 'admin.index', 'path' => 'admin', 'display' => 'Tableau de bord Administratif'])
         ]);
         $role->givePermissionTo($permission->name);
@@ -82,5 +80,15 @@ class RolePermissionSeeder extends Seeder
 
         $role->givePermissionTo($permission->name);
         $role->givePermissionTo($permissionModule->name);
+
+        foreach (config('constants.roles') as $key => $name) {
+            if(!Role::whereName($name)->first()) {
+                $role = Role::create([
+                    'name' => $name,
+                    'home' => json_encode(['name' => 'profile.index', 'path' => 'profile', 'display' => 'Mon compte'])
+                ]);
+                // $role->givePermissionTo($permissionModule->name);
+            }
+        }
     }
 }

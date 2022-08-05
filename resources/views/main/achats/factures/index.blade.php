@@ -32,7 +32,7 @@ Liste des factures
 
             <div class="card-body">
 
-                @role("Chargé d'Achats")
+                @role(config('constants.roles.chgachat'))
                     <a href="{{ route('achats.factures.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right">
                         <span class="ladda-label">Ajouter une facture</span>
                     </a>

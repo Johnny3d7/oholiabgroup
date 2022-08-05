@@ -32,6 +32,11 @@ class createEmployesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer("id_employes")->unsigned()->nullable();
+            $table->foreign('id_employes')->references('id')->on('employes')->onDelete('cascade');
+        });
     }
 
     /**
@@ -42,5 +47,10 @@ class createEmployesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('employes');
+
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->dropForeign('id_employes');
+        //     $table->dropColumn('id_employes');
+        // });
     }
 }
