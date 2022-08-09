@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id_users id users
@@ -9,11 +10,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property varchar $link link
  * @property tinyint $opened opened
  * @property IdUser $user belongsTo
- * 
+ *
  */
-class Notification extends Model 
+class Notification extends Model
 {
-    
+
     /**
     * Database table name
     */
@@ -47,5 +48,10 @@ class Notification extends Model
     public function markAsRead()
     {
         $this->update(['opened' => true]);
+    }
+
+    public function moment(){
+        $datetime = $this->created_at;
+        return ucwords((new Carbon($datetime))->locale('fr')->isoFormat('DD/MM/YYYY à HH:mm'));
     }
 }

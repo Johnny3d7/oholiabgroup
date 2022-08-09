@@ -59,6 +59,7 @@ class InventaireController extends Controller
             "date_inventaire.required" => "La date de l'inventaire est un champ requis",
         ]);
 
+        $request->merge(['statut' => config('constants.statut.inventaires.attente')]);
         $inventaire = Inventaire::create($request->all());
 
         $notification = array(
@@ -131,7 +132,7 @@ class InventaireController extends Controller
             }
         }
 
-        $inventaire->update(['statut' => 'Validation']);
+        $inventaire->update(['statut' => config('constants.statut.inventaires.validation')]);
 
         $notification = array(
             "message" => "Inventaire effectué avec succès !",
@@ -173,6 +174,9 @@ class InventaireController extends Controller
             $actions[\Auth::user()->role->name] => $statut == 'validé' ?? 2
         ]);
 
+        if(!in_array(0, [$inventaire->{$actions[config('constants.roles.geststock')]}, $inventaire->{$actions[config('constants.roles.comptable')]}, $inventaire->{$actions[config('constants.roles.chefcomptable')]}]))
+            $inventaire->update(['statut' => config('constants.statut.inventaires.valide')]);
+
         foreach ($actions as $name => $value) {
             $users = [];
             if(Role::whereName($name)->first()) $users = Role::whereName($name)->first()->users;
@@ -180,8 +184,8 @@ class InventaireController extends Controller
             foreach ($users as $user) {
                 Notification::create([
                     'id_users' => $user->id,
-                    'title' => "Validation d'inventaire par un $name",
-                    'body' => "L'inventaire du " . date_format(new \DateTime($inventaire->date_inventaire), 'd/M/Y') . " a été $statut par ". \Auth::user()->name . " - " . $inventaire->entrepot->entreprise->name,
+                    'title' => "Validation d'inventaire par un " . \Auth::user()->role->name,
+                    'body' => "L'inventaire du " . date_format(new \DateTime($inventaire->date_inventaire), 'd/M/Y') . " a été $statut par ". \Auth::user()->employe->name() . " - " . $inventaire->entrepot->entreprise->name,
                     'link' => route('stock.inventaires.show', $inventaire),
                     'type' => $statut == 'validé' ? 'success' : 'danger',
                 ]);

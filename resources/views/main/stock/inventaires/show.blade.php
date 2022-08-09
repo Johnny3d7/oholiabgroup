@@ -67,11 +67,11 @@ Détails d'un inventaire
             <div class="card-body text-center px-2">
                 <h3 class="text-dark mb-3">Statut</h3>
                 @switch($inventaire->statut)
-                    @case('traité')
-                    <i class="i-Yes text-78 text-primary mt-5"></i>
+                    @case(config('constants.statut.inventaires.effectue'))
+                    <i class="i-Data-Yes text-78 text-primary mt-5"></i>
                     <h3 class="mt-2 text-primary">{{ ucfirst($inventaire->statut) }}</h3>
                         @break
-                    @case('validé')
+                    @case(config('constants.statut.inventaires.valide'))
                     <i class="i-Yes text-78 text-success mt-5"></i>
                     <h3 class="mt-2 text-success">{{ ucfirst($inventaire->statut) }}</h3>
                         @break
@@ -107,7 +107,7 @@ Détails d'un inventaire
                 @endphp
 
                 @hasrole(config('constants.roles.geststock'))
-                    @if (!in_array($inventaire->statut, ['validé', 'refusé', 'annulé', 'Validation']))
+                    @if (!in_array($inventaire->statut, [config('constants.statut.inventaires.valide'), config('constants.statut.inventaires.validation')]))
                         <a href="{{ route('stock.inventaires.procede', $inventaire) }}" class="btn btn-lg btn-info ripple btn-block text-16 mb-3">
                             <i class="i-Big-Data text-30"></i>
                             <span class="d-block">Procéder à l'inventaire </span>
@@ -116,16 +116,20 @@ Détails d'un inventaire
                 @endhasrole
 
                 @hasrole(config('constants.roles.comptable') .'|'. config('constants.roles.geststock') .'|'. config('constants.roles.chefcomptable'))
-                    @if ($inventaire->statut == 'Validation' && !$inventaire->{$actions[Auth::user()->role->name]})
+                    @if ($inventaire->statut == config('constants.statut.inventaires.validation') && !$inventaire->{$actions[Auth::user()->role->name]})
                         <button class="btn btn-lg btn-success ripple btn-block text-16 mb-3 btnValider">
                             <i class="i-Yes text-30"></i>
                             <span class="d-block">Valider l'inventaire </span>
                         </button>
                     @else
-                        {{-- @if (Auth::user()->role == config('constants.roles.geststock') && )
-
-                        @endif --}}
-                        <h6 class="text-center">Aucune action disponible !</h6>
+                        @if (Auth::user()->role->name == config('constants.roles.geststock') && $inventaire->statut == config('constants.statut.inventaires.valide'))
+                            <button class="btn btn-lg btn-primary ripple btn-block text-16 mb-3 btnValider">
+                                <i class="i-Data-Transfer text-30"></i>
+                                <span class="d-block">Mettre à jour les stocks </span>
+                            </button>
+                        @else
+                            <h6 class="text-center">Aucune action disponible !</h6>
+                        @endif
                     @endif
                 @endhasrole
 

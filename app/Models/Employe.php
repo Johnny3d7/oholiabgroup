@@ -46,6 +46,11 @@ class Employe extends BaseModel
         return $this->belongsTo(Entreprise::class, 'id_entreprises');
     }
 
+    public function name()
+    {
+        return $this->nom. ' ' .$this->prenoms;
+    }
+
 
 
 

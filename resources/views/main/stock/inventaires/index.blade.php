@@ -13,6 +13,14 @@ Inventaires
 Liste des inventaires
 @endsection
 
+@php
+    $actions = [
+        config('constants.roles.geststock') => 'vs_inventoriste',
+        config('constants.roles.comptable') => 'vs_comptable',
+        config('constants.roles.chefcomptable') => 'vs_chef_comptable',
+    ];
+@endphp
+
 @section('content')
 <div class="row mb-4">
     <div class="col-md-12 mb-4">
@@ -52,7 +60,12 @@ Liste des inventaires
                                                 {{ $inventaire->entrepot->entreprise->name }}
                                             </td>
                                             <td>{{ ucfirst($inventaire->statut) }}</td>
-                                            <td>{{ $inventaire->vs_inventoriste }} | {{ $inventaire->vs_comptable }} | {{ $inventaire->vs_chef_comptable }}</td>
+                                            <td>
+                                                @foreach ($actions as $role => $action)
+                                                    @php $color = $inventaire->$action ? 'success' : 'info'; $icon = $inventaire->$action ? 'Yes' : 'Loading-3'; @endphp
+                                                    <i class="i-{{ $icon }} text-{{ $color }}" title="{{ $role }}"></i>
+                                                @endforeach
+                                            </td>
                                             <td class="py-1">{{ ucwords((new Carbon($inventaire->created_at))->locale('fr')->isoFormat('DD/MM/YYYY à HH:mm')) }}</td>
                                         </tr>
                                     @empty

@@ -2,8 +2,14 @@
 return [
     'statut' => [
         'besoins' => [],
-        'ligne_besoins' => [],
+        'inventaires' => [
+            'attente' => "en attente",
+            'validation' => "validation",
+            'valide' => "validé",
+            'effectue' => "stocks mis à jour"
+        ],
         'factures' => [],
+        'ligne_besoins' => [],
         'ligne_factures' => [],
     ],
 

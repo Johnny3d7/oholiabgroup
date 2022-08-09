@@ -28,13 +28,13 @@
         <div class="card user-profile o-hidden mb-4">
             <div class="header-cover" style="background-image: url({{ asset('images/photo-wide-6.jpg') }}); background-position:center;"></div>
             <div class="user-info"><img class="profile-picture avatar-lg mb-2" src="{{ asset($user->image()) }}" alt="" />
-                <p class="m-0 pb-2 text-24">{{ ucfirst($user->username) }} {{ $user->isEmploye() ? '('.$user->employe->civilite.' '.$user->employe->nom.' '.$user->employe->prenoms.')' : ''  }}</p>
+                <p class="m-0 pb-2 text-24">{{ ucfirst($user->username) }} {{ $user->isEmploye() ? '('.$user->employe->civilite.' '.$user->employe->name().')' : ''  }}</p>
                 <p class="text-muted m-0">{{ $user->role->name }} {{ $user->isEmploye() ? 'à '. $user->employe->entreprise->name : '' }}</p>
             </div>
             <div class="card-body">
                 <ul class="nav nav-tabs profile-nav mb-4" id="profileTab" role="tablist">
-                    <li class="nav-item"><a class="nav-link active" id="role-tab" data-toggle="tab" href="#role" role="tab" aria-controls="role" aria-selected="true">Rôle & permissions</a></li>
-                    <li class="nav-item"><a class="nav-link" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="false">Compte Utilisateur</a></li>
+                    <li class="nav-item"><a class="nav-link active" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="false">Compte Utilisateur</a></li>
+                    <li class="nav-item"><a class="nav-link" id="role-tab" data-toggle="tab" href="#role" role="tab" aria-controls="role" aria-selected="true">Rôle & permissions</a></li>
                     @if($user->isEmploye())
                         <li class="nav-item"><a class="nav-link" id="employe-tab" data-toggle="tab" href="#employe" role="tab" aria-controls="employe" aria-selected="false">Espace Employé</a></li>
                     @endif
@@ -44,13 +44,39 @@
                     <li class="nav-item"><a class="nav-link" id="photos-tab" data-toggle="tab" href="#photos" role="tab" aria-controls="photos" aria-selected="false">Photos</a></li> --}}
                 </ul>
                 <div class="tab-content" id="profileTabContent">
-                    <div class="tab-pane fade active show" id="role" role="tabpanel" aria-labelledby="role-tab">
-                        <div id="transfer" class="transfer-demo"></div>
-                    </div>
-                    <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
+                    <div class="tab-pane fade active show" id="user" role="tabpanel" aria-labelledby="user-tab">
                         <div class="row">
                             <div class="col-md-8">
+                                <h4 class="mb-5">Informations générales</h4>
 
+                                @php $notifs = Auth::user()->all_notifs; $count = count($notifs); @endphp
+
+                                <div class="card">
+                                    <div class="card-header bg-transparent">
+                                        <h3 class="card-title">Notifications</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="ul-widget-notification" style="height: 25rem; overflow-y: auto;">
+                                            @forelse ($notifs->sortByDesc('created_at') as $notification)
+                                                <div class="ul-widget-notification-item-div">
+                                                    <a class="ul-widget-notification-item" href="{{ $notification->link ?? 'javascript:void(0);' }}">
+                                                        <div class="ul-widget-notification-item-icon">
+                                                            <i class="i-Bell1 text-white bg-{{ $notification->type() }} rounded-circle p-2 mr-3"></i>
+                                                        </div>
+                                                        <div class="ul-widget-notification-item-details">
+                                                            <div class="ul-widget-notification-item-title {{ !$notification->opened ? 'font-weight-bold' : '' }}">{{ $notification->title }}</div>
+                                                            <div class="text-secondary">{{ $notification->body }}</div>
+                                                            <div class="ul-widget-notification-item-time">{{ $notification->moment() }}</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <hr class="m-0">
+                                            @empty
+                                                <div class="text-center text-16">Aucune Notification</div>
+                                            @endforelse
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="row">
@@ -163,6 +189,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="tab-pane fade" id="role" role="tabpanel" aria-labelledby="role-tab">
+                        <div id="transfer" class="transfer-demo"></div>
                     </div>
                     @if($user->isEmploye())
                         <div class="tab-pane fade" id="employe" role="tabpanel" aria-labelledby="employe-tab">
