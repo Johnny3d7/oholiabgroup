@@ -213,13 +213,6 @@
                         </div>
                     @endif
 
-                    @role(config('constants.roles.admin'))
-                    @else
-                        @php
-                            dd('PAs croyable')
-                        @endphp
-                    @endrole
-
                     {{-- <div class="tab-pane fade" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
                         <ul class="timeline clearfix">
                             <li class="timeline-line"></li>
