@@ -37,8 +37,8 @@ Roles
             <div class="card h-100">
                 <div class="card-body pr-1">
                     <div class="ul-widget__head">
-                        <div class="ul-widget__head-label">
-                            <h3 class="ul-widget__head-title text-primary">
+                        <div class="ul-widget__head-label" style="max-width: 45%">
+                            <h3 class="ul-widget__head-title text-primary text-truncate" title="{{ $role->name }}">
                                 {{ $role->name }}
                             </h3>
                         </div>
@@ -80,7 +80,7 @@ Roles
                                                 <img id="userDropdown" src="{{ asset($user->image()) }}" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             </div>
                                             <div class="ul-widget2__info ul-widget4__users-info">
-                                                <a class="ul-widget2__title" href="#">{{ $user->username }}</a>
+                                                <a class="ul-widget2__title" href="#">{{ $user->employe ? $user->employe->name() : '' }} ({{ $user->username }})</a>
                                                 <span class="ul-widget2__username" href="#">Visual Designer,Google Inc</span>
                                             </div>
                                             <div class="ul-widget4__actions">
@@ -169,7 +169,7 @@ Roles
                             @foreach ($role->permissions as $perm)
                                 <li class="list-group-item disabled">{{ $perm->display_name }}</li>
                             @endforeach
-                            
+
                         </ul>
                     </div>
                 </div>

@@ -79,7 +79,7 @@ Ajout de bon d'expression de besoins
                         </div>
                         <div class="form-group col-lg-3 col-md-6">
                             <label class="ul-form__label" for="montant">Montant:</label>
-                            <input class="form-control" value="{{ old('montant') }}" name="montant" id="montant" type="text" placeholder="Ex: FACTXXX-01" required/>
+                            <input class="form-control" value="{{ old('montant') }}" name="montant" id="montant" type="text" placeholder="Ex: 10000" required/>
                             <small class="ul-form__text form-text" id="">
                                 Entrez la montant de la facture svp!
                             </small>
@@ -91,8 +91,8 @@ Ajout de bon d'expression de besoins
                         </div>
                         <div class="form-group col-lg-3 col-md-6">
                             <label class="ul-form__label" for="id_fournisseurs">Fournisseur:</label>
-                            <select id="id_fournisseurs" name="id_fournisseurs" class="form-control" required>
-                                <option value=""  selected>-- Sélectionner --</option>
+                            <select id="id_fournisseurs" name="id_fournisseurs" class="form-control select2" required>
+                                {{-- <option value=""  selected>-- Sélectionner --</option> --}}
                                 @foreach ($fournisseurs as $fournisseur)
                                     <option value="{{ $fournisseur->id }}" @if (old('id_fournisseurs') == $fournisseur->id) selected="selected" @endif>{{ $fournisseur->name }}</option>
                                 @endforeach
@@ -149,7 +149,7 @@ Ajout de bon d'expression de besoins
             default: 'Glissez-déposez un fichier ici ou cliquez',
             replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
             remove:  'Supprimer <i class="i-Remove"></i>',
-            error:   'Désolé, le fichier trop volumineux'
+            error:   'Désolé, le fichier est trop volumineux'
         }
     });
 </script>

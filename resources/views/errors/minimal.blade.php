@@ -32,8 +32,18 @@
                         @yield('message')
                     </div>
                 </div>
-                {{-- <a class="px-4 justify-center text-gray-200" href="{{ back() }}">Revenir en arrière (3 s)</a> --}}
+                <a class="px-4 justify-center text-gray-200" id="btn-back" href="{{ route('backStack') }}">Retour en arrière dans 5 secondes</a>
             </div>
         </div>
+        <script>
+            btn = document.querySelector('#btn-back');
+            sec = 5;
+            btn.innerHTML = 'Retour en arrière dans 5 secondes';
+            setInterval(() => {
+                sec--;
+                btn.innerHTML = `Retour en arrière dans ${sec} secondes`;
+                if(sec <= 0) btn.click();
+            }, 1000);
+        </script>
     </body>
 </html>

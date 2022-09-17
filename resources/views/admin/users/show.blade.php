@@ -32,7 +32,7 @@
                 <p class="text-muted m-0">{{ $user->role->name }} {{ $user->isEmploye() ? 'à '. $user->employe->entreprise->name : '' }}</p>
             </div>
             <div class="card-body">
-                <ul class="nav nav-tabs profile-nav mb-4" id="profileTab" role="tablist">
+                <ul class="nav nav-tabs profile-nav mb-4 text-primary" id="profileTab" role="tablist">
                     <li class="nav-item"><a class="nav-link active" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="false">Compte Utilisateur</a></li>
                     <li class="nav-item"><a class="nav-link" id="role-tab" data-toggle="tab" href="#role" role="tab" aria-controls="role" aria-selected="true">Rôle & permissions</a></li>
                     @if($user->isEmploye())
@@ -47,16 +47,16 @@
                     <div class="tab-pane fade active show" id="user" role="tabpanel" aria-labelledby="user-tab">
                         <div class="row">
                             <div class="col-md-8">
-                                <h4 class="mb-5">Informations générales</h4>
+                                <h4 class="mb-5">Compte utilisateur</h4>
 
                                 @php $notifs = Auth::user()->all_notifs; $count = count($notifs); @endphp
 
-                                <div class="card">
+                                <div class="card mb-4">
                                     <div class="card-header bg-transparent">
-                                        <h3 class="card-title">Notifications</h3>
+                                        <h3 class="card-title text-primary">Notifications</h3>
                                     </div>
                                     <div class="card-body">
-                                        <div class="ul-widget-notification" style="height: 25rem; overflow-y: auto;">
+                                        <div class="ul-widget-notification pr-3" style="height: 30rem; overflow-y: auto;">
                                             @forelse ($notifs->sortByDesc('created_at') as $notification)
                                                 <div class="ul-widget-notification-item-div">
                                                     <a class="ul-widget-notification-item" href="{{ $notification->link ?? 'javascript:void(0);' }}">
@@ -77,6 +77,16 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="card mb-4">
+                                    <div class="card-header bg-transparent">
+                                        <h3 class="card-title text-primary">Historique de connexion</h3>
+                                    </div>
+                                    <div class="card-body p-5 text-center" style="height: 16rem; overflow-y: auto;">
+                                        <h4 class="text-primary">Coming soon !</h4>
+                                        <div class="spinner-bubble spinner-bubble-primary m-5"></div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="row">
@@ -87,7 +97,7 @@
                                                 @method('PUT')
                                                 <div class="card">
                                                     <div class="card-header bg-transparent">
-                                                        <h3 class="card-title">Modification d'informations</h3>
+                                                        <h3 class="card-title text-primary">Modification d'informations</h3>
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="form-group row">
@@ -133,7 +143,7 @@
                                                 @csrf
                                                 <div class="card">
                                                     <div class="card-header bg-transparent">
-                                                        <h3 class="card-title">Modification du mot de passe</h3>
+                                                        <h3 class="card-title text-primary">Modification du mot de passe</h3>
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="form-group row">
@@ -176,7 +186,7 @@
                                                         <div class="mc-footer">
                                                             <div class="row text-right">
                                                                 <div class="container text-center">
-                                                                    <button class="btn btn-primary m-1" type="submit">Modifier</button>
+                                                                    <button class="btn btn-primary m-1" type="submit">Mettre à jour</button>
                                                                     {{-- <button class="btn btn-outline-secondary m-1" type="reset">Reinitialiser</button> --}}
                                                                 </div>
                                                             </div>
