@@ -1,3 +1,6 @@
+@php
+    dd($user, $profile, Auth::user());
+@endphp
 @extends(isset($profile) && $profile == true ? 'admin.partials.main_profile' : 'admin.partials.main')
 
 @section('raccourcis')
