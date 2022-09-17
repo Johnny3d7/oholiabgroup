@@ -8,10 +8,15 @@ use App\Models\Client;
 use App\Models\Entrepot;
 use App\Models\Entreprise;
 use App\Models\Fournisseur;
+use App\Models\Inventaire;
+use App\Models\InventaireCategory;
+use App\Models\LigneInventaire;
+use App\Models\Notification;
 use App\Models\Product;
-use App\Models\ProductCategory;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class InventaireController extends Controller
 {
@@ -22,8 +27,8 @@ class InventaireController extends Controller
      */
     public function index(Request $request)
     {
-        $inventaires = [];
-        return view('main.stock.inventaire.index',compact('inventaires'));
+        $inventaires = Inventaire::all();
+        return view('main.stock.inventaires.index',compact('inventaires'));
     }
 
     /**
@@ -33,11 +38,8 @@ class InventaireController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $entreprises = Entreprise::all();
-        return view('admin.products.create', compact('categories', 'entreprises'));
-        // $categories
-        return view('main.stock.product.create');
+        $entrepots = Entrepot::all();
+        return view('main.stock.inventaires.create', compact('entrepots'));
     }
 
     /**
@@ -50,326 +52,202 @@ class InventaireController extends Controller
     {
         //
         $validatedData = $request->validate([
-            "lib" => "required|min:2",
-            "stockalert" => "required|integer",
-            "id_product_category" => "required",
-            "id_type_product" => "required"
-
+            "name" => "required|min:2",
+            "date_inventaire" => "required",
         ], [
-            "lib.required" => "Le libellé est un champ est requis",
-            "stockalert.required" => "Le stock alerte est un champ requis",
-            "id_type_product.required" => "Le type du produit est un champ requis",
-            "id_product_category.required" => "La catégorie du produit est un champ requis"
+            "name.required" => "Le titre est un champ est requis",
+            "date_inventaire.required" => "La date de l'inventaire est un champ requis",
         ]);
 
-        $dimension = explode("x", $request->dimension);
+        $request->merge(['statut' => config('constants.statut.inventaires.attente')]);
+        $inventaire = Inventaire::create($request->all());
 
-        if ($request->dimension == null) {
-            $product = Product::create([
-                'lib'=>$request->lib,
-                'price'=>$request->price,
-                'stockalert'=>$request->stockalert,
-                'poids'=>$request->poids,
-                'unite_poids'=>$request->unite_poids,
-                'longueur'=>"0",
-                'largeur'=>"0",
-                'hauteur'=>"0",
-                'unite_mesure'=>$request->unite_mesure,
-                'volume'=>$request->volume,
-                'unite_volume'=>$request->unite_volume,
-                'id_product_category'=>$request->id_product_category,
-                'id_type_product'=>$request->id_type_product
-            ]);
-        }elseif ($request->dimension != null) {
-            if ($dimension[1] == "" || $dimension[2] == "" ) {
-                $notification = array(
-                    "message" => "Les dimensions du produit sont incorrectes!",
-                    "alert-type" => "error"
-                );
-                
-                return redirect()->back()->with($notification);
-            }else {
-                $product = Product::create([
-                    'lib'=>$request->lib,
-                    'price'=>$request->price,
-                    'stockalert'=>$request->stockalert,
-                    'poids'=>$request->poids,
-                    'unite_poids'=>$request->unite_poids,
-                    'longueur'=>$dimension[0],
-                    'largeur'=>$dimension[1],
-                    'hauteur'=>$dimension[2],
-                    'unite_mesure'=>$request->unite_mesure,
-                    'volume'=>$request->volume,
-                    'unite_volume'=>$request->unite_volume,
-                    'id_product_category'=>$request->id_product_category,
-                    'id_type_product'=>$request->id_type_product
-                ]);
-                
-            }
-        }
-        
-
-        $product->ref = "P". $product->id;
-
-        $image = $request->file('image');
-
-        //dd($request->hasFile('image'));
-
-        if ($request->file()) {
-
-            $fileName = $image->getClientOriginalName() . '_' . time() . '_' . rand(9, 999) . '.' . $image->extension();
-
-            $path = $image->storeAs('product_image', $fileName, 'public');
-
-            $product->image = $fileName;
-
-            $product->image_path = 'storage/' . $path;
-        }
-
-        $product->save();
-        //dd($product);
         $notification = array(
-            "message" => "Votre nouveau produit est ajouté au stock!",
+            "message" => "Votre nouvel inventaire est ajouté avec succès !",
             "alert-type" => "success"
         );
-        
+        if($request->procede) return redirect()->route('stock.inventaires.procede', $inventaire);
         return redirect()->back()->with($notification);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Inventaire  $inventaire
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Inventaire $inventaire)
     {
-        //
-        // $product = Product::where('slug', $slug)->first();
+        return view('main.stock.inventaires.show',compact('inventaire'));
+    }
 
-        return view('main.stock.product.show',compact('product'));
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Inventaire  $inventaire
+     * @return \Illuminate\Http\Response
+     */
+    public function procede(Inventaire $inventaire)
+    {
+        // dd($inventaire);
+        return view('main.stock.inventaires.create_ligne',compact('inventaire'));
+    }
+
+    public function procedePost(Request $request, Inventaire $inventaire)
+    {
+        $key = 0; $exist = true;
+        while ($exist) {
+            $key++;
+            if(!isset($request->{"id_products_$key"})) $exist = false;
+        }
+        // $key--;
+
+        for ($i=1; $i < $key; $i++) {
+            $product = Product::find($request->{"id_products_$i"});
+            if($product){
+                LigneInventaire::create([
+                    'qte_att' => $inventaire->entrepot->ehp($product)->quantite,
+                    'qte_res' => $request->{"qte_res_$i"},
+                    'statut' => $request->{"statut_$i"},
+                    'observations' => $request->{"observations_$i"},
+                    'id_products' => $product->id,
+                    'id_inventaires' => $inventaire->id
+                ]);
+            } else {
+                dd('error', $key, $request->all(), $key);
+            }
+        }
+
+        $entreprise = Entreprise::find($request->id_entreprises);
+        $roles = Role::whereName('Comptable')->orWhere('name', 'Chef comptable')->get();
+        foreach ($roles as $role) {
+            $users = $role->users;
+            foreach ($users as $user) {
+                Notification::create([
+                    'id_users' => $user->id,
+                    'title' => "Nouvel inventaire effectué en attente de validation",
+                    'body' => 'Inventaire de '. $inventaire->entrepot->name . ' le ' . date_format(new \DateTime($inventaire->date_inventaire), 'd/m/Y'),
+                    'link' => route('stock.inventaires.show', $inventaire),
+                ]);
+            }
+        }
+
+        $inventaire->update(['statut' => config('constants.statut.inventaires.validation')]);
+
+        $notification = array(
+            "message" => "Inventaire effectué avec succès !",
+            "alert-type" => "success"
+        );
+        return redirect()->route('stock.inventaires.show', $inventaire)->with($notification);
+    }
+
+    /**
+     * Validation of the specified resource
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param Inventaire $inventaire
+     * @return \Illuminate\Http\Response
+     */
+    public function validation(Request $request, Inventaire $inventaire)
+    {
+        $validatedData = $request->validate(["statut" => "required"], ["statut.required" => "Erreur de validation liée au statut"]);
+
+        $statut = $request->statut == 'valide' ? "validé" : ($request->statut == 'annulé' ? 'annulé' : 'refusé');
+        $motif = $request->motif;
+        if($statut == 'refusé' && !$motif){
+            $msg = "Merci de renseigner le motif de refus !";
+            $notification = array(
+                "message" => $msg,
+                "alert-type" => "error"
+            );
+            if($request->api) return response()->json(["error"=>$msg], 400);
+            return redirect()->back()->with($notification);
+        }
+
+        $actions = [
+            config('constants.roles.geststock') => 'vs_inventoriste',
+            config('constants.roles.comptable') => 'vs_comptable',
+            config('constants.roles.chefcomptable') => 'vs_chef_comptable',
+        ];
+
+        $inventaire->update([
+            $actions[\Auth::user()->role->name] => $statut == 'validé' ?? 2
+        ]);
+
+        if(!in_array(0, [$inventaire->{$actions[config('constants.roles.geststock')]}, $inventaire->{$actions[config('constants.roles.comptable')]}, $inventaire->{$actions[config('constants.roles.chefcomptable')]}]))
+            $inventaire->update(['statut' => config('constants.statut.inventaires.valide')]);
+
+        foreach ($actions as $name => $value) {
+            $users = [];
+            if(Role::whereName($name)->first()) $users = Role::whereName($name)->first()->users;
+
+            foreach ($users as $user) {
+                Notification::create([
+                    'id_users' => $user->id,
+                    'title' => "Validation d'inventaire par un " . \Auth::user()->role->name,
+                    'body' => "L'inventaire du " . date_format(new \DateTime($inventaire->date_inventaire), 'd/M/Y') . " a été $statut par ". \Auth::user()->employe->name() . " - " . $inventaire->entrepot->entreprise->name,
+                    'link' => route('stock.inventaires.show', $inventaire),
+                    'type' => $statut == 'validé' ? 'success' : 'danger',
+                ]);
+            }
+        }
+
+        $msg = "L'inventaire a été $statut avec succès !";
+        $notification = array(
+            "message" => $msg,
+            "alert-type" => "success"
+        );
+        if($request->api) return response()->json(["msg"=>$msg], 200);
+        return redirect()->back()->with($notification);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Inventaire  $inventaire
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Inventaire $inventaire)
     {
-        $categories = Category::all();
-        $entrepots = Entrepot::all();
-        // $product = Product::where('slug', $slug)->first();
-        return view('main.stock.product.edit',compact('product', 'categories', 'entrepots'));
+        return view('main.stock.inventaires.edit',compact('inventaire'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Inventaire  $inventaire
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(Request $request, Inventaire $inventaire)
     {
         //
-        $validatedData = $request->validate([
-            "lib" => "required|min:2",
-            "stockalert" => "required|integer",
-            "id_product_category" => "required",
-            "id_type_product" => "required"
 
-        ], [
-            "lib.required" => "Le libellé est un champ est requis",
-            "stockalert.required" => "Le stock alerte est un champ requis",
-            "id_type_product.required" => "Le type du produit est un champ requis",
-            "id_product_category.required" => "La catégorie du produit est un champ requis"
-        ]);
-        
-        $dimension = explode("x", $request->dimension);
-        //dd($dimension);
-        $product = Product::where('slug', $slug)->first();
-
-        if ($request->dimension == null) {
-            $product->update([
-                'lib'=>$request->lib,
-                'price'=>$request->price,
-                'stockalert'=>$request->stockalert,
-                'poids'=>$request->poids,
-                'unite_poids'=>$request->unite_poids,
-                'longueur'=>"0",
-                'largeur'=>"0",
-                'hauteur'=>"0",
-                'unite_mesure'=>$request->unite_mesure,
-                'volume'=>$request->volume,
-                'unite_volume'=>$request->unite_volume,
-                'id_product_category'=>$request->id_product_category,
-                'id_type_product'=>$request->id_type_product
-            ]);
-        }elseif ($request->dimension != null) {
-            if ($dimension[1] == "" || $dimension[2] == "" ) {
-                $notification = array(
-                    "message" => "Les dimensions du produit sont incorrectes!",
-                    "alert-type" => "error"
-                );
-                
-                return redirect()->back()->with($notification);
-            }
-            else{
-                $product->update([
-                    'lib'=>$request->lib,
-                    'price'=>$request->price,
-                    'stockalert'=>$request->stockalert,
-                    'poids'=>$request->poids,
-                    'unite_poids'=>$request->unite_poids,
-                    'longueur'=>$dimension[0],
-                    'largeur'=>$dimension[1],
-                    'hauteur'=>$dimension[2],
-                    'unite_mesure'=>$request->unite_mesure,
-                    'volume'=>$request->volume,
-                    'unite_volume'=>$request->unite_volume,
-                    'id_product_category'=>$request->id_product_category,
-                    'id_type_product'=>$request->id_type_product
-                ]);
-            }
-        }
-        
-        
-        //$product->update($validatedData);
-
-        
-
-        $product->save();
+        $inventaire->save();
 
         $notification = array(
             "message" => "Le produit à été modifié avec succès!",
             "alert-type" => "success"
         );
-        
+
         return redirect()->back()->with($notification);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Inventaire  $inventaire
      * @return \Illuminate\Http\Response
      */
-    public function destroy($slug)
+    public function destroy(Inventaire $inventaire)
     {
         //
-        $product = Product::where('slug', $slug)->first();
-        $product->status = 0;
-        $product->save();
+        $inventaire->save();
         $notification = array(
             "message" => "Vous avez supprimer un produit de cette liste!",
             "alert-type" => "success"
         );
-        
-        return redirect()->route('stock.products.index')->with($notification);
+
+        return redirect()->route('stock.inventairess.index')->with($notification);
     }
-
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function etatstock($slug)
-    {
-        //
-        $entreprises = Entreprise::selectAll();
-        $products = Product::selectAll();
-        $fournisseurs = Fournisseur::selectAll();
-        $clients = Client::selectAll();
-        $entreprise = Entreprise::where('slug', $slug)->first();
-
-        // $products = Product::all();
-        // dd($products);
-        return view('main.stock.product.etatstock', compact('products', 'fournisseurs', 'entreprises', 'clients', 'entreprise'));
-
-        // $products = DB::table('variations')->distinct()
-        // ->join('products', 'products.id', '=', 'variations.id_product')
-        // ->join('entreprises', 'entreprises.id', '=', 'variations.id_entreprise')
-        // ->join('products_categories', 'products_categories.id', '=', 'products.id_product_category')
-        // ->where('variations.status', '=', 1)
-        // ->where('products.status', '=', 1)
-        // ->select('products.*','products_categories.lib as category',
-        // DB::raw('SUM(variations.qte_entree) as total_entree'),
-        // DB::raw('SUM(variations.qte_sortie) as total_sortie'),
-        // DB::raw('SUM(variations.qte_entree) - SUM(variations.qte_sortie) as total_stock'))
-        // ->where('variations.id_entreprise', '=', $entreprise->id)->groupBy('products.id')->get();
-        // dd($products);
-
-        return view('main.stock.product.etatstock', compact('products','entreprise'));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function stockStoryComp($entreprise,$slug)
-    {
-        $entreprise = Entreprise::where('slug', $entreprise)->first();
-        $prod = Product::where('slug', $slug)->first();
-
-        // $variations = DB::table('variations')->distinct()
-        // ->join('products', 'products.id', '=', 'variations.id_product')
-        // ->join('entrepots', 'entrepots.id', '=', 'variations.id_entrepot')
-        // ->select('variations.*','products.lib as product_lib')
-        // ->where('variations.id_entreprise', '=', $entreprise->id)
-        // ->where('products.id', '=', $prod->id)
-        // ->where('variations.status', '=',1)
-        // ->orderByDesc('variations.created_at')
-        // ->groupBy('variations.id')->get();
-
-        //dd($variations);
-
-        $variations = $prod->variation_entreprise($entreprise);
-        // dd($variations);
-
-        return view('main.stock.product.stockstory', compact('variations', 'prod'));
-    }
-
-    public function stockStoryEntp(Entrepot $entrepot,Product $product)
-    {
-        $variations = $product->variation_entrepot($entrepot);
-        // dd($variations);
-        return view('main.stock.product.stockstory', compact('variations', 'product'));
-    }
-
-    //Changer l'image du produit
-    public function addImage(Request $request)
-    {
-        $product = Product::where('slug', $request->slug)->first();
-
-        //dd($request->hasFile('image'));
-
-        $image = $request->file('image');
-
-        if ($request->file()) {
-
-            $fileName = $image->getClientOriginalName() . '_' . time() . '_' . rand(9, 999) . '.' . $image->extension();
-
-            $path = $image->storeAs('product_image', $fileName, 'public');
-
-            $product->image = $fileName;
-
-            $product->image_path = 'storage/' . $path;
-         
-        }
-
-        $product->save();
-
-        $notification = array(
-            "message" => "L'image du produit à été modifié avec succès!",
-            "alert-type" => "success"
-        );
-        
-        return redirect()->back()->with($notification);
-    }
-
-
 }

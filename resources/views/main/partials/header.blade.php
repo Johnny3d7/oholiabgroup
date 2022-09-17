@@ -20,7 +20,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <div class="menu-icon-grid">
                     @can('show_module_page')
-                        <a href="{{ route('module.index') }}"><i class="i-Shop-4"></i> Modules</a>
+                        <a href="{{ route('modules.index') }}"><i class="i-Shop-4"></i> Modules</a>
                     @endcan
                     @if (\Auth::user()->home())
                         <a href="{{ route(\Auth::user()->home()['name']) }}"><i class="i-Home-4"></i> Accueil</a>
@@ -185,8 +185,8 @@
                     <h6><i>Profession - Company</i></h6>
                 </div>
                 <div class="menu-icon-grid">
-                    {{-- <a href="{{ route('module.index') }}"><i class="i-Shop-4"></i> Modules</a> --}}
-                    <a href="#"><i class="i-Male-21"></i> Profile</a>
+                    {{-- <a href="{{ route('modules.index') }}"><i class="i-Shop-4"></i> Modules</a> --}}
+                    <a href="{{ route('profile.index') }}"><i class="i-Male-21"></i> Profile</a>
                     <a href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">

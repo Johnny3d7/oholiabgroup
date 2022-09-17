@@ -6,14 +6,14 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <div class="menu-icon-grid">
                     @if (1 == 0)
-                        <a href="{{-- route('module.index') --}}">
+                        <a href="{{-- route('modules.index') --}}">
                             <img class="w-100" src="{{ url('images/logo.png') }}"  alt="alt" />
                         </a>
                     @endif
-                    <a href="{{-- route('module.index') --}}">
+                    <a href="{{-- route('modules.index') --}}">
                         <img class="w-100" src="{{ url('images/faviconobp.png') }}"  alt="alt" />
                     </a>
-                    <a href="{{-- route('module.index') --}}">
+                    <a href="{{-- route('modules.index') --}}">
                         <img class="w-100" src="{{ url('images/logoakebie1.png') }}"  alt="alt" />
                     </a>
                 </div>

@@ -14,4 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Routes Inventaires
+Route::prefix('inventaires')->name('inventaires.')->group(function(){
+    Route::get('{inventaire}/procede', [InventaireController::class, 'procede'])->name('procede');
+    Route::post('{inventaire}/procede', [InventaireController::class, 'procedePost'])->name('procedePost');
+    Route::post('{inventaire}/validation', [InventaireController::class, 'validation'])->name('validation');
+});
+
 Route::resource('inventaires', InventaireController::class);

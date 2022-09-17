@@ -34,31 +34,31 @@ class LigneInventaire extends BaseModel
     protected $dates=[];
 
     /**
-    * idEntrepot
+    * entrepot
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
-    public function idEntrepot()
+    public function entrepot()
     {
         return $this->belongsTo(Entrepot::class,'id_entrepots');
     }
 
     /**
-    * idInventaire
+    * inventaire
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
-    public function idInventaire()
+    public function inventaire()
     {
         return $this->belongsTo(Inventaire::class,'id_inventaires');
     }
 
     /**
-    * idProduct
+    * product
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
-    public function idProduct()
+    public function product()
     {
         return $this->belongsTo(Product::class,'id_products');
     }

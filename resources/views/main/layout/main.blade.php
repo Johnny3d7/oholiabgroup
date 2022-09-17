@@ -10,7 +10,9 @@
     {{--<link rel="icon" href="{{ url('images/main_img/favicon/favicon-32x32.png') }}" type="image/x-icon">--}}
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
     @php
-        $a = Auth::user()->entreprise->id ?? 1;
+        $connected_user = Auth::user();
+        $connected_entreprise = $connected_user->entreprise;
+        $a = $connected_entreprise->id ?? 1;
     @endphp
     @if ($a == 1)
     <link href="{{ url('css/themes/lite-purple.css') }}" rel="stylesheet" />
@@ -38,6 +40,7 @@
 
     <link href="{{ asset('myplugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('myplugins/HoldOn/HoldOn.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('myplugins/select2/css/select2.min.css') }}" rel="stylesheet" />
 
     <style>
         /* Make the badge float in the top right corner of the button */
@@ -143,6 +146,7 @@
     <script src="{{ asset('myplugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('myplugins/HoldOn/HoldOn.min.js') }}"></script>
     <script src="{{ asset('myplugins/HoldOn/HoldOn.min.js') }}"></script>
+    <script src="{{ asset('myplugins/select2/js/select2.min.js') }}"></script>
 
     <script>
         $('#ul-contact-list').DataTable();
@@ -150,7 +154,7 @@
     <script>
         $('[data-mask]').inputmask();
     </script>
-    <script src="{{ url('js/plugins/select2/js/select2.full.min.js') }}"></script>
+    {{-- <script src="{{ url('js/plugins/select2/js/select2.full.min.js') }}"></script> --}}
     <script>
         const Toast = Swal.mixin({
             toast: true,
@@ -197,6 +201,10 @@
     </script>
     <script>
         $(document).ready(function () {
+            $('input.is-invalid').on('keyup', function(){
+                $(this).removeClass('is-invalid');
+            })
+
             $('.table_oholiab').each(function(){
                 $this = $(this);
                 $toExport = $this.data('to-export') ?? [':visible'];
@@ -294,6 +302,8 @@
                     if(link != '#') window.location.assign(link);
                 })
             })
+
+            $('.select2').select2();
         })
     </script>
     @yield('javascripts')

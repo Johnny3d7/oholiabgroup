@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ModuleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,5 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 //Liste des modules
 Route::middleware('auth')->group(function(){
-    Route::get('/modules', 'App\Http\Controllers\ModuleController@index')->name('module.index');
+    Route::get('/modules', [ModuleController::class, 'index'])->name('modules.index');
 });

@@ -11,11 +11,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property date $birthdate birthdate
  * @property date $hiredate hiredate
  * @property \Illuminate\Database\Eloquent\Collection $entrepotshass belongsToMany
- * 
+ *
  */
-class Employe extends BaseModel 
+class Employe extends BaseModel
 {
-    
+
     /**
     * Database table name
     */
@@ -40,6 +40,17 @@ class Employe extends BaseModel
     {
         return $this->hasOne(User::class,'id_employes');
     }
+
+    public function entreprise()
+    {
+        return $this->belongsTo(Entreprise::class, 'id_entreprises');
+    }
+
+    public function name()
+    {
+        return $this->nom. ' ' .$this->prenoms;
+    }
+
 
 
 

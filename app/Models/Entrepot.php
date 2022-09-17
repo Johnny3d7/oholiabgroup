@@ -43,11 +43,12 @@ class Entrepot extends BaseModel
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
     */
-    public function ehp()
+    public function ehp(Product $product = null)
     {
-        return $this->hasMany(EntrepotsHasProduct::class, 'id_entrepots');
+        $ehps = $this->hasMany(EntrepotsHasProduct::class, 'id_entrepots');
+        return $product ? $ehps->whereIdProducts($product->id)->first() : $ehps;
     }
-    
+
     /**
     * products
     *
@@ -58,7 +59,7 @@ class Entrepot extends BaseModel
         $ids = $this->ehp->pluck('id_products');
         return Product::whereIn('id', $ids)->get();
     }
-   
+
     /**
     * voisins
     *

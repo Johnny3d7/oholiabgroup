@@ -110,7 +110,7 @@ Détails de bon d'expression de besoins
         <div class="card h-100">
             <div class="card-body text-center">
                 <h3 class="text-dark mb-4">Actions</h3>
-                @role('Directrice Générale')
+                @role(config('constants.roles.dg'))
                     @if (!in_array($besoin->statut, ['validé', 'refusé', 'annulé', 'traité']))
                         <button type="button" data-link="{{ route('achats.besoins.validation', ['besoin' => $besoin, 'statut' => 'valide']) }}" class="btn btn-lg btn-success ripple btn-block text-16 mb-3 btnValiderSelected">
                             <i class="i-Yes text-30"></i>
@@ -125,7 +125,7 @@ Détails de bon d'expression de besoins
                     @endif
                 @endrole
 
-                @role("Chargé d'Achats")
+                @role(config('constants.roles.chgachat'))
                     @if (in_array($besoin->statut, ['en attente', 'refusé', 'annulé']))
                         <a href="{{ route('achats.besoins.edit', $besoin) }}" class="btn btn-md btn-success ripple btn-block text-16 mb-3">
                             <i class="i-Pen-4 text-30"></i>
@@ -161,7 +161,7 @@ Détails de bon d'expression de besoins
 
                     <div class="user-profile mb-4">
                         <div class="ul-widget-card__user-info row">
-                            @role("Chargé d'Achats")
+                            @role(config('constants.roles.chgachat'))
                                 @if (in_array($besoin->statut, ['en attente' /*, 'refusé', 'annulé' */]))
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#edit_{{ $ligne->uuid }}_modal" class="btn btn-md btn-outline-success ripple text-16 mb-3" style="position: absolute; top:0.2rem; right: 0.2rem; z-index: 1000;">
                                         <i class="i-Pen-4 text-20"></i>
@@ -169,7 +169,7 @@ Détails de bon d'expression de besoins
                                         {{-- <span class="d-block">Editer</span>  --}}
                                 @endif
                             @endrole
-                            @role('Directrice Générale')
+                            @role(config('constants.roles.dg'))
                                 @if ($ligne->statut == 'en attente')
                                     <label class="checkbox checkbox-info">
                                         <input class="checkArticle" data-id={{ $ligne->id }} type="checkbox" checked="checked">
@@ -223,7 +223,7 @@ Détails de bon d'expression de besoins
                         {{-- <button class="btn btn-outline-success m-1 float-right" type="button">Message</button> --}}
                         {{-- <button class="btn btn-outline-success m-1 float-right" type="button">Message</button> --}}
                     </div>
-                    @role('Directrice Générale')
+                    @role(config('constants.roles.dg'))
                         @if ($ligne->statut == 'en attente')
                             <div class="pt-2 px-md-2 text-center row validationRow">
                                 <div class="col-md-6">
@@ -243,7 +243,7 @@ Détails de bon d'expression de besoins
                             <div class="alert alert-{{ $ligne->statut == 'refusé' ? 'danger' : 'info' }} text-center text-16 text-uppercase">{{ $ligne->statut }}{{ $ligne->motif ? ' : '.$ligne->motif  : '' }} </div>
                         @endif
                     @endrole
-                    @role("Chargé d'Achats")
+                    @role(config('constants.roles.chgachat'))
                         @if ($ligne->statut == 'validé')
                             <div class="pt-2 px-md-2 text-center">
                                 <button type="button" data-id="{{ $ligne->id }}" class="btn btn-md btn-info btn-block text-18">
@@ -258,7 +258,7 @@ Détails de bon d'expression de besoins
                 </div>
             </div>
         </div>
-        @role("Chargé d'Achats")
+        @role(config('constants.roles.chgachat'))
             @if (in_array($besoin->statut, ['en attente', 'refusé', 'annulé']))
                 @include('main.achats.besoins._editLigne')
             @endif

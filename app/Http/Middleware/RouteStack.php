@@ -18,7 +18,7 @@ class RouteStack
     public function handle(Request $request, Closure $next)
     {
         /* Configuraton variables declaration */
-        $home = 'module.index';
+        $home = 'modules.index';
         $max_lenght = 20; // -1 for unlimited
 
         /* User profile home */
@@ -29,7 +29,7 @@ class RouteStack
 
         /* Only GET method and not ignored routes are supported */
         $to_ignore = [];
-        
+
         if($request->method() == "GET" && !in_array(Route::currentRouteName(), $to_ignore)){
             $array = session('routeStack', []);
 

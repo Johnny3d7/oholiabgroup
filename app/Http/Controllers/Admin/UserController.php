@@ -77,10 +77,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        dd($user);
+        // dd($user);
         // dd($user->hasPermissionTo('show_module_page'));
         // dd($user->roles[0], $user->roles[0]->permissions, $user->permissions, $user->perms());
-        // dd($user->roles()->get(), $user->role, $user->role->permissions()->get(), $user->permissions(), $user->hasRole('superadmin'), $user->hasPermissionTo("Show Aministration"));
+        // dd($user->roles()->get(), $user->role, $user->role->permissions()->get(), $user->permissions(), $user->hasRole(config('constants.roles.superadmin')), $user->hasPermissionTo("Show Aministration"));
         return view('admin.users.show', compact('user'));
     }
 
@@ -102,9 +102,44 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'username' => 'required',
+        ]);
+
+        $user->update(['username' => $request->username]);
+
+        if ($image = $request->file('image')) {
+            $name = $request->name;
+            $fileName = str_replace(' ', '_', $name) . '_' . time() . '.' . $image->extension();
+            $path = $image->storeAs('Products', $fileName, 'public');
+            $user->image = 'storage/' . $path;
+            $user->save();
+        }
+
+        $notification = array(
+            "message" => "Compte utilisateur mis à jour avec succès !",
+            "alert-type" => "success"
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function updatePassword(Request $request, User $user)
+    {
+        $request->validate([
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user->update(['password' => Hash::make($request->password)]);
+
+        $notification = array(
+            "message" => "Mot de passe de l'utilisateur mis à jour avec succès !",
+            "alert-type" => "success"
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     /**

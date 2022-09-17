@@ -38,4 +38,10 @@ class LigneBesoin extends BaseModel
     {
         return $this->quantite * $this->prix;
     }
+
+    public function ligne_facture()
+    {
+        return $this->hasOne(LigneFacture::class,'id_ligne_besoins');
+    }
+
 }

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::prefix('/achats')->name('achats.')->group(function () {
+Route::prefix('/achats')->name('achats.')->middleware(['role_or_permission:'.config('constants.roles.chgachat').'|'.config('constants.roles.dg')])->group(function () {
     Route::get('/', [AchatController::class, 'index'])->name('index');
 
     Route::prefix('besoins')->name('besoins.')->group(function(){

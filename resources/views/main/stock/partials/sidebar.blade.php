@@ -6,9 +6,9 @@
     @if ($entreprise == 1)
         <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Shop text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Inventaire</span></a>
             <ul class="mm-collapse">
-                <li class="item-name"><a href="{{-- route('stock.etat_stock.index',$data) --}}"><i class="nav-icon i-Bell1"></i><span class="item-name">Liste</span></a></li>
+                <li class="item-name"><a href="{{ route('stock.inventaires.index') }}"><i class="nav-icon i-Bell1"></i><span class="item-name">Liste</span></a></li>
                 @foreach (Entreprise::all() as $data)
-                    <li class="item-name"><a href="{{-- route('stock.etat_stock.index',$data) --}}"><i class="nav-icon i-Bell1"></i><span class="item-name">{{ $data->name }}</span></a></li>
+                    <li class="item-name"><a href="javascript:void(0);"><i class="nav-icon i-Bell1"></i><span class="item-name">{{ $data->name }}</span></a></li>
                 @endforeach
                 <li class="item-name"></li>
                 {{-- <li class="nav-item"><a href="#"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Journal | entrées</span></a></li>

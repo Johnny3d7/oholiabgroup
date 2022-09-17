@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -41,52 +42,58 @@ Route::middleware(['auth','route-stack'])->group(function(){
         return back();
     })->name('markAllAsRead');
 
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', [UserController::class, 'profile'])->name('index');
+        Route::post('general', [UserController::class, 'update'])->name('update');
+        Route::post('password', [UserController::class, 'password'])->name('password');
+    });
+
     //Liste des modules
     require('web/modules/main.php');
 
     //Les routes des bons de commande et de livraison
     require('web/bon_commande_livraison.php');
-    
+
     //Akébié routes
-    require('web/akebie/main.php');    
-    
+    require('web/akebie/main.php');
+
     //Obp Inc routes
     require('web/obpinc/main.php');
-    
-    
+
+
     //connexion
     Route::get('/slogin', 'App\Http\Controllers\Stock\DashboardController@loguser')->name('user.login');
-    
+
     //commande client
     require('web/commande_client.php');
-    
+
     //Bon de commande
     require('web/bon_de_commande.php');
 
     //expression de besoin
     Route::get('/expression_besoin', 'App\Http\Controllers\Stock\CommandeController@expressionbesoin')->name('expression_besoin.index');
-    
+
     //Commande fournisseur
     require('web/commande_fournisseur.php');
-    
+
     //Facture
     Route::get('/factures', 'App\Http\Controllers\Stock\FactureController@index')->name('facture.index');
-    
+
     //Livraison
     Route::get('/livraisons', 'App\Http\Controllers\Stock\LivraisonController@index')->name('livraison.index');
     Route::get('commande-nature/{id}', 'App\Http\Controllers\Stock\AjaxController@getCommandeNature')->name('commande-nature.search');
-    
+
     //Bon de livraison
-    
+
     //Créer bon de livraison
     Route::post('/commande-client/create-bon-livraison', 'App\Http\Controllers\Stock\LivraisonController@creer_bonlivraison')->name('commande_client.create_bon_livraison');
-    
+
     //Gestion de stock routes
     require('web/modules/stock/main.php');
 
     // Administration Module routes
     require('web/admin/main.php');
-    
+
     // Achats
     require('web/modules/achat/main.php');
 });
@@ -98,7 +105,7 @@ Route::get('back', function () {
 
     session(['routeStack' => $array]);
 
-    return redirect()->route(is_array($route) ? $route['name'] : 'module.index', is_array($route) ? $route['params'] : null);
+    return redirect()->route(is_array($route) ? $route['name'] : 'modules.index', is_array($route) ? $route['params'] : null);
 })->name('backStack');
 
 Auth::routes();
