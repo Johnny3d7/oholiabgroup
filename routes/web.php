@@ -43,7 +43,7 @@ Route::middleware(['auth','route-stack'])->group(function(){
     })->name('markAllAsRead');
 
     Route::prefix('profile')->name('profile.')->group(function () {
-        Route::get('/', [UserController::class, 'profile'])->name('index');
+        Route::get('/', [UserController::class, 'mon_compte'])->name('index');
         Route::post('general', [UserController::class, 'update'])->name('update');
         Route::post('password', [UserController::class, 'password'])->name('password');
     });
