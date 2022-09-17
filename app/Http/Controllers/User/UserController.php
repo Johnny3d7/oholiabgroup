@@ -40,7 +40,7 @@ class UserController extends Controller
         }
     }
 
-    public function profile()
+    public function mon_compte()
     {
         $user = \Auth::user();
         return view('admin.users.show', compact('user'), ['profile' => true]);
