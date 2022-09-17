@@ -212,6 +212,9 @@
                             </div>
                         </div>
                     @endif
+                    @php
+                        dd('Fin');
+                    @endphp
                     {{-- <div class="tab-pane fade" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
                         <ul class="timeline clearfix">
                             <li class="timeline-line"></li>
