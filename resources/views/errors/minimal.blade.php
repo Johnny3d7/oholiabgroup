@@ -42,7 +42,7 @@
             setInterval(() => {
                 sec--;
                 btn.innerHTML = `Retour en arrière dans ${sec} secondes`;
-                if(sec <= 0) btn.click();
+                if(sec == 0) btn.click();
             }, 1000);
         </script>
     </body>
