@@ -1,6 +1,3 @@
-@php
-    dd($user, $profile, Auth::user());
-@endphp
 @extends(isset($profile) && $profile == true ? 'admin.partials.main_profile' : 'admin.partials.main')
 
 @section('raccourcis')
@@ -52,7 +49,7 @@
                             <div class="col-md-8">
                                 <h4 class="mb-5">Compte utilisateur</h4>
 
-                                @php $notifs = Auth::user()->all_notifs; $count = count($notifs); @endphp
+                                @php $notifs = Auth::user()->all_notifs; $count = count($notifs); dd($notifs); @endphp
 
                                 <div class="card mb-4">
                                     <div class="card-header bg-transparent">
