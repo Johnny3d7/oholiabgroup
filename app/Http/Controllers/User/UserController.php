@@ -43,7 +43,6 @@ class UserController extends Controller
     public function profile()
     {
         $user = \Auth::user();
-        dd('here', $user);
         return view('admin.users.show', compact('user'), ['profile' => true]);
     }
 
