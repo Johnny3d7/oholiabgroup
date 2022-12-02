@@ -15,11 +15,12 @@ class RolePermissionSeeder extends Seeder
      */
     public function run()
     {
-        // \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        if(config('database.default') == 'mysql') \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         Role::truncate();
         Permission::truncate();
-        // \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        if(config('database.default') == 'mysql') \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $role = Role::create([
             'name' => config('constants.roles.geststock'),

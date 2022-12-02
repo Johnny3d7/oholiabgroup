@@ -14,7 +14,10 @@ class ParametresTableSeeder extends Seeder
      */
     public function run()
     {
+        if(config('database.default') == 'mysql') \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Parametre::truncate();
+        if(config('database.default') == 'mysql') \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
 
         $parametres = [
             'products' => [
