@@ -28,8 +28,8 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Eau minérale Harod - Pack de 6 x 1L",
-            'type' => 2, // 'Fragile',
-            'nature' => 2, // 'Pack',
+            'type' => 5, // 'Fragile',
+            'nature' => 7, // 'Pack',
             'unite' => 1, // 'unité',
             'image' => 'storage/Products/Optimized-bo.png',
             'id_categories' => 2,
@@ -38,8 +38,8 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Eau minérale Harod - Pack de 9 x 570ml",
-            'type' => 2, // 'Fragile',
-            'nature' => 2, // 'Pack',
+            'type' => 5, // 'Fragile',
+            'nature' => 7, // 'Pack',
             'unite' => 1, // 'unité',
             'image' => 'storage/Products/Optimized-bo.png',
             'id_categories' => 2,
@@ -48,8 +48,8 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Eau minérale Harod - Carton 24 x 330ml",
-            'type' => 1, // 'Périssable',
-            'nature' => 2, // 'Pack',
+            'type' => 4, // 'Périssable',
+            'nature' => 7, // 'Pack',
             'unite' => 1, // 'unité',
             'image' => 'storage/Products/Optimized-gobelet-250-ml.jpg',
             'id_categories' => 2,
@@ -58,8 +58,8 @@ class ProductsTableSeeder extends Seeder
         
         Product::create([
             'name' => "Poulet bio THALILA (3Kg)",
-            'type' => 1, // 'Périssable',
-            'nature' => 1, // 'Unité',
+            'type' => 4, // 'Périssable',
+            'nature' => 6, // 'Unité',
             'unite' => 1, // 'unité',
             'image' => 'storage/Products/Thalila_Boutique-300x300.png',
             'id_categories' => 1,
@@ -68,8 +68,8 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Poulet de chair (1,5 - 2Kg)",
-            'type' => 1, // 'Périssable',
-            'nature' => 1, // 'Unité',
+            'type' => 4, // 'Périssable',
+            'nature' => 6, // 'Unité',
             'unite' => 1, // 'unité',
             'image' => 'storage/Products/Poulet-de-chair_Boutique-300x300.png',
             'id_categories' => 1,
@@ -78,8 +78,8 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Poisson Tilapia 1Kg",
-            'type' => 1, // 'Périssable',
-            'nature' => 1, // 'Unité',
+            'type' => 4, // 'Périssable',
+            'nature' => 6, // 'Unité',
             'unite' => 1, // 'unité',
             'image' => 'storage/Products/Tilapia_Boutique-300x300.png',
             'id_categories' => 1,
@@ -88,8 +88,8 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Poisson Silure 1Kg",
-            'type' => 1, // 'Périssable',
-            'nature' => 1, // 'Unité',
+            'type' => 4, // 'Périssable',
+            'nature' => 6, // 'Unité',
             'unite' => 1, // 'unité',
             'image' => 'storage/Products/Silure_Boutique-300x300.png',
             'id_categories' => 1,
@@ -98,8 +98,8 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Alevins de Silure",
-            'type' => 1, // 'Périssable',
-            'nature' => 1, // 'Unité',
+            'type' => 4, // 'Périssable',
+            'nature' => 6, // 'Unité',
             'unite' => 1, // 'unité',
             'image' => 'storage/Products/alevins_silure-300x300.jpg',
             'id_categories' => 1,
@@ -108,8 +108,8 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Alevins de Tilapia",
-            'type' => 1, // 'Périssable',
-            'nature' => 1, // 'Unité',
+            'type' => 4, // 'Périssable',
+            'nature' => 6, // 'Unité',
             'unite' => 1, // 'unité',
             'image' => 'storage/Products/alevins_tilapia-300x300.jpg',
             'id_categories' => 1,
@@ -118,8 +118,8 @@ class ProductsTableSeeder extends Seeder
 
         Product::create([
             'name' => "Gants médicaux (propres)",
-            'type' => 1, // 'Périssable',
-            'nature' => 1, // 'Unité',
+            'type' => 4, // 'Périssable',
+            'nature' => 6, // 'Unité',
             'unite' => 1, // 'unité',
             'image' => 'storage/Products/gants-medicaux-300x300-top.jpg',
             'id_categories' => 3,

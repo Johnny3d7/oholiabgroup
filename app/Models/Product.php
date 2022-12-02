@@ -94,6 +94,17 @@ class Product extends BaseModel
     {
         return $this->belongsTo(Parametre::class,$string)->first();
     }
+    
+    public function natureName()
+    {
+        return $this->parametre('nature')->name;
+    }
+
+    public function typeName()
+    {
+        return $this->parametre('type')->name;
+    }
+
 
     /**
     * entreprise
