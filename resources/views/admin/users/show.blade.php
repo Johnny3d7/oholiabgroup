@@ -34,7 +34,7 @@
             <div class="card-body">
                 <ul class="nav nav-tabs profile-nav mb-4 text-primary" id="profileTab" role="tablist">
                     <li class="nav-item"><a class="nav-link active" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="false">Compte Utilisateur</a></li>
-                    <li class="nav-item"><a class="nav-link" id="role-tab" data-toggle="tab" href="#role" role="tab" aria-controls="role" aria-selected="true">Rôle & permissions</a></li>
+                    {{-- <li class="nav-item"><a class="nav-link" id="role-tab" data-toggle="tab" href="#role" role="tab" aria-controls="role" aria-selected="true">Rôle & permissions</a></li> --}}
                     @if($user->isEmploye())
                         <li class="nav-item"><a class="nav-link" id="employe-tab" data-toggle="tab" href="#employe" role="tab" aria-controls="employe" aria-selected="false">Espace Employé</a></li>
                     @endif
@@ -206,8 +206,12 @@
                     @if($user->isEmploye())
                         <div class="tab-pane fade" id="employe" role="tabpanel" aria-labelledby="employe-tab">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="container">
                                     <h4>Espace Employé</h4>
+                                    <div class="p-5 text-center" style="height: 16rem; overflow-y: auto;">
+                                        <h4 class="text-primary">Coming soon !</h4>
+                                        <div class="spinner-bubble spinner-bubble-primary m-5"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

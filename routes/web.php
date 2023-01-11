@@ -96,6 +96,12 @@ Route::middleware(['auth','route-stack'])->group(function(){
 
     // Achats
     require('web/modules/achat/main.php');
+
+    // Parc Info
+    require('web/modules/parc-info/main.php');
+
+    // Parc Auto
+    require('web/modules/parc-auto/main.php');
 });
 
 Route::get('back', function () {
@@ -111,10 +117,6 @@ Route::get('back', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-require('web/modules/parc-auto/main.php');
-require('web/modules/parc-info/main.php');
-require('web/modules/ressourceh/main.php');
 
 Route::fallback(function(){
     return back();

@@ -13,7 +13,7 @@ Gestions des achats
 @endsection
 
 @section('pageTitle')
-Gestions des achats
+Tableau de bord
 @endsection
 
 @section('content')

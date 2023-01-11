@@ -13,7 +13,7 @@ class CreateFacturesTable extends Migration
      */
     public function up()
     {
-        /*Schema::create('factures', function (Blueprint $table) {
+        Schema::create('factures', function (Blueprint $table) {
             $table->id();
             $table->string('uuid', 100);
             $table->string('reference', 100);
@@ -30,7 +30,7 @@ class CreateFacturesTable extends Migration
             $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
-        });*/
+        });
 
         Schema::create('ligne_factures', function (Blueprint $table) {
             $table->id();
@@ -59,6 +59,6 @@ class CreateFacturesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('ligne_factures');
-        // Schema::dropIfExists('factures');
+        Schema::dropIfExists('factures');
     }
 }

@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>@yield('title') {{ $moduleTitle ?? '' }} | {{ $entrepriseTitle ?? 'Oholiab Group' }}</title>
+    <title>{{ $pageTitle ?? '' }} {{ $moduleTitle ?? '' }} | {{ $entrepriseTitle ?? 'Oholiab Group' }}</title>
     {{--<link rel="icon" href="{{ url('images/main_img/favicon/favicon-32x32.png') }}" type="image/x-icon">--}}
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
     @php
-        $connected_user = Auth::user();
-        $connected_entreprise = $connected_user->entreprise;
-        $a = $connected_entreprise->id ?? 1;
+        // $connected_user = Auth::user();
+        // $connected_entreprise = $connected_user->entreprise;
+        // $a = $connected_entreprise->id ?? 1;
+
+        $a = Auth::user()->entreprise->id ?? 1;
     @endphp
     @if ($a == 1)
     <link href="{{ url('css/themes/lite-purple.css') }}" rel="stylesheet" />

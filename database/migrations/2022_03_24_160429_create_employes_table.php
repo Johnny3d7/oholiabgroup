@@ -34,7 +34,7 @@ class createEmployesTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->integer("id_employes")->unsigned()->nullable();
+            $table->unsignedBigInteger("id_employes")->nullable();
             $table->foreign('id_employes')->references('id')->on('employes')->onDelete('cascade');
         });
     }
