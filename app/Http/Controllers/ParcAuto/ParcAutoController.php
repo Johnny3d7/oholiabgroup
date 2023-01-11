@@ -10,6 +10,6 @@ class ParcAutoController extends Controller
 {
     public function index(){
         $vehicles = Vehicle::all();
-        return view('main.parcAuto.index', compact('vehicles'));
+        return view('main.parcauto.index', compact('vehicles'));
     }
 }
