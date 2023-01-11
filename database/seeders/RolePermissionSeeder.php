@@ -29,7 +29,8 @@ class RolePermissionSeeder extends Seeder
 
         $role = Role::create([
             'name' => config('constants.roles.chgachat'),
-            'home' => json_encode(['name' => 'achats.besoins.index', 'path' => 'achats/besoins', 'display' => 'Liste des bons de besoin'])
+            // 'home' => json_encode(['name' => 'achats.besoins.index', 'path' => 'achats/besoins', 'display' => 'Liste des bons de besoin'])
+            'home' => json_encode(['name' => 'achats.index', 'path' => 'achats', 'display' => 'Dashboard gestion des achats'])
         ]);
 
         $permissionModule = Permission::create([

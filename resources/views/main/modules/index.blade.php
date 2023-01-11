@@ -90,7 +90,7 @@ Liste des modules
                     <h5 class="card-title mb-2">Ressources humaines</h5>
                     <p class="card-text text-mute">Module</p>
                     <div class="mt-2">
-                        <a href="{{ route('ressourceh.index') }}"><button class="btn btn-primary btn-block m-1" type="button">Accéder</button></a>
+                        <a href="javascript:void(0);"><button class="btn btn-primary btn-block m-1" type="button">Accéder</button></a>
                     </div>
                 </div>
             </div>

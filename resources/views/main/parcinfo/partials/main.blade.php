@@ -1,21 +1,18 @@
-@extends('main.layout.main')
+@extends('main.layout.main', [
+    'moduleTitle' => 'Gestion du Parc Informatique',
+    'pageTitle' => $pageTitle ? "$pageTitle - " : ''
+])
 
 @section('stylesheets')
-
     @yield('stylesheets')
-
 @endsection
 
 @section('menuTitle')
-
     @yield('menuTitle')
-
 @endsection
 
 @section('pageTitle')
-
     @yield('pageTitle')
-
 @endsection
 
 @section('module_sidebar')
@@ -27,17 +24,9 @@
 @endsection
 
 @section('content')
-
     @yield('content')
-
-@endsection
-
-@section('module_name')
-    Parc Informatique
 @endsection
 
 @section('javascripts')
-
     @yield('javascripts')
-
 @endsection

@@ -1,21 +1,17 @@
-@extends('main.layout.main')
+@extends('main.layout.main', [
+    'moduleTitle' => 'Gestion des achats'
+])
 
 @section('stylesheets')
-
     @yield('stylesheets')
-
 @endsection
 
 @section('menuTitle')
-
     @yield('menuTitle')
-
 @endsection
 
 @section('pageTitle')
-
     @yield('pageTitle')
-
 @endsection
 
 @section('module_sidebar')
@@ -27,17 +23,9 @@
 @endsection
 
 @section('content')
-
     @yield('content')
-
-@endsection
-
-@section('module_name')
-    Gestion des achats
 @endsection
 
 @section('javascripts')
-
     @yield('javascripts')
-
 @endsection
