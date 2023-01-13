@@ -28,7 +28,7 @@ Liste des entrepôts
             
             <div class="card-body">
                 
-                 <a href="{{-- route('stock.entrepots.create') --}}"><button class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right"  data-style="expand-right"><span class="ladda-label">Ajouter un entrepôt</span></button></a>
+                 {{-- <a href="{{ route('stock.entrepots.create') }}"><button class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right"  data-style="expand-right"><span class="ladda-label">Ajouter un entrepôt</span></button></a> --}}
                 
                 <div class="table-responsive">
                     <table class="display table table-striped table-bordered table_oholiab"  style="width:100%">

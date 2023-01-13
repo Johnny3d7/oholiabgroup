@@ -21,7 +21,7 @@
 
     <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Safe-Box text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Produit</span></a>
         <ul class="mm-collapse">
-            <li class="nav-item"><a href="{{ route('stock.products.create') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Nouveau</span></a></li>
+            {{-- <li class="nav-item"><a href="{{ route('stock.products.create') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Nouveau</span></a></li> --}}
             <li class="nav-item"><a href="{{ route('stock.products.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
             <li class="item-name"><a href="{{ route('stock.categories.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Catégories</span></a></li>
         </ul>
@@ -67,7 +67,7 @@
     <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Checkout-Bag text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Entrepôts</span></a>
         <ul class="mm-collapse">
             <li class="nav-item"><a href="{{ route('stock.entrepots.index') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Liste</span></a></li>
-            <li class="nav-item"><a href="{{-- route('stock.entrepots.create') --}}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Créer un entrepôt</span></a></li>
+            {{-- <li class="nav-item"><a href="{{ route('stock.entrepots.create') }}"><i class="nav-icon i-File-Horizontal-Text"></i><span class="item-name">Créer un entrepôt</span></a></li> --}}
         </ul>
     </li>
     @endif

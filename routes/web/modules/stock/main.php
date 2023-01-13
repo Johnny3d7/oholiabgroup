@@ -18,9 +18,10 @@ $roles = [
     config('constants.roles.comptable'),
     config('constants.roles.chefcomptable'),
 ];
-Route::prefix('/stock')->name('stock.')->middleware(['role_or_permission:'.implode("|", $roles)])->group(function () {
+Route::prefix('/stock')->name('stock.')->middleware(['role_or_permission:'.implode("|", $roles)])->group(function () use ($roles) {
 
-    Route::middleware(['role_or_permission:'.config('constants.roles.geststock')])->group(function () {
+    // Route::middleware(['role_or_permission:'.config('constants.roles.geststock')])->group(function () {
+    Route::middleware(['role_or_permission:'.implode("|", $roles)])->group(function () {
         //Tableau de bord
         Route::get('/', [DashboardController::class, 'index'])->name('index');
 
