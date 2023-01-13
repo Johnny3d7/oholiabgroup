@@ -72,9 +72,11 @@ Historique des mouvements | {{ $product->name }}
                                         </td>
                                         <td>{{ ucwords((new Carbon\Carbon($data->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                         <td>
+                                            @hasrole(config('constants.roles.geststock'))
                                             {{-- <button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#updateVariation{{ $data->id }}" data-whatever="@fat">Modifier</button> --}}
                                             <a href="" class="text-success m-1" type="button" data-toggle="modal" data-target="#updateVariation{{ $data->id }}" data-whatever="@fat"><i class="i-Pen-3"></i></a>
                                             <a class="ul-link-action text-danger mr-1 deletevariation" href="{{ route('stock.variations.destroy', $data) }}" data-toggle="tooltip" data-placement="top" title="Voulez-vous supprimer!!!"><i class="i-Eraser-2"></i></a>
+                                            @endhasrole
                                         </td>
                                     </tr>
                                     <div class="modal fade" id="updateVariation{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="updateVariation{{ $data->id }}" aria-hidden="true">

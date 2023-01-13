@@ -31,7 +31,7 @@ Liste  des catégories
                                         <th scope="col">ID</th>
                                         <th scope="col">Libellé</th>
                                         <th scope="col">Commercialisable</th>
-                                        <th scope="col">Action</th>
+                                        {{-- <th scope="col">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,12 +47,12 @@ Liste  des catégories
                                                 @endif
                                                 
                                             </span><br /></td>
-                                            <td>
+                                            {{-- <td>
                                                 <button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#verifyModalContent{{ $category->id }}" data-whatever="@fat">Modifier</button>
                                                 <a href="{{ route('stock.categories.destroy', $category) }}">
                                                     <button class="btn btn-outline-danger m-1" type="button">Supprimer</button>
                                                 </a>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                         <div class="modal fade" id="verifyModalContent{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="verifyModalContent{{ $category->id }}" aria-hidden="true">
                                             <div class="modal-dialog" role="document">

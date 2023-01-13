@@ -15,11 +15,11 @@ Détails du produit
 @endsection
 
 @section('content')
-
+@hasrole(config('constants.roles.geststock'))
 <section class="ul-product-detail__box mb-3 pb-2">
     <div class="row">
-            <div class="col-lg-3 col-md-3 mt-4 text-center">
-                <a href="{{ route('stock.products.edit', $product) }}">
+        <div class="col-lg-3 col-md-3 mt-4 text-center">
+            <a href="{{ route('stock.products.edit', $product) }}">
                 <div class="card">
                     <div class="card-body">
                         <div class="ul-product-detail__border-box">
@@ -30,7 +30,7 @@ Détails du produit
                     </div>
                 </div>
             </a>
-            </div>
+        </div>
         <div class="col-lg-3 col-md-3 mt-4 text-center">
             <a href="#" type="button" data-toggle="modal" data-target="#add_image{{ $product->id }}" data-whatever="@fat">
                 <div class="card">
@@ -115,6 +115,7 @@ Détails du produit
         </div>
     </div>
 </section>
+@endhasrole
 
 <!--  content goes here -->
 <section class="ul-product-detail">
@@ -159,12 +160,12 @@ Détails du produit
                                     </div>
                                     <div class="ul-widget-app__browser-list-1 mb-2 ">
                                         <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
-                                        <span class="text-15"><strong>Type :</strong> {{ $product->type }}</span>
+                                        <span class="text-15"><strong>Type :</strong> {{ $product->typeName() }}</span>
                                         <span class="text-mute" style="display: none">2 April </span>
                                     </div>
                                     <div class="ul-widget-app__browser-list-1 mb-2 ">
                                         <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
-                                        <span class="text-15"><strong>Nature :</strong> {{ $product->nature }}</span>
+                                        <span class="text-15"><strong>Nature :</strong> {{ $product->natureName() }}</span>
                                         <span class="text-mute" style="display: none">2 April </span>
                                     </div>
                                     @if ($product->poids && $product->unite_poids )
@@ -201,13 +202,13 @@ Détails du produit
             $entrepots = $product->entrepots();
         @endphp
         @foreach ($entrepots as $entrepot)
-        @include('main.stock.product._mouvement', ['type' => 'entrée'])
-        @include('main.stock.product._mouvement', ['type' => 'sortie'])
-        @include('main.stock.product._transfert')
-        @php
-            $e = $entrepot->entreprise->id;
-            $color = ($e == 1) ? 'success' : (($e == 2) ? 'info' : (($e == 3) ? 'primary' : ''));
-        @endphp
+            @include('main.stock.product._mouvement', ['type' => 'entrée'])
+            @include('main.stock.product._mouvement', ['type' => 'sortie'])
+            @include('main.stock.product._transfert')
+            @php
+                $e = $entrepot->entreprise->id;
+                $color = ($e == 1) ? 'success' : (($e == 2) ? 'info' : (($e == 3) ? 'primary' : ''));
+            @endphp
             <div class="col-md-4 mt-4">
                 <div class="card">
                     <div class="card-body">
@@ -243,10 +244,12 @@ Détails du produit
                             </div>
                         </div>
                         <div class="pt-2 border-top px-md-2">
+                            @hasrole(config('constants.roles.geststock'))
                             <a href="" class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#add_variation{{ $product->id }}{{ $entrepot->id }}entrée"><i class="nav-icon i-Down mr-1"></i> Entrée </a>
                             <a href="" class="btn btn-outline-danger m-1" type="button" data-toggle="modal" data-target="#add_variation{{ $product->id }}{{ $entrepot->id }}sortie"><i class="nav-icon i-Up mr-1"></i> Sortie </a>
-                            <a href="{{ route('stock.stock_story_entrepot.index',['entrepot'=>$entrepot, 'product'=> $product]) }}" class="btn btn-outline-warning m-1"><i class="nav-icon i-Repeat-4 mr-1"></i> Historique </a>
-                            <a href="" class="btn btn-outline-primary m-1 float-right" type="button" data-toggle="modal" data-target="#add_variation{{ $product->id }}{{ $entrepot->id }}transfert"><i class="nav-icon i-Data-Transfer mr-1"></i> Transfert </a>
+                            <a href="" class="btn btn-outline-primary m-1" type="button" data-toggle="modal" data-target="#add_variation{{ $product->id }}{{ $entrepot->id }}transfert"><i class="nav-icon i-Data-Transfer mr-1"></i> Transfert </a>
+                            @endrole
+                            <a href="{{ route('stock.stock_story_entrepot.index',['entrepot'=>$entrepot, 'product'=> $product]) }}" class="btn btn-outline-warning m-1"><i class="nav-icon i-Repeat-4"></i> Historique </a>
                             {{-- <button class="btn btn-outline-success m-1 float-right" type="button">Message</button> --}}
                             {{-- <button class="btn btn-outline-success m-1 float-right" type="button">Message</button> --}}
                         </div>
