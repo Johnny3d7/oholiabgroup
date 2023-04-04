@@ -23,13 +23,30 @@ Liste des entrepôts
 
 @section('content')
 <div class="row mb-4">
-    <div class="col-md-12 mb-4">
+    @forelse ($entrepots->sortBy('id_entreprises') as $entrepot)
+        @php
+            $e = $entrepot->entreprise->id;
+            $color = ($e == 1) ? 'success' : (($e == 2) ? 'info' : (($e == 3) ? 'primary' : ''));
+        @endphp
+        <div class="col-lg-3 col-md-4 py-2">
+            <a href="{{ route('stock.entrepots.show', $entrepot) }}">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="i-Shop{{ $e <> 1 ? '-'.$e : '' }} text-{{ $color }} text-25 font-weight-500" style="font-size: 150px;"></i>
+                        <h5 class="card-title my-2 text-truncate" title="{{ $entrepot->name }}">{{ $entrepot->name }}</h5>
+                        <p class="card-text text-mute">{{ $entrepot->lieu }}</p>
+                        <span class="rounded" style="position: absolute; top:1rem; right: 0rem; background-color: rgba(218, 201, 201, 0.5)"><img class="m-2" src="{{ asset($entrepot->entreprise->logo) }}" alt="" style="height: 3rem;"></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    @empty
+        <h6 class="text-center">Aucun entrepôt !</h6>
+    @endforelse
+    {{-- <div class="col-md-12 mb-4">
         <div class="card text-left">
             
             <div class="card-body">
-                
-                 {{-- <a href="{{ route('stock.entrepots.create') }}"><button class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right"  data-style="expand-right"><span class="ladda-label">Ajouter un entrepôt</span></button></a> --}}
-                
                 <div class="table-responsive">
                     <table class="display table table-striped table-bordered table_oholiab"  style="width:100%">
                         <thead>
@@ -39,33 +56,16 @@ Liste des entrepôts
                                 <th>Entreprise</th>
                                 <th>Lieu</th>
                                 <th>Date de création</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($entrepots as $entrepot)
-                                <tr>
+                                <tr class="tr-link py-3" data-link="{{ route('stock.entrepots.show', $entrepot) }}">
                                     <td>{{ $entrepot->reference }}</td>
                                     <td>{{ $entrepot->name }}</td>
-                                    <td>{{ $entrepot->entreprise ? $entrepot->entreprise->name : ''  }}</td>
+                                    <td><img style="height: 2em;" class="mr-2" src="{{ asset($entrepot->entreprise->logo) }}" alt="logo_entreprise" />{{ $entrepot->entreprise ? $entrepot->entreprise->name : ''  }}</td>
                                     <td>{{ $entrepot->lieu }}</td>
                                     <td>{{ ucwords((new Carbon\Carbon($entrepot->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
-                                    <td>
-                                        <button class="btn " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="_dot _inline-dot bg-primary"></span>
-                                            <span class="_dot _inline-dot bg-primary"></span>
-                                            <span class="_dot _inline-dot bg-primary"></span>
-                                        </button>
-                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                            <a class="dropdown-item ul-widget__link--font" href="{{ route('stock.entrepots.show',$entrepot) }}"><i class="i-Eye">
-                                                </i> Consulter
-                                            </a>
-                                            <a class="dropdown-item ul-widget__link--font" href="{{ route('stock.entrepots.edit', $entrepot) }}">
-                                                <i class="i-Edit"> </i> Modifier
-                                            </a>
-                                        </div>
-                                    </td>
-                                    {{-- <td><a href="{{ route('stock.products.show', $data) }}"><button class="btn btn-outline-warning btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Eye"></i></span></button></a><a href="{{ route('stock.products.edit', $data) }}"><button class="btn btn-outline-success btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Edit"></i></span></button></a><a href="{{ route('stock.products.destroy', $data) }}"><button class="btn btn-outline-danger btn-icon m-1" type="button"><span class="ul-btn__icon"><i class="i-Close"></i></span></button></a></td> --}}
                                 </tr>
                             @empty
                                 
@@ -80,14 +80,13 @@ Liste des entrepôts
                                 <th>Entreprise</th>
                                 <th>Lieu</th>
                                 <th>Date de création</th>
-                                <th>Action</th>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection
 

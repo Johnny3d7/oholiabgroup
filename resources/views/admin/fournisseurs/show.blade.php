@@ -18,20 +18,20 @@ Détails du fournisseur
 
 <section class="ul-product-detail__box mb-3 pb-2">
     <div class="row">
-            <div class="col-lg-3 col-md-3 mt-4 text-center">
-                <a href="{{ route('stock.fournisseurs.edit', $fournisseur) }}">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="ul-product-detail__border-box">
-                                <div class="ul-product-detail--icon mb-2"><i class="i-Edit text-success text-25 font-weight-500"></i></div>
-                                <h5 class="heading">Modifier ce fournisseur</h5>
-                                <p class="text-muted text-12">Mettre à jour les caractérisques du fournisseur actuel.</p>
-                            </div>
+        {{-- <div class="col-lg-3 col-md-3 mt-4 text-center">
+            <a href="{{ route('stock.fournisseurs.edit', $fournisseur) }}">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="ul-product-detail__border-box">
+                            <div class="ul-product-detail--icon mb-2"><i class="i-Edit text-success text-25 font-weight-500"></i></div>
+                            <h5 class="heading">Modifier ce fournisseur</h5>
+                            <p class="text-muted text-12">Mettre à jour les caractérisques du fournisseur actuel.</p>
                         </div>
                     </div>
-                </a>
-            </div>
-        <div class="col-lg-3 col-md-3 mt-4 text-center">
+                </div>
+            </a>
+        </div> --}}
+        {{-- <div class="col-lg-3 col-md-3 mt-4 text-center">
             <a href="#" type="button" data-toggle="modal" data-target="#add_image{{ $fournisseur->id }}" data-whatever="@fat">
                 <div class="card">
                     <div class="card-body">
@@ -72,7 +72,7 @@ Détails du fournisseur
 
                 </div>
             </div>
-        </div>
+        </div> --}}
         {{--<div class="col-lg-3 col-md-3 mt-4 text-center">
             <a href="{{ route('stock.fournisseurs.index') }}">
             <div class="card">
@@ -86,7 +86,7 @@ Détails du fournisseur
             </div>
         </a>
         </div>--}}
-        <div class="col-lg-3 col-md-3 mt-4 text-center">
+        {{-- <div class="col-lg-3 col-md-3 mt-4 text-center">
             <a href="#" type="button" data-toggle="modal" data-target="#add_variation{{ $fournisseur->id }}" data-whatever="@fat">
             <div class="card">
                 <div class="card-body">
@@ -98,8 +98,8 @@ Détails du fournisseur
                 </div>
             </div>
             </a>
-        </div>
-        @include('main.stock.product._mouvement')
+        </div> --}}
+        {{-- @include('main.stock.product._mouvement')
         <div class="col-lg-3 col-md-3 mt-4 text-center">
             <a href="{{ route('stock.fournisseurs.destroy', $fournisseur) }}">
             <div class="card">
@@ -112,7 +112,7 @@ Détails du fournisseur
                 </div>
             </div>
             </a>
-        </div>
+        </div> --}}
     </div>
 </section>
 

@@ -16,7 +16,7 @@ Détails du produit
 
 @section('content')
 @hasrole(config('constants.roles.geststock'))
-<section class="ul-product-detail__box mb-3 pb-2">
+{{-- <section class="ul-product-detail__box mb-3 pb-2">
     <div class="row">
         <div class="col-lg-3 col-md-3 mt-4 text-center">
             <a href="{{ route('stock.products.edit', $product) }}">
@@ -73,7 +73,7 @@ Détails du produit
                 </div>
             </div>
         </div>   
-        {{--<div class="col-lg-3 col-md-3 mt-4 text-center">
+        <!--<div class="col-lg-3 col-md-3 mt-4 text-center">
             <a href="{{ route('stock.products.index') }}">
             <div class="card">
                 <div class="card-body">
@@ -85,7 +85,7 @@ Détails du produit
                 </div>
             </div>
         </a>
-        </div>--}}
+        </div>-->
         <div class="col-lg-3 col-md-3 mt-4 text-center">
             <a href="#" type="button" data-toggle="modal" data-target="#add_variation{{ $product->id }}" data-whatever="@fat">
             <div class="card">
@@ -114,7 +114,7 @@ Détails du produit
             </a>
         </div>
     </div>
-</section>
+</section> --}}
 @endhasrole
 
 <!--  content goes here -->
@@ -136,7 +136,9 @@ Détails du produit
                         </div>
                         <div class="col-lg-8">
                             <div class="ul-product-detail__brand-name mb-4">
-                                <h2 class="heading">{{ $product->name }}</h2><span class="text-warning">{{ $product->category->name }}</span>
+                                {{-- <span class="text-warning h4">{{ $product->category->name }}</span> --}}
+                                <h2 class="heading">{{ $product->name }}</h2>
+                                <span>{!! $product->description !!}</span>
                             </div>
                             @if ($product->price)
                                 <div class="ul-product-detail__price-and-rating d-flex align-items-baseline">
@@ -146,18 +148,18 @@ Détails du produit
                             @endif
                         
                             <div class="ul-product-detail__features mt-4">
-                                <h5 class="font-weight-700">Caractéristiques du produit:</h5>
+                                <h5 class="font-weight-700">Caractéristiques :</h5>
                                 <ul class="m-0 p-0">
                                     <div class="ul-widget-app__browser-list-1 mb-2 mt-4">
                                         <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
                                         <span class="text-15"><strong>Référence :</strong> {{ $product->reference }} </span>
                                         <span class="text-mute" style="display: none">2 April </span>
                                     </div>
-                                    <div class="ul-widget-app__browser-list-1 mb-2">
+                                    {{-- <div class="ul-widget-app__browser-list-1 mb-2">
                                         <i class="i-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
                                         <span class="text-15"><strong>Stock alerte (seuil) :</strong> {{ $product->stockalert }}</span>
                                         <span class="text-mute" style="display: none">2 April </span>
-                                    </div>
+                                    </div> --}}
                                     <div class="ul-widget-app__browser-list-1 mb-2 ">
                                         <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
                                         <span class="text-15"><strong>Type :</strong> {{ $product->typeName() }}</span>
@@ -166,6 +168,11 @@ Détails du produit
                                     <div class="ul-widget-app__browser-list-1 mb-2 ">
                                         <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
                                         <span class="text-15"><strong>Nature :</strong> {{ $product->natureName() }}</span>
+                                        <span class="text-mute" style="display: none">2 April </span>
+                                    </div>
+                                    <div class="ul-widget-app__browser-list-1 mb-2 ">
+                                        <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
+                                        <span class="text-15"><strong>Catégorie :</strong> {{ $product->category->name }}</span>
                                         <span class="text-mute" style="display: none">2 April </span>
                                     </div>
                                     @if ($product->poids && $product->unite_poids )

@@ -27,7 +27,6 @@ Liste des bons d'expression de besoins
 
 @section('content')
 <div class="row mb-4">
-
     <div class="col-md-6 offset-md-3 mb-1">
         <div class="card text-left">
             <div class="card-body">
@@ -61,9 +60,9 @@ Liste des bons d'expression de besoins
             <div class="card-body">
 
                 <div class="tab-content" style="overflow-x: auto;">
-                    <div class="tab-pane fade show active" id="pills-all-besoin" role="tabpanel" aria-labelledby="success-tab">
+                    <div class="tab-pane fade show active text-center" id="pills-all-besoin" role="tabpanel" aria-labelledby="success-tab">
                         @role(config('constants.roles.chgachat'))
-                            <a href="{{ route('achats.besoins.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right">
+                            <a href="{{ route('achats.besoins.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" data-style="expand-right">
                                 <span class="ladda-label">Ajouter un besoin</span>
                             </a>
                         @endrole
@@ -136,7 +135,7 @@ Liste des bons d'expression de besoins
             </div>
         </div>
     </div>
-
+</div>
 @endsection
 
 @section('javascripts')

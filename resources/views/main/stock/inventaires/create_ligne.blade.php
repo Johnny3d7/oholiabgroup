@@ -1,6 +1,6 @@
 @extends('main.stock.partials.main')
 
-@section('title', "Formulaire d'inventaire -")
+@section('title', "Renseignement d'inventaire -")
 
 {{-- @section('stylesheets')
 <style>
@@ -14,11 +14,11 @@
 @endsection --}}
 
 @section('menuTitle')
-Formulaire d'inventaire
+Renseignement d'inventaire
 @endsection
 
 @section('pageTitle')
-Formulaire d'inventaire
+Renseignement d'inventaire
 @endsection
 
 @section('content')
@@ -42,9 +42,9 @@ Formulaire d'inventaire
             </div>
         </section> --}}
         <div class="card animate__animated animate__backInDown">
-            <div class="card-header bg-transparent">
-                <h3 class="card-title">Formulaire d'inventaire</h3>
-            </div>
+            {{-- <div class="card-header bg-transparent">
+                <h3 class="text-primary">{{ $inventaire->name }}</h3>
+            </div> --}}
             <form method="post" action="{{ route('stock.inventaires.procedePost', $inventaire)}}">
                 @csrf
                 @method('POST')
@@ -56,24 +56,25 @@ Formulaire d'inventaire
                             $color = ($e == 1) ? 'success' : (($e == 2) ? 'info' : (($e == 3) ? 'primary' : ''));
                         @endphp
                         <div class="form-group col-md-6 col-lg-4 pr-2 text-center">
-                            <h3 class="heading mb-4">Date Inventaire</h3>
+                            <h4 class="heading mb-3">Date Inventaire</h4>
                             <i class="i-Calendar-4 text-50 font-weight-500 d-block"></i>
-                            <h3 class="mt-2 mb-3">{{ ucwords((new Carbon($inventaire->date_inventaire))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</h3>
+                            <h5 class="mt-2 mb-3">{{ ucwords((new Carbon($inventaire->date_inventaire))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</h5>
                         </div>
                         <div class="form-group col-md-6 col-lg-4 pr-2 text-center">
-                            <h3 class="heading mb-4">Entreprise</h3>
+                            <h4 class="heading mb-3">Entreprise</h4>
                             <img src="{{ asset($entrepot->entreprise->logo) }}" alt="" style="height: 4rem;">
-                            <h3 class="mt-2 mb-3">{{ $entrepot->entreprise->name }}</h3>
+                            <h5 class="mt-2 mb-3">{{ $entrepot->entreprise->name }}</h5>
                         </div>
                         <div class="form-group col-md-6 col-lg-4 pr-2 text-center">
-                            <h3 class="heading mb-4">Entrepot</h3>
+                            <h4 class="heading mb-3">Entrepot</h4>
                             <i class="i-Shop{{ $e <> 1 ? '-'.$e : '' }} text-{{ $color }} text-50 font-weight-500 d-block"></i>
-                            <h3 class="mt-2 mb-3">{{ $entrepot->name }}</h3>
+                            <h5 class="mt-2 mb-3">{{ $entrepot->name }}</h5>
                         </div>
                     </div>
 
                     <div class="custom-separator"></div>
-                    <h4>Articles concernés</h4>
+                    <h4>Produits concernés</h4>
+                    <div class="custom-separator"></div>
                     <div class="articles">
                         @php
                             $products = $entrepot->products()->sortBy('name');
@@ -82,7 +83,7 @@ Formulaire d'inventaire
                         @endphp
                         @foreach ($products as $product)
                             @php $key++; @endphp
-                            @if($key!=1) <div class="custom-separator"></div> @endif
+                            @if($key!=1) <center><div class="custom-separator w-75"></div></center> @endif
                             <div class="row">
                                 <div class="container text-center">
                                     {{-- <h5 class="title">Article {{ $key }}</span></h5> --}}

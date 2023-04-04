@@ -5,9 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="_token" content="{{ csrf_token() }}" />
     <title>{{ $pageTitle ?? '' }} {{ $moduleTitle ?? '' }} | {{ $entrepriseTitle ?? 'Oholiab Group' }}</title>
     {{--<link rel="icon" href="{{ url('images/main_img/favicon/favicon-32x32.png') }}" type="image/x-icon">--}}
+    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
     @php
         // $connected_user = Auth::user();
@@ -63,12 +64,13 @@
             top: 0;
             right: 2px;
         }
+
     </style>
     @yield('stylesheets')
 
 </head>
 
-<body class="text-left" style="background-image: url({{ url('images/back1.jpg') }}) !important; background-position: center center !important; ">
+<body class="text-left p-0" style="background-image: url({{ url('images/back1.jpg') }}) !important; background-position: center center !important;">
     <div class="app-admin-wrap layout-sidebar-vertical sidebar-full">
 
         @include('main.partials.sidebar')
@@ -78,7 +80,7 @@
             @include('main.partials.header')
 
             <!-- ============ Body content start ============= -->
-           <div class="main-content pt-4">
+           <div class="main-content pt-4" style="min-height: 80vh;">
                 <div class="breadcrumb">
                     <h1>@yield('pageTitle')</h1>
                     <ul>
@@ -203,6 +205,21 @@
     </script>
     <script>
         $(document).ready(function () {
+            
+            if("{{ Session::has('sidebar-compact') }}"){
+                toggleOnHover();
+                $(".sidebar-panel").mouseleave();
+            }
+            
+            $(".sidebar-compact-switch").click(function(){
+                $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')}});
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('set-sidebar-compact')}}",
+                })
+            })
+            
             $('input.is-invalid').on('keyup', function(){
                 $(this).removeClass('is-invalid');
             })
@@ -298,8 +315,11 @@
             })
 
             $('tr.tr-link, .notifLink').each(function(){
-                $(this).css({'cursor':'pointer'});
-                $(this).click(function(){
+                $this = $(this);
+                $this.css({'cursor':'pointer'});
+                $this.find('td').addClass('py-2');
+                // $this.find('td').css({'padding-top':'1rem', 'padding-bottom':'1rem'});
+                $this.click(function(){
                     link = $(this).data('link');
                     if(link != '#') window.location.assign(link);
                 })

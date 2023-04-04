@@ -31,6 +31,8 @@
         <div class="sidebar-compact-switch ml-auto"><span></span></div>
     </div>
 
+    <hr class="bg-primary my-3">
+
     <!--  user -->
     <div class="scroll-nav ps ps--active-y" data-perfect-scrollbar="data-perfect-scrollbar" data-suppress-scroll-x="true">
         <div class="side-nav">

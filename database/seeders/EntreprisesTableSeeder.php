@@ -26,20 +26,31 @@ class EntreprisesTableSeeder extends Seeder
         $faker = (new \Faker\Factory())::create();
 
         $entreprises= [
-            'Oholiab Group' => 'images/logo.png',
-            'Akébié SARL' => 'images/logoakebie1.png',
-            'OBP INC.' => 'images/faviconobp.png'
+            'Oholiab Group' => [
+                'logo' => 'images/logo.png',
+                'reference' => 'ENTR0010'
+            ],
+            'Akébié SARL' => [
+                'logo' => 'images/logoakebie1.png',
+                'reference' => 'ENTR0020'
+            ],
+            'OBP INC.' => [
+                'logo' => 'images/faviconobp.png',
+                'reference' => 'ENTR0030'
+            ],
         ];
 
-        foreach ($entreprises as $name => $logo) {
+        foreach ($entreprises as $name => $values) {
             $entreprise = Entreprise::create([
                 'name' => $name,
                 'ncc' => 'XXXX-XXXX',
-                'logo' => $logo,
+                'logo' => $values['logo'],
             ]);
-
+            
             $entrepot = Entrepot::create([
-                'name' => "Principal ".$name,
+                'reference' => $values['reference'],
+                'lieu' => "Siège de $name",
+                'name' => "Principal $name",
                 'id_entreprises' => $entreprise->id,
             ]);
         }

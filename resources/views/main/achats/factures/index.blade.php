@@ -30,11 +30,11 @@ Liste des factures
     <div class="col-md-12 mb-4">
         <div class="card text-left">
 
-            <div class="card-body">
+            <div class="card-body text-center">
 
                 @role(config('constants.roles.chgachat'))
-                    <a href="{{ route('achats.factures.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right">
-                        <span class="ladda-label">Ajouter une facture</span>
+                    <a href="{{ route('achats.factures.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" data-style="expand-right">
+                        <span class="ladda-label">Enregistrer une facture</span>
                     </a>
                 @endrole
                 <div class="table-responsive">
