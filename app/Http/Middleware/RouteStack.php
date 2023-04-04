@@ -31,9 +31,9 @@ class RouteStack
         $to_ignore = [];
 
         if($request->method() == "GET" && !in_array(Route::currentRouteName(), $to_ignore)){
-            $array = session('routeStack', []);
+            $array = session('routeStack', []) ?? [];
 
-            if($max_lenght <> -1 && count($array) >= $max_lenght) array_shift($array);
+            if($max_lenght <> -1 && $array && count($array) >= $max_lenght) array_shift($array);
 
             try {
                 if(count($array) == 0 || $array[count($array)-1]["name"] != Route::currentRouteName()){

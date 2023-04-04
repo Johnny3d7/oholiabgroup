@@ -55,10 +55,10 @@
                                     <div class="card-header bg-transparent">
                                         <h3 class="card-title text-primary">Notifications</h3>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="ul-widget-notification pr-3" style="height: 30rem; overflow-y: auto;">
+                                    <div class="card-body p-0 px-1">
+                                        <div class="ul-widget-notification pr-2" style="height: 30rem; overflow-y: auto;">
                                             @forelse ($notifs->sortByDesc('created_at') as $notification)
-                                                <div class="ul-widget-notification-item-div">
+                                                {{-- <div class="ul-widget-notification-item-div">
                                                     <a class="ul-widget-notification-item" href="{{ $notification->link ?? 'javascript:void(0);' }}">
                                                         <div class="ul-widget-notification-item-icon">
                                                             <i class="i-Bell1 text-white bg-{{ $notification->type() }} rounded-circle p-2 mr-3"></i>
@@ -68,8 +68,21 @@
                                                             <div class="text-secondary">{{ $notification->body }}</div>
                                                             <div class="ul-widget-notification-item-time">{{ $notification->moment() }}</div>
                                                         </div>
+                                                        
                                                     </a>
-                                                </div>
+                                                </div> --}}
+                                                <a class="ul-widget-notification-item" href="{{ $notification->link ?? 'javascript:void(0);' }}">
+                                                    <div class="d-flex justify-content-space-between pl-2">
+                                                        <div class="my-auto">
+                                                            <i class="i-Bell1 text-white bg-{{ $notification->type() }} rounded-circle p-2 mr-3"></i>
+                                                        </div>
+                                                        <div class="">
+                                                            <h5 class="text-dark {{ !$notification->opened ? 'font-weight-bold' : '' }}">{{ $notification->title }}</h5>
+                                                            <div class="text-secondary pr-5">{{ $notification->body }}</div>
+                                                            <p class="text-mute">{{ $notification->moment() }}</p>
+                                                        </div>
+                                                    </div>
+                                                </a>
                                                 <hr class="m-0">
                                             @empty
                                                 <div class="text-center text-16">Aucune Notification</div>
@@ -100,17 +113,17 @@
                                                         <h3 class="card-title text-primary">Modification d'informations</h3>
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="form-group row">
-                                                            <label class="action-bar-horizontal-label col-lg-4 col-form-label" for="image">Photo de profil:</label>
-                                                            <div class="col-lg-6 offset-lg-1">
+                                                        <div class="form-group">
+                                                            <label class="action-bar-horizontal-label" for="image">Photo de profil:</label>
+                                                            <div class="">
                                                                 <input type="file" name="image" class="dropify-fr" data-bs-height="180" accept=".png, .jpg, .jpeg" data-default-file="{{ asset($user->image()) }}" />
                                                             </div>
-                                                            <div class="col-lg-8 offset-lg-4 mb-4">
+                                                            <div class="mb-4">
                                                                 <small class="ul-form__text form-text" id="imageHelpBlock">Veuillez glisser-deposer une image ou cliquer pour selectionner (.png | .jpg | .jpeg)</small>
                                                             </div>
 
-                                                            <label class="action-bar-horizontal-label col-lg-4 col-form-label" for="username">Nom d'utilisateur:</label>
-                                                            <div class="col-lg-8 mb-4">
+                                                            <label class="action-bar-horizontal-label" for="username">Nom d'utilisateur:</label>
+                                                            <div class="mb-4">
                                                                 <input class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" id="username" name="username" type="text" value="{{ old('username') ?? $user->username }}" placeholder="Saisissez votre nouveau nom d'utilisateur" required>
                                                                 <small class="ul-form__text form-text" id="usernameHelpBlock">Veuillez saisir votre nouveau nom d'utilisateur</small>
                                                                 @if ($errors->has('username'))
@@ -146,10 +159,10 @@
                                                         <h3 class="card-title text-primary">Modification du mot de passe</h3>
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="form-group row">
+                                                        <div class="form-group">
                                                             @if (Auth::user()->id == $user->id)
-                                                                <label class="action-bar-horizontal-label col-lg-4 col-form-label" for="oldPassword">Ancien mot de passe:</label>
-                                                                <div class="col-lg-8 mb-4">
+                                                                <label class="action-bar-horizontal-label" for="oldPassword">Ancien mot de passe:</label>
+                                                                <div class=" mb-4">
                                                                     <input class="form-control {{ $errors->has('old_password') ? 'is-invalid' : '' }}" id="oldPassword" name="old_password" type="password" placeholder="Saisissez votre ancien mot de passe" required>
                                                                     <small class="ul-form__text form-text" id="oldPasswordHelpBlock">Veuillez saisir votre ancien mot de passe</small>
                                                                     @if ($errors->has('old_password'))
@@ -162,14 +175,14 @@
                                                                 </div>
                                                             @endif
 
-                                                            <label class="action-bar-horizontal-label col-lg-4 col-form-label" for="password">Nouveau mot de passe:</label>
-                                                            <div class="col-lg-8 mb-4">
+                                                            <label class="action-bar-horizontal-label" for="password">Nouveau mot de passe:</label>
+                                                            <div class=" mb-4">
                                                                 <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" type="password" placeholder="Saisissez votre nouveau mot de passe" required>
                                                                 <small class="ul-form__text form-text" id="passwordHelpBlock">Veuillez saisir votre nouveau mot de passe</small>
                                                             </div>
 
-                                                            <label class="action-bar-horizontal-label col-lg-4 col-form-label" for="passwordConfirmation">Confirmation mot de passe:</label>
-                                                            <div class="col-lg-8">
+                                                            <label class="action-bar-horizontal-label" for="passwordConfirmation">Confirmation mot de passe:</label>
+                                                            <div class="">
                                                                 <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="passwordConfirmation" name="password_confirmation" type="password" placeholder="Confirmez votre nouveau mot de passe" required>
                                                                 <small class="ul-form__text form-text" id="passwordConfirmationHelpBlock">Veuillez confirmer votre nouveau mot de passe</small>
                                                                 @if ($errors->has('password'))

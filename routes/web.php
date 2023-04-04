@@ -42,6 +42,13 @@ Route::middleware(['auth','route-stack'])->group(function(){
         return back();
     })->name('markAllAsRead');
 
+    Route::post('set-sidebar-compact', function () {
+        if(session('sidebar-compact')) 
+            session()->forget('sidebar-compact');
+        else
+            session(['sidebar-compact' => true]);
+    })->name('set-sidebar-compact');
+
     Route::prefix('mon-compte')->name('profile.')->group(function () {
         Route::get('/', [UserController::class, 'mon_compte'])->name('index');
         Route::post('general', [UserController::class, 'update'])->name('update');
@@ -106,8 +113,12 @@ Route::middleware(['auth','route-stack'])->group(function(){
 
 Route::get('back', function () {
     $array = session('routeStack');
-    $route = array_pop($array); $route = array_pop($array);
-    /* Double pop because the current have to be deleted (but the previous would be pushed onto the current) */
+    try {
+        /* Double pop because the current have to be deleted (but the previous would be pushed onto the current) */
+        $route = array_pop($array); $route = array_pop($array);
+    } catch (\Throwable $th) {
+        $route = null;
+    }
 
     session(['routeStack' => $array]);
 

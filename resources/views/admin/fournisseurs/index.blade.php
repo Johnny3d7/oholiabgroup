@@ -22,9 +22,9 @@ Fournisseurs
     <div class="col-md-12 mb-4">
         <div class="card text-left">
 
-            <div class="card-body">
+            <div class="card-body text-center">
                 <a href="{{ route('admin.fournisseurs.create') }}">
-                    <button class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right"  data-style="expand-right">
+                    <button class="btn btn-lg btn-primary ladda-button basic-ladda-button"  data-style="expand-right">
                         <span class="ladda-label">Ajouter un fournisseur</span>
                     </button>
                 </a>

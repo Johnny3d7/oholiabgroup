@@ -54,9 +54,9 @@ Ajout de bon d'expression de besoins
                             <label class="ul-form__label">Entreprise concernée</label>
                             <div class="">
                                 @foreach ($entreprises->sortBy('name') as $entreprise)
-                                    <label class="radio radio-outline-primary ml-5" style="display: inline">
+                                    <label class="radio radio-outline-primary ml-3" style="display: inline">
                                         <input type="radio" name="id_entreprises" value="{{ $entreprise->id }}" @if (old('id_entreprises') == $entreprise->id) selected="checked" @endif required>
-                                        <span><img src="{{ asset($entreprise->logo) }}" alt="" style="height: 4rem;"></span>
+                                        <span><img class="pb-2" src="{{ asset($entreprise->logo) }}" alt="" style="height: 4rem;"></span>
                                         <span class="checkmark"></span>
                                     </label>
                                 @endforeach

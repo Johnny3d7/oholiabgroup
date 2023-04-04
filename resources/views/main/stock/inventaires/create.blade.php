@@ -123,7 +123,7 @@ Ajout d'inventaire
                         <div class="row">
                             <div class="container text-center">
                                 <label class="checkbox checkbox-outline-primary mr-2 d-inline-flex">
-                                    <input type="checkbox" name="procede" id="" value="oui" checked> <span>Procéder à l'inventaire après ajout</span>
+                                    <input type="checkbox" name="procede" id="" value="oui" checked> <span>Renseigner l'inventaire suite à l'ajout</span>
                                     <span class="checkmark"></span>
                                 </label>
                             </div>

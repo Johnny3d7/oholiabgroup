@@ -30,12 +30,12 @@ Liste des achats effectués
     <div class="col-md-12 mb-4">
         <div class="card text-left">
 
-            <div class="card-body">
+            <div class="card-body text-center">
 
                 <div class="tab-content" style="overflow-x: auto;">
                     <div class="tab-pane fade show active" id="pills-all-besoin" role="tabpanel" aria-labelledby="success-tab">
                         @role(config('constants.roles.chgachat'))
-                            <a href="{{ route('achats.ligne_factures.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right">
+                            <a href="{{ route('achats.ligne_factures.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" data-style="expand-right">
                                 <span class="ladda-label">Ajouter un achat</span>
                             </a>
                         @endrole
@@ -84,7 +84,7 @@ Liste des achats effectués
             </div>
         </div>
     </div>
-
+</div>
 @endsection
 
 @section('javascripts')

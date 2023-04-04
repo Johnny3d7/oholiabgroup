@@ -31,11 +31,13 @@ Liste des inventaires
 
                 <div class="tab-content" style="overflow-x: auto;">
                     <div class="tab-pane fade show active" id="pills-all-inventaire" role="tabpanel" aria-labelledby="success-tab">
-                        {{-- @role("gestionnaire") --}}
-                            <a href="{{ route('stock.inventaires.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right" data-style="expand-right">
+                        @hasrole(config('constants.roles.geststock'))
+                        <div class="text-center">
+                            <a href="{{ route('stock.inventaires.create') }}" class="btn btn-lg btn-primary ladda-button basic-ladda-button" data-style="expand-right">
                                 <span class="ladda-label">Ajouter un inventaire</span>
                             </a>
-                        {{-- @endrole --}}
+                        </div>
+                        @endrole
                         <div class="table-responsive">
                             <table class="display table table-striped table-bordered table_oholiab"  style="width:100%">
                                 <thead>

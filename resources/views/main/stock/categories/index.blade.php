@@ -95,7 +95,7 @@ Liste  des catégories
                 </div>
                 <!-- end:projects-->
             </div>
-            <div class="col-lg-5 col-xl-5 mb-4 mt-0">
+            {{-- <div class="col-lg-5 col-xl-5 mb-4 mt-0">
                 <form method="POST" action="{{ route('stock.categories.store')}}">
                     <!-- start card  Horizontal Form Layout-->
                     @csrf
@@ -141,7 +141,7 @@ Liste  des catégories
                     </div>
                     <!-- end card  Horizontal Form Layout-->
                 </form>
-            </div>
+            </div> --}}
            
         </div>
         <!-- end::8th section-->
