@@ -162,12 +162,12 @@ Détails du produit
                                     </div> --}}
                                     <div class="ul-widget-app__browser-list-1 mb-2 ">
                                         <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
-                                        <span class="text-15"><strong>Type :</strong> {{ $product->typeName() }}</span>
+                                        <span class="text-15"><strong>Type :</strong> {{ $product->type_rel->name }}</span>
                                         <span class="text-mute" style="display: none">2 April </span>
                                     </div>
                                     <div class="ul-widget-app__browser-list-1 mb-2 ">
                                         <i class="i-Spell-Check text-white teal-500 rounded-circle p-2 mr-3"></i>
-                                        <span class="text-15"><strong>Nature :</strong> {{ $product->natureName() }}</span>
+                                        <span class="text-15"><strong>Nature :</strong> {{ $product->nature_rel->name }}</span>
                                         <span class="text-mute" style="display: none">2 April </span>
                                     </div>
                                     <div class="ul-widget-app__browser-list-1 mb-2 ">
@@ -204,11 +204,7 @@ Détails du produit
 
 <section class="ul-product-detail__box">
     <div class="row">
-        @php
-            // $entrepots = $product->entrepots(Auth::user()->entreprise->id <> 1 ? Auth::user()->entreprise : null);
-            $entrepots = $product->entrepots();
-        @endphp
-        @foreach ($entrepots as $entrepot)
+        @foreach ($product->entrepots() as $entrepot)
             @include('main.stock.product._mouvement', ['type' => 'entrée'])
             @include('main.stock.product._mouvement', ['type' => 'sortie'])
             @include('main.stock.product._transfert')

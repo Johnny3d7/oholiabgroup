@@ -28,11 +28,11 @@ Liste des produits
             <div class="card text-left">
                 
                 <div class="card-body">
-                    <a href="{{ route('stock.products.create') }}">
+                    {{-- <a href="{{ route('stock.products.create') }}">
                         <button class="btn btn-lg btn-primary ladda-button basic-ladda-button" style="float: right"  data-style="expand-right">
                             <span class="ladda-label">Ajouter un produit</span>
                         </button>
-                    </a>
+                    </a> --}}
                     <div class="table-responsive">
                         <table class="display table table-striped table-bordered table_oholiab" data-to-export="[0,2,3,4,5,6]" style="width:100%">
                             <thead>
@@ -53,8 +53,8 @@ Liste des produits
                                         <td class="text-center"><img class="py-2" style="height:5rem;" src="{{ asset($product->image()) }}" alt="" /></td>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->category->name }}</td>
-                                        <td>{{ $product->natureName() }}</td>
-                                        <td>{{ $product->typeName() }}</td>
+                                        <td>{{ $product->nature_rel->name }}</td>
+                                        <td>{{ $product->type_rel->name }}</td>
                                         <td>{{ ucwords((new Carbon\Carbon($product->created_at))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                     </tr>
                                 @empty
@@ -87,7 +87,7 @@ Liste des produits
                         <img class="d-block w-100 rounded rounded" src="{{ asset($product->image()) }}" alt="alt" />
                         <div class="card-body">
                             <h5 class="card-title mb-2 text-truncate" title="{{ $product->name }}">{{ $product->name }}</h5>
-                            <p class="card-text text-mute">{{ $product->category->name }} - {{ $product->natureName() }}</p>
+                            <p class="card-text text-mute">{{ $product->category->name }} - {{ $product->nature_rel->name }}</p>
                             <span class="rounded" style="position: absolute; top:1rem; right: 0rem; background-color: rgba(218, 201, 201, 0.5)"><img class="m-2" src="{{ asset($product->entreprise->logo) }}" alt="" style="height: 3rem;"></span>
                         </div>
                     </div>

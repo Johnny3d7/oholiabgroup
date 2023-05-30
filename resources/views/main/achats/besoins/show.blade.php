@@ -31,12 +31,12 @@ Détails de bon d'expression de besoins
         <div class="card h-100">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-lg-4 text-center p-5 pt-0">
-                        <h3 class="text-dark mb-5">Entreprise</h3>
+                    <div class="col-md-6 col-lg-3 text-center pt-0">
+                        <h3 class="text-dark mb-3">Entreprise</h3>
                         <img src="{{ asset($besoin->entreprise->logo) }}" class="pt-1" alt="" style="height: 5rem;">
-                        <h3 class="mt-2">{{ $besoin->entreprise->name }}</h3>
+                        <h3 class="mt-2 mb-3">{{ $besoin->entreprise->name }}</h3>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-md-6 col-lg-8">
                         <div class="ul-product-detail__brand-name mb-4">
                             <h2 class="heading">{{ $besoin->nature }}</h2>
                         </div>
@@ -81,23 +81,23 @@ Détails de bon d'expression de besoins
                 <h3 class="text-dark mb-3">Statut</h3>
                 @switch($besoin->statut)
                     @case('traité')
-                    <i class="i-Yes text-78 text-primary mt-5"></i>
+                    <i class="i-Yes text-50 text-primary mt-5"></i>
                     <h3 class="mt-2 text-primary">{{ ucfirst($besoin->statut) }}</h3>
                         @break
                     @case('validé')
-                    <i class="i-Yes text-78 text-success mt-5"></i>
+                    <i class="i-Yes text-50 text-success mt-5"></i>
                     <h3 class="mt-2 text-success">{{ ucfirst($besoin->statut) }}</h3>
                         @break
                     @case('refusé')
-                    <i class="i-Close text-78 text-danger"></i>
+                    <i class="i-Close text-50 text-danger"></i>
                     <h3 class="mt-2 text-danger">{{ ucfirst($besoin->statut) }}</h3>
                         @break
                     @case('annulé')
-                    <i class="i-Close text-78 text-warning"></i>
+                    <i class="i-Close text-50 text-warning"></i>
                     <h3 class="mt-2 text-warning">{{ ucfirst($besoin->statut) }}</h3>
                     @break
                     @default
-                    <i class="i-Loading-3 text-78 text-info mt-5"></i>
+                    <i class="i-Loading-3 text-50 text-info mt-5"></i>
                     <h3 class="mt-2 text-info">{{ ucfirst($besoin->statut) }}</h3>
                 @endswitch
                 @if ($besoin->statut == 'refusé')
@@ -294,7 +294,7 @@ Détails de bon d'expression de besoins
             theme:"sk-circle"
         });
 
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')}});
         $.ajax({
             method: "POST",
             url: "{{ route('achats.besoins.lignes.validation') }}",
@@ -313,6 +313,7 @@ Détails de bon d'expression de besoins
                     'title': msg.msg
                 })
                 HoldOn.close();
+                window.reload();
             },
             error : function( msg ) {
                 console.log(msg);
@@ -321,6 +322,7 @@ Détails de bon d'expression de besoins
                     'title': msg.responseJSON.msg ?? msg.responseJSON.message
                 })
                 HoldOn.close();
+                window.reload();
             }
         });
     }

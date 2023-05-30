@@ -42,6 +42,7 @@ Liste des inventaires
                             <table class="display table table-striped table-bordered table_oholiab"  style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Date</th>
                                         <th>Titre</th>
                                         <th>Entrepot</th>
@@ -52,8 +53,10 @@ Liste des inventaires
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($inventaires->sortByDesc('date_inventaire') as $inventaire)
+                                    @php $num = 0; @endphp
+                                    @foreach ($inventaires->sortByDesc('date_inventaire') as $inventaire)
                                         <tr class="tr-link" data-link="{{ route('stock.inventaires.show', $inventaire) }}">
+                                            <td>{{ ++$num }}</td>
                                             <td class="py-1">{{ ucwords((new Carbon($inventaire->date_inventaire))->locale('fr')->isoFormat('DD/MM/YYYY')) }}</td>
                                             <td>{{ ucwords($inventaire->name) }}</td>
                                             <td>{{ $inventaire->entrepot->name }}</td>
@@ -70,14 +73,13 @@ Liste des inventaires
                                             </td>
                                             <td class="py-1">{{ ucwords((new Carbon($inventaire->created_at))->locale('fr')->isoFormat('DD/MM/YYYY à HH:mm')) }}</td>
                                         </tr>
-                                    @empty
-
-                                    @endforelse
+                                    @endforeach
 
 
                                 </tbody>
                                 <tfoot>
                                     <tr>
+                                        <th>#</th>
                                         <th>Date</th>
                                         <th>Titre</th>
                                         <th>Entrepot</th>

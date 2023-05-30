@@ -78,7 +78,9 @@ class InventaireController extends Controller
      */
     public function show(Inventaire $inventaire)
     {
-        return view('main.stock.inventaires.show',compact('inventaire'));
+        $entrepot = $inventaire->entrepot;
+        $entreprise = $entrepot->entreprise;
+        return view('main.stock.inventaires.show',compact('inventaire', 'entrepot', 'entreprise'));
     }
 
     /**

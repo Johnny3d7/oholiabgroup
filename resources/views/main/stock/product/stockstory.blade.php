@@ -31,21 +31,24 @@ Historique des mouvements | {{ $product->name }}
              
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="display table" id="inventaireTable" style="width:100%">
+                        <table class="display table-striped table-bordered table_oholiab" id="inventaireTable" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th style="width: 10%;">Date mouvement</th>
                                     <th style="width: 10%;">Type </th>
                                     <th style="width: 20%;">Entrepot</th>
                                     <th style="width: 10%;">Quantité</th>
                                     <th style="width: 30%;">Observation</th>
                                     <th style="width: 10%;">Date d'ajout</th>
-                                    <th style="width: 10%;">Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($variations as $data)
+                                @php $num = 0; @endphp
+                                @foreach ($variations->sortByDesc('mouvement.date_mouvement') as $data)
                                     <tr>
+                                        <td>{{ ++$num }}</td>
                                         <td>
                                             {{ ucwords((new Carbon\Carbon($data->mouvement->date_mouvement))->locale('fr')->isoFormat('DD/MM/YYYY')) }}
                                         </td>
@@ -58,7 +61,7 @@ Historique des mouvements | {{ $product->name }}
                                             @endif
                                         </td>
                                         <td>
-                                            {{ $data->mouvement->entrepot->name }}
+                                            {{ $entrepot->name }}
                                         </td>
                                         <td>
                                             {{ $data->quantite }}
@@ -74,8 +77,10 @@ Historique des mouvements | {{ $product->name }}
                                         <td>
                                             @hasrole(config('constants.roles.geststock'))
                                             {{-- <button class="btn btn-outline-success m-1" type="button" data-toggle="modal" data-target="#updateVariation{{ $data->id }}" data-whatever="@fat">Modifier</button> --}}
-                                            <a href="" class="text-success m-1" type="button" data-toggle="modal" data-target="#updateVariation{{ $data->id }}" data-whatever="@fat"><i class="i-Pen-3"></i></a>
-                                            <a class="ul-link-action text-danger mr-1 deletevariation" href="{{ route('stock.variations.destroy', $data) }}" data-toggle="tooltip" data-placement="top" title="Voulez-vous supprimer!!!"><i class="i-Eraser-2"></i></a>
+                                            {{-- <a href="" class="text-success m-1" type="button" data-toggle="modal" data-target="#updateVariation{{ $data->id }}" data-whatever="@fat"><i class="i-Pen-3"></i></a> --}}
+                                            {{-- <a class="ul-link-action text-danger mr-1 deletevariation" href="{{ route('stock.variations.destroy', $data) }}" data-toggle="tooltip" data-placement="top" title="Voulez-vous supprimer!!!"><i class="i-Eraser-2"></i></a> --}}
+                                            
+                                            {{-- <a href="" class="text-success m-1 h3" type="button" data-toggle="modal" data-target="#updateVariation{{ $data->id }}" data-whatever="@fat"><i class="i-Eye"></i></a> --}}
                                             @endhasrole
                                         </td>
                                     </tr>
@@ -132,9 +137,7 @@ Historique des mouvements | {{ $product->name }}
                                         </div>
                                     </div>
                                 </div>
-                                @empty
-                                    
-                                @endforelse
+                                @endforeach
                                                          
                              </tbody>
                         </table>
@@ -149,15 +152,15 @@ Historique des mouvements | {{ $product->name }}
 @section('javascripts')
 <script>
     $(document).ready(function() {
-    $('#inventaireTable').DataTable({
-        ordering:false,
-        paging: true,
-        searching: true,
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    } );
+    // $('#inventaireTable').DataTable({
+    //     ordering:false,
+    //     paging: true,
+    //     searching: true,
+    //     dom: 'Bfrtip',
+    //     buttons: [
+    //         'copy', 'csv', 'excel', 'pdf', 'print'
+    //     ]
+    // } );
 } );
 </script>
 <script>

@@ -73,18 +73,18 @@ Tableau de bord
                 <div class="row bg-primary pt-1"></div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
+        {{-- <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4 hoverChange" data-color="primary">
                 <div class="card-body text-center">
-                    {{-- <i class="i-Store-2"></i> --}}
+                    <i class="i-Truck"></i>
                     <div class="content">
-                        <p class="text-muted mt-2 mb-0">Nbre de besoins par entreprise / mois</p>
-                        {{-- <p class="text-primary text-24 line-height-1 mb-2">{{ $nbre->fournisseur }}</p> --}}
+                        <p class="text-muted mt-2 mb-0">Nbre de besoins/Entreprise/Mois</p>
+                        <p class="text-primary text-24 line-height-1 mb-2">2</p>
                     </div>
                 </div>
                 <div class="row bg-primary pt-1"></div>
             </div>
-        </div>
+        </div> --}}
         {{-- <div class="container">
             <div class="row">
             </div>

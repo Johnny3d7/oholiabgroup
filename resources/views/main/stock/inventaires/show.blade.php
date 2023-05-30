@@ -32,18 +32,18 @@ Détails d'un inventaire
             <div class="card-body">
                 <div class="row">
                     @php
-                        $e = $inventaire->entrepot->entreprise->id;
+                        $e = $entreprise->id;
                         $color = ($e == 1) ? 'success' : (($e == 2) ? 'info' : (($e == 3) ? 'primary' : ''));
                     @endphp
                     <div class="col-md-6 col-lg-3 text-center pt-0">
                         <h4 class="heading mb-3">Entrepot</h4>
                         <i class="i-Shop{{ $e <> 1 ? '-'.$e : '' }} text-{{ $color }} text-50 font-weight-500 d-block"></i>
-                        <h5 class="mt-2 mb-3">{{ $inventaire->entrepot->name }}</h5>
+                        <h5 class="mt-2 mb-3">{{ $entrepot->name }}</h5>
                     </div>
                     <div class="col-md-6 col-lg-3 text-center pt-0">
                         <h4 class="heading mb-3">Entreprise</h4>
-                        <img src="{{ asset($inventaire->entrepot->entreprise->logo) }}" class="pt-1" alt="" style="height: 4rem;">
-                        <h5 class="mt-2 mb-3">{{ $inventaire->entrepot->entreprise->name }}</h5>
+                        <img src="{{ asset($entreprise->logo) }}" class="pt-1" alt="" style="height: 4rem;">
+                        <h5 class="mt-2 mb-3">{{ $entreprise->name }}</h5>
                     </div>
                     <div class="col-md-6 col-lg-4 text-center">
                         <h4 class="heading mb-3">{{ $inventaire->name }}</h4>

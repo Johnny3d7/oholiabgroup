@@ -92,17 +92,18 @@ class Product extends BaseModel
     */
     public function parametre($string)
     {
-        return $this->belongsTo(Parametre::class,$string)->first();
+        return $this->belongsTo(Parametre::class,$string);
     }
     
-    public function natureName()
+    public function nature_rel()
     {
-        return $this->parametre('nature')->name;
+        // dd($this->parametre('nature')->get());
+        return $this->parametre('nature');
     }
 
-    public function typeName()
+    public function type_rel()
     {
-        return $this->parametre('type')->name;
+        return $this->parametre('type');
     }
 
 
@@ -124,6 +125,8 @@ class Product extends BaseModel
     public function entrepots()
     {
         $entr = EntrepotsHasProduct::whereIdProducts($this->id)->get()->pluck('id_entrepots');
+        return Entrepot::whereIn('id', $entr)->get();
+
         $entrepots = new Collection();
         foreach ($entr as $value) {
             if(Entrepot::find($value)) $entrepots->add(Entrepot::find($value));
@@ -162,6 +165,7 @@ class Product extends BaseModel
         $ids = Mouvement::whereIdEntrepots($entrepot->id)->get()->pluck('id');
         $object = LigneMouvement::whereIdProducts($this->id)
                                 ->whereIn('id_mouvements', $ids)
+                                ->with(['mouvement', 'entrepot'])
                                 ->get();
         return $object;
     }

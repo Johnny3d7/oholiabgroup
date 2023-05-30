@@ -23,7 +23,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $view = $request->view;
-        $products = Product::all();
+        $products = Product::with(['category', 'entreprise', 'nature_rel', 'type_rel'])->get();
         //  dd($products);
         return view('main.stock.product.index',compact('products', 'view'));
     }
@@ -148,7 +148,6 @@ class ProductController extends Controller
     {
         //
         // $product = Product::where('slug', $slug)->first();
-
         return view('main.stock.product.show',compact('product'));
     }
 
@@ -338,8 +337,8 @@ class ProductController extends Controller
     public function stockStoryEntp(Entrepot $entrepot,Product $product)
     {
         $variations = $product->variation_entrepot($entrepot);
-        // dd($variations);
-        return view('main.stock.product.stockstory', compact('variations', 'product'));
+        // dd($variations[0]);
+        return view('main.stock.product.stockstory', compact('variations', 'product', 'entrepot'));
     }
 
     //Changer l'image du produit
